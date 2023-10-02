@@ -27,5 +27,5 @@ Overall, our application aims to simplify the pet adoption process by providing 
 "German Shepherd Dog"
 
 
-## Technical Problems: 
+### Technical Problems: 
 While we are still at the early stages of development and may run into unexpected problems in the future, our main technical problem at the moment is generating an access token from Java automatically. The access tokens we are currently using is authorized and retrieved from third-party tools, such as Postman, which are limited in terms of time. However, we are currently facing difficulties integrating the OAuth system used by the API into Java code, which is the main challenge we are currently working to solve.  
