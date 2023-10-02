@@ -19,7 +19,7 @@ API Screenshot (Postman):
 
 ![API Screenshot](https://github.com/Viceu/CSC207-PetMatch/assets/144386124/fc899a3f-5f6e-47c6-b49e-4e4b8fe3631e)
 
-Example Output Code:
+Example Code (in src/api/CodeSnippet.Java) Ouput:
 
 "German Shepherd Dog"
 
