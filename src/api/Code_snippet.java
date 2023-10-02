@@ -28,8 +28,8 @@ public class Code_snippet {
             JSONObject responseBody = new JSONObject(response.body().string());
 
             if (responseBody.getInt("status_code") == 200) {
-                JSONObject animals = responseBody.getJSONObject("animals");
-                System.out.println(animals.toString(5)); // Print it with specified indentation
+                JSONObject breed = responseBody.getJSONObject("breed");
+                System.out.println(breed.toString()); // Print it with specified indentation
                 return;
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
