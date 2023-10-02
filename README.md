@@ -18,3 +18,7 @@ Here is the link to the documentation for the Pet Finder API: https://www.petfin
 API Screenshot (Postman):
 
 ![API Screenshot](https://github.com/Viceu/CSC207-PetMatch/assets/144386124/fc899a3f-5f6e-47c6-b49e-4e4b8fe3631e)
+
+Example Output Code:
+
+"German Shepherd Dog"
