@@ -29,7 +29,7 @@ public class Code_snippet {
 
             if (responseBody.getInt("status_code") == 200) {
                 JSONObject breed = responseBody.getJSONObject("breed");
-                System.out.println(breed.toString()); // Print it with specified indentation
+                System.out.println(breed.toString());
                 return;
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
