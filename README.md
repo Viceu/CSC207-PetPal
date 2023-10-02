@@ -14,3 +14,7 @@ Social Networking: Users can create profiles for their pets and connect with oth
 Overall, our application aims to simplify the pet adoption process by providing a user-friendly interface for finding and communicating with potential adopters or pet owners. Additionally, it seeks to create a pet-loving community where users can share their passion for animals and provide support and guidance to each other! :)
 
 Here is the link to the documentation for the Pet Finder API: https://www.petfinder.com/developers/v2/docs/
+
+API Screenshot (Postman):
+
+![API Screenshot](https://github.com/Viceu/CSC207-PetMatch/assets/144386124/fc899a3f-5f6e-47c6-b49e-4e4b8fe3631e)
