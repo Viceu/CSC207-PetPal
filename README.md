@@ -1,4 +1,4 @@
-# CSC207-PetMatch
+# CSC207-PetPal
 
 ### Problem domain:
 Our project focuses on pet adoption and pet-related social interactions. This domain involves helping people find and adopt the right pets for their lifestyles while also facilitating social connections between pet owners and potential adopters. Our chosen domain addresses pet overpopulation, animal welfare, and community building.
