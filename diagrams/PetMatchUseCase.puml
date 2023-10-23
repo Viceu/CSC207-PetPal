@@ -1,14 +1,28 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+'getStatus(return "adoptable")
+'goodwith -- children/dog/cat -- return bool
+
 +interface Pet {
     {abstract} +Integer getID()
     {abstract} +String getName()
-    {abstract} +String getColour()
-    {abstract} +String getBreed()
     {abstract} +String getType()
+    {abstract} +String getBreed()
+    {abstract} +String getSize()
+    {abstract} +String getGender()
     {abstract} +Integer getAge()
-    {abstract} +List<String> getTags()
+    {abstract} +String getColour()
+    {abstract} +String getCoat()
+    {abstract} +String getStatus()
+    {abstract} +String getOrg()
+    {abstract} +boolean getGWChildren()
+    {abstract} +boolean getGWDog()
+    {abstract} +boolean getGWCat()
+    {abstract} +boolean getTrained()
+    {abstract} +boolean getDeclawed()
+    {abstract} +String getNeeds()
+    {abstract} +String getLocation()
 }
 
 +class ViewManagerModel {
