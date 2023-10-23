@@ -9,6 +9,7 @@
 '-- convert to Pet and display to user only one page of result
 'after return results, 3 choices: exit, new search, interact with a Pet
 'coding challenges: connect+retrieve from API, GUI
+'future implementation: if want to interact with a Pet, user must log in
 
 +interface Pet {
     {abstract} +Integer getID()
