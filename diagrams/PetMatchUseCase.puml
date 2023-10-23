@@ -5,6 +5,10 @@
 'goodwith -- children/dog/cat -- return bool
 'results make into a Pet object each
 'limit return number of Pets to 50
+'-- done through limit page and result per page
+'-- convert to Pet and display to user only one page of result
+'after return results, 3 choices: exit, new search, interact with a Pet
+'coding challenges: connect+retrieve from API, GUI
 
 +interface Pet {
     {abstract} +Integer getID()
