@@ -3,6 +3,8 @@
 
 'getStatus(return "adoptable")
 'goodwith -- children/dog/cat -- return bool
+'results make into a Pet object each
+'limit return number of Pets to 50
 
 +interface Pet {
     {abstract} +Integer getID()
