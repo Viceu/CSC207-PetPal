@@ -1,0 +1,156 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
++interface Pet {
+    {abstract} +Integer getID()
+    {abstract} +String getName()
+    {abstract} +String getType()
+    {abstract} +String getBreed()
+    {abstract} +String getSize()
+    {abstract} +String getGender()
+    {abstract} +Integer getAge()
+    {abstract} +String getColour()
+    {abstract} +String getCoat()
+    {abstract} +String getStatus()
+    {abstract} +String getOrg()
+    {abstract} +boolean getGWChildren()
+    {abstract} +boolean getGWDog()
+    {abstract} +boolean getGWCat()
+    {abstract} +boolean getTrained()
+    {abstract} +boolean getDeclawed()
+    {abstract} +String getNeeds()
+    {abstract} +String getLocation()
+}
+
++class ViewManagerModel {
+    -String activeViewName
+    -PropertyChangeSupport support
+    +String getActiveView()
+    + void setActiveView()
+    +void firePropertyChanged()
+    +void addPropertyChangeListener()
+}
+
++class MatchController {
+    -MatchInputBoundary matchUseCaseInteractor
+    +MatchController()
+    +void execute()
+}
+
++class MatchPresenter implements MatchOutputBoundary {
+    -MatchViewModel matchViewModel
+    -ViewManagerModel viewManagerModel
+    +MatchPresenter()
+    +void prepareSuccessView()
+    +void prepareFailView()
+}
+
++class MatchState {
+    -List<String> requirements
+    -String requirementError
+    +MatchState()
+    +List<String> getRequirements()
+    +String getRequirementError()
+    +void setRequirements()
+    +void setRequirementError()
+}
+
++class MatchViewModel extends ViewModel {
+    +String TITLE_LABEL
+    +String REQUIREMENT_LABEL
+    +String MATCH_BUTTON_LABEL
+    -MatchState matchState
+    +MatchViewModel()
+    +void setState()
+    -PropertyChangeSupport
+    +void firePropertyChanged()
+    +void addPropertyChangeListener()
+    +MatchState getState()
+}
+
++abstract class ViewModel {
+    -String activeViewName
+    +ViewModel()
+    +String getViewName()
+    {abstract} +void firePropertyChanged()
+    {abstract} +void addPropertyChangeListener()
+}
+
++interface MatchInputBoundary {
+    {abstract} +void execute()
+}
+
++class MatchInputData {
+    -List<String> requirements
+    +MatchInputData()
+    +List<String> getRequirements()
+}
+
++class MatchUseCaseInteractor implements MatchInputBoundary {
+    -MatchDataAccessInterface matchDataAccessObject
+    -MatchOutputBoundary matchPresenter
+    +MatchUseCaseInteractor()
+    +void execute()
+}
+
++interface MatchOutputBoundary {
+    {abstract} +void prepareSuccessView()
+    {abstract} +void prepareFailView()
+}
+
++class MatchOutputData {
+    -List<String> requirements
+    -boolean searchFail
+    +MatchOutputData()
+    +List<String> getRequirements()
+}
+
++interface MatchDataAccessInterface {
+    {abstract} +void accessApi()
+    {abstract} +List<Pet> retrieve()
+}
+
++class ApiDataAccessObject implements MatchDataAccessInterface {
+    -str apiToken
+    -void accessApi()
+    +List<Pet> retrieve()
+}
+
+'requirement input needs to change format, not just text box
++class MatchView extends JPanel implements ActionListener, PropertyChangeSupport {
+    -String viewName
+    -MatchViewModel matchViewModel
+    -JTextField requirementInputField
+    -MatchController matchController
+    -JButton search
+    +MatchView()
+    +void actionPerformed()
+    +void propertyChange()
+}
+
++class ViewManager implements PropertyChangeListener {
+    -CardLayout cardLayout
+    -Jpanel views
+    -ViewManagerModel viewManagerModel
+    +ViewManager()
+    +void propertyChange()
+}
+
+Pet *-- MatchDataAccessInterface
+Pet *-- MatchUseCaseInteractor
+MatchDataAccessInterface *-- MatchUseCaseInteractor
+MatchOutputBoundary *-- MatchUseCaseInteractor
+MatchOutputData *-- MatchUseCaseInteractor
+MatchInputData *-- MatchUseCaseInteractor
+MatchInputData *-- MatchController
+MatchInputBoundary *-- MatchController
+MatchOutputData *-- MatchPresenter
+MatchViewModel *-- MatchPresenter
+MatchViewModel *-- MatchView
+MatchController *-- MatchView
+ViewManagerModel *-- ViewManager
+MatchState *-- MatchViewModel
+
+
+@enduml
