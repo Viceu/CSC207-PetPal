@@ -1,8 +1,6 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-'getStatus(return "adoptable")
-'goodwith -- children/dog/cat -- return bool
 
 +interface Pet {
     {abstract} +Integer getID()
