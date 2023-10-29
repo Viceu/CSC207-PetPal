@@ -15,7 +15,6 @@ public class SearchInteractor implements SearchInputBoundary {
     @Override
     public void execute(SearchInputData searchInputData) {
         Map<String, String> requirements = searchInputData.getRequirements();
-
     }
 
 
