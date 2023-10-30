@@ -1,14 +1,16 @@
+import view.*;
+
 public class SearchPresenter {
 
     private final SearchViewModel searchViewModel;
 
     private ViewManagerModel viewManagerModel;
 
-    private ResultViewModel resultViewModel;
+    private DisplayViewModel resultViewModel;
 
     public SearchPresenter(SearchViewModel searchViewModel,
                            ViewManagerModel viewManagerModel,
-                           ResultViewModel resultViewModel) {
+                           DisplayViewModel resultViewModel) {
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
         this.resultViewModel = resultViewModel;
@@ -17,7 +19,7 @@ public class SearchPresenter {
     public void prepareSuccessView(SearchOutputData result){
         // on success, switch to the result-displaying view
 
-        ResultState resultState = resultViewModel.getState();
+        DisplayState resultState = resultViewModel.getState();
         resultState.setUsername(result.getRequirements());
         this.resultViewModel.setState(resultState);
         resultViewModel.firePropertyChanged();
