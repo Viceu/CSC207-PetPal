@@ -5,7 +5,6 @@ import entity.PetFactory;
 import use_case.SearchPetDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
@@ -21,6 +20,8 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     public ApiPetDataAccessObject(String csvPath, PetFactory petFactory) throws IOException {
         this.petFactory = petFactory;
 
+        //response should also include a header containing a status code (200 for OK; others to indicate errors)
+        // need read status code, make sure 200, then procede to read repsonse array
         csvFile = new File(csvPath);
         headers.put("id", 0);
         headers.put("organization_id", 1);
@@ -58,17 +59,20 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
                         "size,coat,attributes,environment,tags,name,description,photos,videos,status," +
                         "published_at,contact,_links");
 
+                https://www.geeksforgeeks.org/how-to-convert-json-array-to-string-array-in-java/
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     //id,organization_id,url,type,species,breeds,colors,age,gender,size,coat,attributes,
                     // environment,tags,name,description,photos,videos,status,published_at,contact,_links
-                    Integer id = Integer.valueOf(String.valueOf(col[headers.get("id")]));
-                    String organization_id = String.valueOf(col[headers.get("organization_id")]);
-                    String url = String.valueOf(col[headers.get("url")]);
+                    Integer petID = Integer.valueOf(String.valueOf(col[headers.get("id")]));
+                    String organizationID = String.valueOf(col[headers.get("organization_id")]);
+                    String profileURL = String.valueOf(col[headers.get("url")]);
                     String species = String.valueOf(col[headers.get("species")]);
-                    String breeds = String.valueOf(col[headers.get("breeds")]);
-                    // make breeds Map
+                    String breedsRow = String.valueOf(col[headers.get("breeds")]);
+                    String[] breed = breedsRow.split(",").split(": ");
+                    Map<String, String> breeds = new HashMap<>();
+                    for(String[] a: breed)
                     String colors = String.valueOf(col[headers.get("colors")]);
                     // make List<String>
                     String age = String.valueOf(col[headers.get("age")]);
@@ -86,7 +90,11 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
                     // Boolean
                     String contact = String.valueOf(col[headers.get("contact")]);
                     // Map<String, String>
-                    Pet pet = petFactory.create(username, password);
+                    Pet pet = petFactory.create(Integer petID, String organizationID, String profileURL, String name, List<String> colors,
+                            Map<String, String> breed, String species, List<String> coat, String age, Map<String,
+                            Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
+                            Map<String, String> contact, String gender, String size);
+
                     profiles.put(username, user);
                 }
             }
@@ -145,6 +153,12 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     public void deleteAll() {
         profiles.clear();
         this.save();
+    }
+
+    @Override
+    public Pet retrieve(Integer id) {
+        //Precondition already ran existsByName!!!!!!!
+        return profiles.get(id);
     }
 
 }

@@ -8,4 +8,6 @@ public interface SearchPetDataAccessInterface {
     void save(Pet pet);
 
     void deleteAll();
+
+    Pet retrieve();
 }
