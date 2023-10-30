@@ -3,7 +3,7 @@ package view;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ViewModelManager {
+public class ViewManagerModel {
     private String activeViewName;
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

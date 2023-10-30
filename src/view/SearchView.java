@@ -1,6 +1,6 @@
 package view;
 
-import view.SearchViewModel;
+import viviansong.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -73,7 +73,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         buttons.add(search);
 
         search.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
@@ -87,10 +86,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         speciesField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -319,14 +314,21 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         this.add(title);
         this.add(speciesInfo);
+        this.add(breedInfo);
         this.add(colorInfo);
+        this.add(cityInfo);
+        this.add(stateInfo);
+        this.add(ageInfo);
+        this.add(sexInfo);
+        this.add(coatInfo);
+        this.add(houseTrainedInfo);
+        this.add(declawedInfo);
+        this.add(goodWithCatsInfo);
+        this.add(goodWithDogsInfo);
         this.add(goodWithKidsInfo);
         this.add(buttons);
     }
 
-    /**
-     * React to a button click that results in evt.
-     */
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "This is not implemented yet.");
     }
