@@ -9,5 +9,7 @@ public interface SearchPetDataAccessInterface {
 
     void deleteAll();
 
-    Pet retrieve();
+    List<Pet> getPets();
+
+    List<Integer> getIDs();
 }

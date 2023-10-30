@@ -20,84 +20,84 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     public ApiPetDataAccessObject(String csvPath, PetFactory petFactory) throws IOException {
         this.petFactory = petFactory;
 
-        //response should also include a header containing a status code (200 for OK; others to indicate errors)
-        // need read status code, make sure 200, then procede to read repsonse array
-        csvFile = new File(csvPath);
-        headers.put("id", 0);
-        headers.put("organization_id", 1);
-        headers.put("url", 2);
-        headers.put("type", 3);
-        headers.put("species", 4);
-        headers.put("breeds", 5);
-        headers.put("colors", 6);
-        headers.put("age", 7);
-        headers.put("gender", 8);
-        headers.put("size", 9);
-        headers.put("coat", 10);
-        headers.put("attributes", 11);
-        headers.put("environment", 12);
-        headers.put("tags", 13);
-        headers.put("name", 14);
-        headers.put("description", 15);
-        headers.put("photos", 16);
-        headers.put("videos", 17);
-        headers.put("status", 18);
-        headers.put("published_at", 19);
-        headers.put("contact", 20);
-        headers.put("_links", 21);
+        String jsonString;
+        JSONObject jsonObject;
 
+        // Try block to check for exceptions
+        try {
 
-        if (csvFile.length() == 0) {
-            save();
-        } else {
+            // 1: Read contents of JSON file
+            // using readAllBytes() method and store result in a string
+            jsonString = new String(
+                    Files.readAllBytes(Paths.get("sample_data.json")));
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                String header = reader.readLine();
+            // 2: Construct a JSONObject using above string
+            jsonObject = new JSONObject(jsonString);
 
-                // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("id,organization_id,url,type,species,breeds,colors,age,gender," +
-                        "size,coat,attributes,environment,tags,name,description,photos,videos,status," +
-                        "published_at,contact,_links");
+            myObj = JSON.parse(jsonObject);
+            animals = myObj.animals[0];
+            // this is a JSONObject
 
-                https://www.geeksforgeeks.org/how-to-convert-json-array-to-string-array-in-java/
-                String row;
-                while ((row = reader.readLine()) != null) {
-                    String[] col = row.split(",");
-                    //id,organization_id,url,type,species,breeds,colors,age,gender,size,coat,attributes,
-                    // environment,tags,name,description,photos,videos,status,published_at,contact,_links
-                    Integer petID = Integer.valueOf(String.valueOf(col[headers.get("id")]));
-                    String organizationID = String.valueOf(col[headers.get("organization_id")]);
-                    String profileURL = String.valueOf(col[headers.get("url")]);
-                    String species = String.valueOf(col[headers.get("species")]);
-                    String breedsRow = String.valueOf(col[headers.get("breeds")]);
-                    String[] breed = breedsRow.split(",").split(": ");
-                    Map<String, String> breeds = new HashMap<>();
-                    for(String[] a: breed)
-                    String colors = String.valueOf(col[headers.get("colors")]);
-                    // make List<String>
-                    String age = String.valueOf(col[headers.get("age")]);
-                    String gender = String.valueOf(col[headers.get("gender")]);
-                    String size = String.valueOf(col[headers.get("size")]);
-                    String coat = String.valueOf(col[headers.get("coat")]);
-                    // make List<String>
-                    String attributes = String.valueOf(col[headers.get("attributes")]);
-                    // make Map<String, Boolean>
-                    String environment = String.valueOf(col[headers.get("environment")]);
-                    // Map<String, Boolean>
-                    String name = String.valueOf(col[headers.get("name")]);
-                    String description = String.valueOf(col[headers.get("description")]);
-                    String adoptable = String.valueOf(col[headers.get("status")]);
-                    // Boolean
-                    String contact = String.valueOf(col[headers.get("contact")]);
-                    // Map<String, String>
-                    Pet pet = petFactory.create(Integer petID, String organizationID, String profileURL, String name, List<String> colors,
-                            Map<String, String> breed, String species, List<String> coat, String age, Map<String,
-                            Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
-                            Map<String, String> contact, String gender, String size);
+            Integer petID = animals.id;
+            String organizationID = animals.organization_id;
+            String profileURL = animals.url;
+            String species = animals.species;
+            String breedsRow = animals.breeds;
 
-                    profiles.put(username, user);
-                }
+            String[] breed = breedsRow.split(",").split(": ");
+            Map<String, String> breeds = new HashMap<>();
+            for(String[] a: breed) {
+
             }
+
+            String colors = animals.colors;
+            // make List<String>
+            String age = animals.age;
+            String gender = animals.gender;
+            String size = animals.size;
+            String coat = animals.coat;
+            // make List<String>
+            String attributes = animals.attributes;
+            // make Map<String, Boolean>
+            String environment = animals.environment;
+            // Map<String, Boolean>
+            String name = animals.name;
+            String description = animals.description;
+            String adoptable = animals.status;
+            // Boolean
+            String contact = animals.contact;
+            // Map<String, String>
+            Pet pet = petFactory.create(Integer petID, String organizationID, String profileURL, String name, List<String> colors,
+                    Map<String, String> breed, String species, List<String> coat, String age, Map<String,
+                    Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
+                    Map<String, String> contact, String gender, String size);
+
+            profiles.put(username, user);
+
+
+
+
+
+            // 3: Fetching JSON Array test from JSON Object
+            JSONArray docs
+                    = jsonObject.getJSONArray("animals");
+
+            List<String> exampleList = new ArrayList<String>();
+
+            for(int i=0; i< exampleArray.length; i++){
+                exampleList.add(exampleArray.getString(i));
+            }
+
+            if (exampleList.length() == 0) {
+                save();
+            } else {
+            }
+        }
+        // Catch block to handle exceptions
+        catch (Exception e) {
+            // Display exceptions on console with line
+            // number using printStackTrace() method
+            e.printStackTrace();
         }
     }
 
@@ -121,7 +121,13 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
             for (Pet pet : profiles.values()) {
                 String line = String.format("%s,%s,%s",
-                        pet.getName(), pet.getPassword(), pet.getCreationTime());
+                        pet.getPetID(), pet.getOrganizationID(), pet.getURL(), pet.getName(), pet.getColors(),
+                        pet.getBreed(), pet.getSpecies(), pet.getCoat(), pet.getAge(), pet.getAttributes(),
+                        pet.getEnvironment(), pet.getDescription(), pet.getAdoptable(), pet.getContact(),
+                        pet.getGender(), pet.getSize());
+                /** how would Integer and Map format
+                + change getter if that changes (attributes and environments)
+                **/
                 writer.write(line);
                 writer.newLine();
             }
@@ -133,20 +139,9 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
         }
     }
 
-
-    /**
-     * Return whether a user exists with username identifier.
-     * @param identifier the username to check.
-     * @return whether a user exists with username identifier
-     */
     @Override
     public boolean existsByName(Integer id) {
         return profiles.containsKey(id);
-    }
-
-    @Override
-    public List<Integer> getUsers() {
-        return new ArrayList<Integer>(profiles.keySet());
     }
 
     @Override
@@ -156,9 +151,13 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     }
 
     @Override
-    public Pet retrieve(Integer id) {
-        //Precondition already ran existsByName!!!!!!!
-        return profiles.get(id);
+    public List<Integer> getIDs() {
+        return new ArrayList<Integer>(profiles.keySet());
+        }
+
+    @Override
+    public List<Pet> getPets() {
+        return profiles
     }
 
 }
