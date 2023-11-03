@@ -1,5 +1,7 @@
 package view;
 
+import entities.Pet;
+
 import java.util.HashMap;
 import java.util.*;
 import javax.swing.*;
@@ -22,6 +24,6 @@ public class DisplayState {
     public Object getRequirementsError() {
         return failMessage;
     }
-    public void setUsername(String requirements) {
+    public void setRequirements(Map<Integer, Pet> requirements) {
     }
 }
