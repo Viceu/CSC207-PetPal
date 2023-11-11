@@ -9,15 +9,14 @@ import java.util.*;
 
 public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
-    private final File csvFile; // get api access instead of file name later
-
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
     private final Map<Integer, Pet> profiles = new HashMap<>();
 
     private PetFactory petFactory;
 
-    public ApiPetDataAccessObject(String csvPath, PetFactory petFactory) throws IOException {
+    public ApiPetDataAccessObject(JSONObject results, PetFactory petFactory) throws IOException {
+
         this.petFactory = petFactory;
 
         String jsonString;
@@ -28,27 +27,32 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
             // 1: Read contents of JSON file
             // using readAllBytes() method and store result in a string
-            jsonString = new String(
-                    Files.readAllBytes(Paths.get("sample_data.json")));
+            // once connected to API, instead of readAllBytes from file, will read parameter results
+            jsonString = new String(Files.readAllBytes(Paths.get("sample_data.json")));
 
             // 2: Construct a JSONObject using above string
             jsonObject = new JSONObject(jsonString);
 
             myObj = JSON.parse(jsonObject);
             animals = myObj.animals[0];
-            // this is a JSONObject
+            // animals is a JSONObject
 
             Integer petID = animals.id;
             String organizationID = animals.organization_id;
             String profileURL = animals.url;
             String species = animals.species;
-            String breedsRow = animals.breeds;
-
-            String[] breed = breedsRow.split(",").split(": ");
-            Map<String, String> breeds = new HashMap<>();
-            for(String[] a: breed) {
+            JSONObject breedsRow = animals.breeds;
+            Map<String, String> breeds;
+            for (int i=0;i<breedsRow.length();i++){
+                breeds.put(breedsRow.getString(i))
 
             }
+            /**
+             * https://www.geeksforgeeks.org/how-to-convert-json-array-to-string-array-in-java/
+             * https://www.w3schools.com/js/js_json_arrays.asp
+             * https://stackoverflow.com/questions/42726232/how-convert-jsonobject-to-arraylist
+             */
+
 
             String colors = animals.colors;
             // make List<String>
