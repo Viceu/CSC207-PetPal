@@ -15,25 +15,23 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
     private PetFactory petFactory;
 
-    public ApiPetDataAccessObject(JSONObject results, PetFactory petFactory) throws IOException {
+    public ApiPetDataAccessObject(HashMap<String, String> params, PetFactory petFactory) throws IOException {
 
+        List<Pet> listPets = new ArrayList<Pet>();
         this.petFactory = petFactory;
 
         String jsonString;
         JSONObject jsonObject;
 
-        // Try block to check for exceptions
-        try {
+        // Read API retrieved results (List of String)
+        List<String> apiResults = ApiResults.getAnimals(params);
 
-            // 1: Read contents of JSON file
-            // using readAllBytes() method and store result in a string
-            // once connected to API, instead of readAllBytes from file, will read parameter results
-            jsonString = new String(Files.readAllBytes(Paths.get("sample_data.json")));
+        for (String petInfo:apiResults) {
 
-            // 2: Construct a JSONObject using above string
-            jsonObject = new JSONObject(jsonString);
+            // Construct a JSONObject using above string
+            JSONObject petJson = new JSONObject(petInfo);
 
-            myObj = JSON.parse(jsonObject);
+            myObj = JSON.parse(petJson);
             animals = myObj.animals[0];
             // animals is a JSONObject
 
@@ -43,7 +41,7 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             String species = animals.species;
             JSONObject breedsRow = animals.breeds;
             Map<String, String> breeds;
-            for (int i=0;i<breedsRow.length();i++){
+            for (int i = 0; i < breedsRow.length(); i++) {
                 breeds.put(breedsRow.getString(i))
 
             }
@@ -71,15 +69,12 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             // Boolean
             String contact = animals.contact;
             // Map<String, String>
-            Pet pet = petFactory.create(Integer petID, String organizationID, String profileURL, String name, List<String> colors,
-                    Map<String, String> breed, String species, List<String> coat, String age, Map<String,
-                    Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
-                    Map<String, String> contact, String gender, String size);
+            Pet pet = petFactory.create(Integer petID, String organizationID, String profileURL, String name, List < String > colors,
+                    Map < String, String > breed, String species, List < String > coat, String age, Map < String,
+                    Boolean > attributes, Map < String, Boolean > environment, String description, Boolean adoptable,
+                    Map < String, String > contact, String gender, String size);
 
             profiles.put(username, user);
-
-
-
 
 
             // 3: Fetching JSON Array test from JSON Object
@@ -88,20 +83,15 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
             List<String> exampleList = new ArrayList<String>();
 
-            for(int i=0; i< exampleArray.length; i++){
+            for (int i = 0; i < exampleArray.length; i++) {
                 exampleList.add(exampleArray.getString(i));
             }
 
             if (exampleList.length() == 0) {
                 save();
             } else {
+                TODO//
             }
-        }
-        // Catch block to handle exceptions
-        catch (Exception e) {
-            // Display exceptions on console with line
-            // number using printStackTrace() method
-            e.printStackTrace();
         }
     }
 
