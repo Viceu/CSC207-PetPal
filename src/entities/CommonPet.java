@@ -98,22 +98,22 @@ class CommonPet implements Pet {
     {
         HashMap<String, String> all = new HashMap<String, String>();
 
-        all.put("petID", getPetID().toString());
-        all.put("organizationID", getOrganizationID());
-        all.put("URL", getURL());
-        all.put("name", getName());
-        all.put("colors", convertList(getColors()));
-        all.put("breed", convertMap(getBreed()));
-        all.put("species", getSpecies());
-        all.put("coat", convertList(getCoat()));
-        all.put("age", getAge());
-        all.put("attributes", convertMap(getAttributes()));
-        all.put("environment", convertMap(getEnvironment()));
-        all.put("description", getDescription());
-        all.put("adoptable", getAdoptable().toString());
-        all.put("contact", convertMap(getContact()));
-        all.put("gender", getGender());
-        all.put("size", getSize());
+        all.put("Pet ID: ", getPetID().toString());
+        all.put("Organization ID: ", getOrganizationID());
+        all.put("URL: ", getURL());
+        all.put("Name: ", getName());
+        all.put("Colors: ", convertList(getColors()));
+        all.put("Breed: ", convertMap(getBreed()));
+        all.put("Species: ", getSpecies());
+        all.put("Coat: ", convertList(getCoat()));
+        all.put("Age: ", getAge());
+        all.put("Attributes: ", convertMap(getAttributes()));
+        all.put("Environment: ", convertMap(getEnvironment()));
+        all.put("Description: ", getDescription());
+        all.put("Adoptable: ", getAdoptable().toString());
+        all.put("Contact: ", convertMap(getContact()));
+        all.put("Gender: ", getGender());
+        all.put("Size: ", getSize());
 
         return all;
     }
