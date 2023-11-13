@@ -32,8 +32,8 @@ public class GetToken {
 
         // create access, request body
         OAuthClientRequest request = OAuthClientRequest.tokenLocation(tokenURL)
-                                    .setGrantType(GrantType.CLIENT_CREDENTIALS)
-                                    .buildBodyMessage();
+                .setGrantType(GrantType.CLIENT_CREDENTIALS)
+                .buildBodyMessage();
 
         // add header to request
         request.addHeader("Authorization", "Basic " + encodeValue);

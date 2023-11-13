@@ -32,41 +32,41 @@
     +void addPropertyChangeListener()
 }
 
-+class SearchController {
-    -SearchInputBoundary searchUseCaseInteractor
-    +SearchController()
++class MatchController {
+    -MatchInputBoundary matchUseCaseInteractor
+    +MatchController()
     +void execute()
 }
 
-+class SearchPresenter implements SearchOutputBoundary {
-    -SearchViewModel searchViewModel
++class MatchPresenter implements MatchOutputBoundary {
+    -MatchViewModel matchViewModel
     -ViewManagerModel viewManagerModel
-    +SearchPresenter()
+    +MatchPresenter()
     +void prepareSuccessView()
     +void prepareFailView()
 }
 
-+class SearchState {
++class MatchState {
     -List<String> requirements
     -String requirementError
-    +SearchState()
+    +MatchState()
     +List<String> getRequirements()
     +String getRequirementError()
     +void setRequirements()
     +void setRequirementError()
 }
 
-+class SearchViewModel extends ViewModel {
++class MatchViewModel extends ViewModel {
     +String TITLE_LABEL
     +String REQUIREMENT_LABEL
-    +String SEARCH_BUTTON_LABEL
-    -SearchState searchState
-    +SearchViewModel()
+    +String MATCH_BUTTON_LABEL
+    -MatchState matchState
+    +MatchViewModel()
     +void setState()
     -PropertyChangeSupport
     +void firePropertyChanged()
     +void addPropertyChangeListener()
-    +SearchState getState()
+    +MatchState getState()
 }
 
 +abstract class ViewModel {
@@ -77,56 +77,54 @@
     {abstract} +void addPropertyChangeListener()
 }
 
-+interface SearchInputBoundary {
++interface MatchInputBoundary {
     {abstract} +void execute()
 }
 
-+class SearchInputData {
-    -Map<String, List<String>> requirements
-    +SearchInputData()
++class MatchInputData {
+    -List<String> requirements
+    +MatchInputData()
     +List<String> getRequirements()
 }
 
-+class SearchUseCaseInteractor implements SearchInputBoundary {
-    -SearchDataAccessInterface searchDataAccessObject
-    -SearchOutputBoundary searchPresenter
-    +SearchUseCaseInteractor()
++class MatchUseCaseInteractor implements MatchInputBoundary {
+    -MatchDataAccessInterface matchDataAccessObject
+    -MatchOutputBoundary matchPresenter
+    +MatchUseCaseInteractor()
     +void execute()
 }
 
-+interface SearchOutputBoundary {
++interface MatchOutputBoundary {
     {abstract} +void prepareSuccessView()
     {abstract} +void prepareFailView()
 }
 
-+class SearchOutputData {
++class MatchOutputData {
     -List<String> requirements
     -boolean searchFail
-    +SearchOutputData()
+    +MatchOutputData()
     +List<String> getRequirements()
 }
 
-+interface SearchDataAccessInterface {
++interface MatchDataAccessInterface {
     {abstract} +void accessApi()
     {abstract} +List<Pet> retrieve()
-    {abstract} +save()
 }
 
-+class ApiDataAccessObject implements SearchDataAccessInterface {
++class ApiDataAccessObject implements MatchDataAccessInterface {
     -str apiToken
     -void accessApi()
     +List<Pet> retrieve()
-    +save()
 }
 
 'requirement input needs to change format, not just text box
-+class SearchView extends JPanel implements ActionListener, PropertyChangeSupport {
++class MatchView extends JPanel implements ActionListener, PropertyChangeSupport {
     -String viewName
-    -SearchViewModel searchViewModel
+    -MatchViewModel matchViewModel
     -JTextField requirementInputField
-    -SearchController searchController
+    -MatchController matchController
     -JButton search
-    +SearchView()
+    +MatchView()
     +void actionPerformed()
     +void propertyChange()
 }
@@ -139,20 +137,20 @@
     +void propertyChange()
 }
 
-Pet *-- SearchDataAccessInterface
-Pet *-- SearchUseCaseInteractor
-SearchDataAccessInterface *-- SearchUseCaseInteractor
-SearchOutputBoundary *-- SearchUseCaseInteractor
-SearchOutputData *-- SearchUseCaseInteractor
-SearchInputData *-- SearchUseCaseInteractor
-SearchInputData *-- SearchController
-SearchInputBoundary *-- SearchController
-SearchOutputData *-- SearchPresenter
-SearchViewModel *-- SearchPresenter
-SearchViewModel *-- SearchView
-SearchController *-- SearchView
+Pet *-- MatchDataAccessInterface
+Pet *-- MatchUseCaseInteractor
+MatchDataAccessInterface *-- MatchUseCaseInteractor
+MatchOutputBoundary *-- MatchUseCaseInteractor
+MatchOutputData *-- MatchUseCaseInteractor
+MatchInputData *-- MatchUseCaseInteractor
+MatchInputData *-- MatchController
+MatchInputBoundary *-- MatchController
+MatchOutputData *-- MatchPresenter
+MatchViewModel *-- MatchPresenter
+MatchViewModel *-- MatchView
+MatchController *-- MatchView
 ViewManagerModel *-- ViewManager
-SearchState *-- SearchViewModel
+MatchState *-- MatchViewModel
 
 
 @enduml

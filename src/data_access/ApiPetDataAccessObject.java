@@ -127,8 +127,8 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
                         pet.getEnvironment(), pet.getDescription(), pet.getAdoptable(), pet.getContact(),
                         pet.getGender(), pet.getSize());
                 /** how would Integer and Map format
-                + change getter if that changes (attributes and environments)
-                **/
+                 + change getter if that changes (attributes and environments)
+                 **/
                 writer.write(line);
                 writer.newLine();
             }
@@ -165,7 +165,7 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     @Override
     public List<Integer> getIDs() {
         return new ArrayList<Integer>(profiles.keySet());
-        }
+    }
 
     @Override
     public List<Pet> getPets() {
