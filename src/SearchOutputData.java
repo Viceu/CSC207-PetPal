@@ -1,15 +1,19 @@
+import entities.Pet;
+
+import java.util.Map;
+
 public class SearchOutputData {
 
-    private String requirements = "";
+    private final Map<Integer, Pet> results;
 
     private boolean searchFail;
 
-    public SearchOutputData(String requirements, boolean searchFail) {
-        this.requirements = requirements;
+    public SearchOutputData(Map<Integer, Pet> results, boolean searchFail) {
+        this.results = results;
         this.searchFail = searchFail;
     }
 
-    public String getRequirements() {
-        return requirements;
+    public Map<Integer, Pet> getResults() {
+        return results;
     }
 }
