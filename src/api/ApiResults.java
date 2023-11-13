@@ -12,13 +12,14 @@ import java.util.*;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static org.apache.oltu.oauth2.common.OAuth.ContentType.JSON;
 
 public class ApiResults {
-    private static final String API_TOKEN;
 
     public static List<String> getAnimals(HashMap<String, String> params) throws JSONException {
 
         // first get live API access token
+        String API_TOKEN;
         try {
             API_TOKEN = GetToken.accessToken();
         } catch (OAuthSystemException | OAuthProblemException e) {
@@ -87,6 +88,10 @@ public class ApiResults {
         exParam.put("type", "dog");
         exParam.put("name", "Serenity");
         List<String> exResults = getAnimals(exParam);
-        System.out.println(exResults);
+
+        JSONObject petJson = new JSONObject(exResults.get(1));
+
+        String petID = String.valueOf(petJson.get("id"));
+        System.out.println(petID);
     }
 }

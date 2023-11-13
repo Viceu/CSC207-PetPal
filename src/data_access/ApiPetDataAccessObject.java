@@ -1,24 +1,33 @@
 package data_access;
 
-import entity.Pet;
-import entity.PetFactory;
-import use_case.SearchPetDataAccessInterface;
+import entities.Pet;
+import entities.PetFactory;
+import api.ApiResults;
 
 import java.io.*;
 import java.util.*;
 
+import org.json.JSONObject;
+
 public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
+    private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
     private final Map<Integer, Pet> profiles = new HashMap<>();
 
     private PetFactory petFactory;
 
-    public ApiPetDataAccessObject(HashMap<String, String> params, PetFactory petFactory) throws IOException {
+    public ApiPetDataAccessObject(HashMap<String, String> params, String csvPath, PetFactory petFactory) throws IOException {
+        this.petFactory = petFactory;
+
+        csvFile = new File(csvPath);
+        headers.put("username", 0);
+        headers.put("password", 1);
+        headers.put("creation_time", 2);
+
 
         List<Pet> listPets = new ArrayList<Pet>();
-        this.petFactory = petFactory;
 
         String jsonString;
         JSONObject jsonObject;
@@ -28,82 +37,80 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
         for (String petInfo:apiResults) {
 
-            // Construct a JSONObject using above string
+            // Construct a JSONObject using above string for easier parsing
             JSONObject petJson = new JSONObject(petInfo);
 
-            myObj = JSON.parse(petJson);
-            animals = myObj.animals[0];
-            // animals is a JSONObject
+            // store all needed data points for construction a Pet object
+            Integer petID = Integer.valueOf(String.valueOf(petJson.get("id")));
+            String organizationID = String.valueOf(petJson.get("organization_id"));
+            String profileURL = String.valueOf(petJson.get("url"));
+            String species = String.valueOf(petJson.get("species"));
+            String age = String.valueOf(petJson.get("age"));
+            String gender = String.valueOf(petJson.get("gender"));
+            String size = String.valueOf(petJson.get("size"));
+            String name = String.valueOf(petJson.get("name"));
+            String description = String.valueOf(petJson.get("description"));
+            String status = String.valueOf(petJson.get("status"));
+            Boolean adoptable = status.equals("adoptable");
 
-            Integer petID = animals.id;
-            String organizationID = animals.organization_id;
-            String profileURL = animals.url;
-            String species = animals.species;
-            JSONObject breedsRow = animals.breeds;
-            Map<String, String> breeds;
-            for (int i = 0; i < breedsRow.length(); i++) {
-                breeds.put(breedsRow.getString(i))
-
+            Map<String, String> breed = toMapSS(petJson, "breeds");
+            Map<String, String> colorsMap = toMapSS(petJson, "colors");
+            List<String> colors = new ArrayList<>(colorsMap.values());
+            Map<String, String> coatMap = toMapSS(petJson, "coat");
+            List<String> coat = new ArrayList<>(coatMap.values());
+            Map<String, String> attributesSS = toMapSS(petJson, "attributes");
+            Map<String, Boolean> attributes = new HashMap<>();
+            for (String key: attributesSS.keySet()) {
+                String value = attributesSS.get(key);
+                if(value.equals("false")) {
+                    attributes.put(key, Boolean.FALSE);
+                }
+                else if(value.equals("true")) {
+                    attributes.put(key, Boolean.TRUE);
+                }
+                else{
+                    attributes.put(key, null);
+                }
             }
-            /**
-             * https://www.geeksforgeeks.org/how-to-convert-json-array-to-string-array-in-java/
-             * https://www.w3schools.com/js/js_json_arrays.asp
-             * https://stackoverflow.com/questions/42726232/how-convert-jsonobject-to-arraylist
-             */
-
-
-            String colors = animals.colors;
-            // make List<String>
-            String age = animals.age;
-            String gender = animals.gender;
-            String size = animals.size;
-            String coat = animals.coat;
-            // make List<String>
-            String attributes = animals.attributes;
-            // make Map<String, Boolean>
-            String environment = animals.environment;
-            // Map<String, Boolean>
-            String name = animals.name;
-            String description = animals.description;
-            String adoptable = animals.status;
-            // Boolean
-            String contact = animals.contact;
-            // Map<String, String>
-            Pet pet = petFactory.create(Integer petID, String organizationID, String profileURL, String name, List < String > colors,
-                    Map < String, String > breed, String species, List < String > coat, String age, Map < String,
-                    Boolean > attributes, Map < String, Boolean > environment, String description, Boolean adoptable,
-                    Map < String, String > contact, String gender, String size);
-
-            profiles.put(username, user);
-
-
-            // 3: Fetching JSON Array test from JSON Object
-            JSONArray docs
-                    = jsonObject.getJSONArray("animals");
-
-            List<String> exampleList = new ArrayList<String>();
-
-            for (int i = 0; i < exampleArray.length; i++) {
-                exampleList.add(exampleArray.getString(i));
+            Map<String, String> environmentSS = toMapSS(petJson, "environment");
+            Map<String, Boolean> environment = new HashMap<>();
+            for (String key: environmentSS.keySet()) {
+                String value = environmentSS.get(key);
+                if(value.equals("false")) {
+                    environment.put(key, Boolean.FALSE);
+                }
+                else if(value.equals("true")) {
+                    environment.put(key, Boolean.TRUE);
+                }
+                else{
+                    environment.put(key, null);
+                }
             }
+            Map<String, String> contact = toMapSS(petJson, "contact");
 
-            if (exampleList.length() == 0) {
-                save();
-            } else {
-                TODO//
-            }
+            Pet pet = petFactory.create(petID, organizationID, profileURL, name, colors,
+                    breed, species, coat, age, attributes, environment, description, adoptable,
+                    contact, gender, size);
+
+            profiles.put(petID, pet);
         }
+    }
+
+    // helper function to transform certain pet data points to Map<String, String>
+    public Map<String, String> toMapSS(JSONObject petJson, String param){
+        JSONObject row = (JSONObject) petJson.get(param); // changed from List<String> to Map<String, Object>
+        Map<String, Object> mapSO = row.toMap();
+        Map<String, String> mapSS = new HashMap<String, String>();
+        for (String key: mapSO.keySet()) {
+            mapSS.put(key, (String) mapSO.get(key));
+        }
+        return mapSS;
     }
 
     @Override
     public void save(Pet pet) {
-        profiles.put(pet.getName(), pet);
+        profiles.put(pet.getPetID(), pet);
         this.save();
-    }
-
-    @Override
-    public Pet get(Integer id) {
-        return profiles.get(id);
     }
 
     private void save() {
@@ -114,7 +121,7 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             writer.newLine();
 
             for (Pet pet : profiles.values()) {
-                String line = String.format("%s,%s,%s",
+                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         pet.getPetID(), pet.getOrganizationID(), pet.getURL(), pet.getName(), pet.getColors(),
                         pet.getBreed(), pet.getSpecies(), pet.getCoat(), pet.getAge(), pet.getAttributes(),
                         pet.getEnvironment(), pet.getDescription(), pet.getAdoptable(), pet.getContact(),
@@ -139,6 +146,17 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     }
 
     @Override
+    public Pet getPet(Integer id) {
+        assert existsByName(id);
+        return profiles.get(id);
+    }
+
+    @Override
+    public void accessApi() {
+
+    }
+
+    @Override
     public void deleteAll() {
         profiles.clear();
         this.save();
@@ -151,7 +169,7 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
     @Override
     public List<Pet> getPets() {
-        return profiles
+        return (List<Pet>) profiles.values();
     }
 
 }
