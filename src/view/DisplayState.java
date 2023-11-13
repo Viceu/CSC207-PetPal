@@ -11,7 +11,7 @@ public class DisplayState {
     private String failMessage = null;
     private Map<Integer, Pet> pets;
 
-    public Map<String, Pet> getPets() {
+    public Map<Integer, Pet> getPets() {
         return pets;
     }
 

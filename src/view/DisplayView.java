@@ -29,7 +29,7 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
 
         ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
 
-        for (Map.Entry<String, Pet> entry: displayViewModel.getState().getPets().entrySet()) {
+        for (Map.Entry<Integer, Pet> entry: displayViewModel.getState().getPets().entrySet()) {
             LabelButtonPanel newButton = new LabelButtonPanel(
                     new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
             buttons.add(newButton);
