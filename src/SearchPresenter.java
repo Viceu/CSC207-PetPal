@@ -20,7 +20,7 @@ public class SearchPresenter {
         // on success, switch to the result-displaying view
 
         DisplayState resultState = resultViewModel.getState();
-        resultState.setRequirements(result.getRequirements());
+        resultState.setResults(result.getResults());
         this.resultViewModel.setState(resultState);
         resultViewModel.firePropertyChanged();
 

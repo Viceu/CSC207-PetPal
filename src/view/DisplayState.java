@@ -24,6 +24,6 @@ public class DisplayState {
     public Object getRequirementsError() {
         return failMessage;
     }
-    public void setRequirements(Map<Integer, Pet> requirements) {
+    public void setResults(Map<Integer, Pet> results) {
     }
 }
