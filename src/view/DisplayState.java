@@ -5,18 +5,20 @@ import entities.Pet;
 import java.util.HashMap;
 import java.util.*;
 import javax.swing.*;
+import entities.Pet;
 
 public class DisplayState {
     private String failMessage = null;
-    private HashMap<String, String> requirements = new HashMap<String, String>();
+    private HashMap<String, Pet> pets = new HashMap<String, Pet>();
 
-    public Map<String, String> getRequirements() {
-        return requirements;
+    public Map<String, Pet> getPets() {
+        return pets;
     }
 
-    public void addRequirement(String req, String input) {
-        requirements.put(req, input);
+    public void setRequirements(HashMap<String, Pet> petAttributes) {
+        pets = petAttributes;
     }
+
     public void setSearchFailMessage(String errorMessage) {
         failMessage = errorMessage;
     }
@@ -24,6 +26,7 @@ public class DisplayState {
     public Object getRequirementsError() {
         return failMessage;
     }
+  
     public void setResults(Map<Integer, Pet> results) {
     }
 }
