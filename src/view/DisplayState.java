@@ -9,14 +9,10 @@ import entities.Pet;
 
 public class DisplayState {
     private String failMessage = null;
-    private HashMap<String, Pet> pets = new HashMap<String, Pet>();
+    private Map<Integer, Pet> pets;
 
-    public Map<String, Pet> getPets() {
+    public Map<Integer, Pet> getPets() {
         return pets;
-    }
-
-    public void setRequirements(HashMap<String, Pet> petAttributes) {
-        pets = petAttributes;
     }
 
     public void setSearchFailMessage(String errorMessage) {
@@ -28,5 +24,6 @@ public class DisplayState {
     }
   
     public void setResults(Map<Integer, Pet> results) {
+        this.pets = results;
     }
 }
