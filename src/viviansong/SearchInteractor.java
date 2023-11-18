@@ -1,14 +1,16 @@
 package viviansong;
 
+import data_access.ApiPetDataAccessObject;
+import data_access.SearchPetDataAccessInterface;
 import entities.Pet;
 
 import java.util.*;
 
 public class SearchInteractor implements SearchInputBoundary {
-    final SearchUserDataAccessInterface userDataAccessObject;
+    final SearchPetDataAccessInterface userDataAccessObject;
     final SearchOutputBoundary searchPresenter;
 
-    public SearchInteractor(SearchUserDataAccessInterface userDataAccessInterface,
+    public SearchInteractor(SearchPetDataAccessInterface userDataAccessInterface,
                             SearchOutputBoundary searchOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.searchPresenter = searchOutputBoundary;
@@ -19,56 +21,53 @@ public class SearchInteractor implements SearchInputBoundary {
         Map<String, String> requirements = searchInputData.getRequirements();
 
         // getting pet objects
-        List<Pet> masterPetList = new ArrayList<>(userDataAccessObject.getPets);
-        Map<Integer, Pet> displaypetList;
+        List<Pet> masterPetList = new ArrayList<>(userDataAccessObject.getPets());
+        Map<Integer, Pet> displayPetMap = new HashMap<>();
         for (Pet pet : masterPetList) {
             if (!pet.getAdoptable()) {
                 continue;
             } else if (masterPetList.contains(pet)) {
                 continue;
             }
-            for (String req : requirements) {
-                if (pet.req != req.getValue) {
+            for (Map.Entry<String, String> req : requirements.entrySet()) {
+                if ((req.equals("name")) && !(pet.getName().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("colors")) && !(pet.getColors().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("breed")) && !(pet.getBreed().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("species")) && !(pet.getSpecies().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("coat")) && !(pet.getCoat().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("age")) && !(pet.getAge().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("attributes")) && !(pet.getAttributes().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("environment")) && !(pet.getEnvironment().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("description")) && !(pet.getDescription().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("contact")) && !(pet.getContact().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("gender")) && !(pet.getGender().equals(req.getValue()))) {
+                    masterPetList.remove(pet);
+                } else if ((req.equals("size")) && !(pet.getSize().equals(req.getValue()))) {
                     masterPetList.remove(pet);
                 }
             }
         }
-
-        // getting ids
+        // putting pet and id in hashmap
+        for (Pet pet1 : masterPetList) {
+            displayPetMap.put(pet1.getPetID(), pet1);
+        }
 
         if (masterPetList.isEmpty()) {
             searchPresenter.prepareFailView("No search results.");
         } else {
-            SearchOutputData searchOutputData = new SearchOutputData(..., true);
+            SearchOutputData searchOutputData = new SearchOutputData(displayPetMap, true);
             searchPresenter.prepareSuccessView(searchOutputData);
         }
-
-
-        /* PSEUDO-CODE:
-        List<Pet> masterPetList = userDataAccessObject.getPets.copy();
-        Map<Integer, Pet> displayPetList;
-        for pet in masterPetList:
-            if !pet.getAdoptable():
-                pass;
-            if pet in masterPetList.values():
-                pass;
-            for req in requirements:
-                if pet.req != req.value:
-                    masterPetList.remove(pet);
-        if masterPetList.empty():
-            searchPresenter.prepareFailView("No search results");
-        else:
-            # NOTE - create User entity?
-            User user = userDataAccessObject.get(searchInputData.getUsername());
-            SearchOutputData searchOutputData = new SearchOutputData()
-            searchPresenter.prepareSuccessView(searchOutputData);
-
-            # --- From CACoding:
-            LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
-            loginPresenter.prepareSuccessView(loginOutputData);
-        * */
-
     }
-
-
 }
+
