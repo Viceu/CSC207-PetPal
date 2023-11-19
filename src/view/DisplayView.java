@@ -31,10 +31,15 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
 
         ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
 
-        for (Map.Entry<Integer, Pet> entry: displayViewModel.getState().getPets().entrySet()) {
-            LabelButtonPanel newButton = new LabelButtonPanel(
-                    new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
-            buttons.add(newButton);
+        if (displayViewModel.getState().getPets() != null) {
+            for (Map.Entry<Integer, Pet> entry : displayViewModel.getState().getPets().entrySet()) {
+                LabelButtonPanel newButton = new LabelButtonPanel(
+                        new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
+                buttons.add(newButton);
+            }
+        }
+        else {
+            buttons = null;
         }
 
         for (LabelButtonPanel button: buttons) {
@@ -77,8 +82,13 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        for (LabelButtonPanel someButton: buttons) {
-            this.add(someButton);
+        if (buttons != null) {
+            for (LabelButtonPanel someButton : buttons) {
+                this.add(someButton);
+            }
+        }
+        else {
+            this.add(new JLabel("No results found for this search, please change your search."));
         }
     }
 
