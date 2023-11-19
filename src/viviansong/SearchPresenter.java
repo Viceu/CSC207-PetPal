@@ -1,3 +1,5 @@
+package viviansong;
+
 import view.*;
 
 public class SearchPresenter {
