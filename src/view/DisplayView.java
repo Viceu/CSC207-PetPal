@@ -6,7 +6,9 @@ import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 
 import entities.Pet;
-import viviansong.*;
+import interface_adaptor.display.DisplayViewModel;
+import interface_adaptor.display.DisplayState;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                                 for (Map.Entry<String, Boolean> attributes: thisPet.getAttributes().entrySet()) {
                                     if (attributes.getValue()) {
                                         String key = attributes.getKey();
-                                        message += key + ": " + Pet.getThoseAttributes().get(key) + "\n";
+                                        message += key + ": " + thisPet.getAll().get(key) + "\n";
                                     }
                                 }
 

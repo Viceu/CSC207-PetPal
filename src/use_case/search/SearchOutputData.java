@@ -1,3 +1,5 @@
+package use_case.search;
+
 import entities.Pet;
 
 import java.util.Map;

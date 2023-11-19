@@ -1,4 +1,4 @@
-package view;
+package interface_adaptor.search;
 
 import javax.swing.*;
 import java.util.*;
