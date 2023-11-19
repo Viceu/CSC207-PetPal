@@ -1,4 +1,7 @@
-package viviansong;
+package interface_adaptor.search;
+
+import use_case.search.SearchInputBoundary;
+import use_case.search.SearchInputData;
 
 import java.util.Map;
 

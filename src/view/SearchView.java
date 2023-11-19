@@ -1,6 +1,9 @@
 package view;
 
-import viviansong.*;
+import interface_adaptor.search.SearchController;
+import interface_adaptor.search.SearchState;
+import interface_adaptor.search.SearchViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

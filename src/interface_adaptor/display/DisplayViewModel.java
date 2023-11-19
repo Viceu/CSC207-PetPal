@@ -1,4 +1,7 @@
-package view;
+package interface_adaptor.display;
+
+import interface_adaptor.ViewModel;
+import view.DisplayView;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

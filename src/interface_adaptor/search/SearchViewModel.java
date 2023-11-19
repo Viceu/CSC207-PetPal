@@ -1,4 +1,7 @@
-package view;
+package interface_adaptor.search;
+
+import interface_adaptor.ViewModel;
+import view.SearchView;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -1,4 +1,4 @@
-package viviansong;
+package use_case.search;
 
 import java.util.HashMap;
 import java.util.List;
