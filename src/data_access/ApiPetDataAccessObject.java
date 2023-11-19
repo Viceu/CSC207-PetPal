@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.*;
 
 import org.json.JSONObject;
+import use_case.search.SearchPetDataAccessInterface;
 
 public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 

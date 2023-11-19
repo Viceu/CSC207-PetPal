@@ -6,7 +6,9 @@ import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 
 import entities.Pet;
-import viviansong.*;
+import interface_adaptor.display.DisplayViewModel;
+import interface_adaptor.display.DisplayState;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Map;

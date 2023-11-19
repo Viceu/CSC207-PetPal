@@ -1,7 +1,6 @@
-package viviansong;
+package use_case.search;
 
 import data_access.ApiPetDataAccessObject;
-import data_access.SearchPetDataAccessInterface;
 import entities.Pet;
 
 import java.util.*;
@@ -19,6 +18,8 @@ public class SearchInteractor implements SearchInputBoundary {
     @Override
     public void execute(SearchInputData searchInputData) {
         Map<String, String> requirements = searchInputData.getRequirements();
+
+
 
         // getting pet objects
         List<Pet> masterPetList = new ArrayList<>(userDataAccessObject.getPets());
@@ -70,4 +71,3 @@ public class SearchInteractor implements SearchInputBoundary {
         }
     }
 }
-

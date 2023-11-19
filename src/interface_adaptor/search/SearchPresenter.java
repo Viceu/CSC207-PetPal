@@ -1,14 +1,18 @@
-package viviansong;
+package interface_adaptor.search;
 
-import view.*;
+import interface_adaptor.ViewManagerModel;
+import interface_adaptor.display.DisplayViewModel;
+import interface_adaptor.display.DisplayState;
+import use_case.search.SearchOutputBoundary;
+import use_case.search.SearchOutputData;
 
-public class SearchPresenter {
+public class SearchPresenter implements SearchOutputBoundary {
 
     private final SearchViewModel searchViewModel;
 
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
-    private DisplayViewModel resultViewModel;
+    private final DisplayViewModel resultViewModel;
 
     public SearchPresenter(SearchViewModel searchViewModel,
                            ViewManagerModel viewManagerModel,
@@ -18,6 +22,7 @@ public class SearchPresenter {
         this.resultViewModel = resultViewModel;
     }
 
+    @Override
     public void prepareSuccessView(SearchOutputData result){
         // on success, switch to the result-displaying view
 
@@ -30,6 +35,7 @@ public class SearchPresenter {
         viewManagerModel.firePropertyChanged();
     }
 
+    @Override
     public void prepareFailView(String failmessage) {
         SearchState searchState = searchViewModel.getState();
         searchState.setSearchFailMessage(failmessage);
