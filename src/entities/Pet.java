@@ -3,53 +3,37 @@ package entities;
 import java.util.List;
 import java.util.Map;
 
-public class Pet {
-    private Integer petID;
-    private String organizationID;
-    private String URL;
-    private String name;
-    private List<String> colors;
-    private Map<String, String> breed;
-    private String species;
-    private List<String> coat;
-    private String age;
-    private Map<String, Boolean> attributes;
-    private Map<String, Boolean> environment;
-    private String description;
-    private Boolean adoptable;
-    private Map<String, String> contact;
-    private String gender;
-    private String size;
+public interface Pet {
 
-    public Integer getPetID(){ return petID; }
+    Integer getPetID();
 
-    public String getOrganizationID(){ return organizationID; }
+    String getOrganizationID();
 
-    public String getURL(){ return URL; }
+    String getURL();
 
-    public String getName(){ return name; }
+    String getName();
 
-    public List<String> getColors(){ return colors; }
+    List<String> getColors();
 
-    public Map<String, String> getBreed() {return breed;}
+    Map<String, String> getBreed();
 
-    public String getSpecies(){ return species; }
+    String getSpecies();
 
-    public List<String> getCoat(){ return coat; }
+    List<String> getCoat();
 
-    public String getAge() { return age; }
+    String getAge();
 
-    public Map<String, Boolean> getAttributes(){ return attributes; }
+    Map<String, Boolean> getAttributes();
 
-    public Map<String, Boolean> getEnvironment(){ return environment; }
+    Map<String, Boolean> getEnvironment();
 
-    public String getDescription() {return description;}
+    String getDescription();
 
-    public Boolean getAdoptable() {return adoptable;}
+    Boolean getAdoptable();
 
-    public Map<String, String> getContact() {return contact;}
+    Map<String, String> getContact();
 
-    public String getGender() {return gender;}
+    String getGender();
 
-    public String getSize() {return size;}
+    String getSize();
 }
