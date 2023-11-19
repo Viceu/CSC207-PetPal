@@ -36,4 +36,6 @@ public interface Pet {
     String getGender();
 
     String getSize();
+
+    Map<String, String> getAll();
 }
