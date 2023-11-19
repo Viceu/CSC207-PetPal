@@ -29,14 +29,16 @@ public class ApiResults {
         // build URL that searches for animals with inputted requirements
         StringBuilder paramURL = new StringBuilder("https://api.petfinder.com/v2/animals?");
 
-        // take first requirement and add manually
-        HashMap.Entry<String,String> firstEntry = params.entrySet().iterator().next();
-        String firstKey = firstEntry.getKey();
-        paramURL.append(firstKey).append("=").append(firstEntry.getValue());
-        // rest of the requirements need a "&" before inserting to URL
-        for (String param : params.keySet()) {
-            if(!param.equals(firstKey)) {
-                paramURL.append("&").append(param).append("=").append(params.get(param));
+        if(!params.isEmpty()) {
+            // take first requirement and add manually
+            HashMap.Entry<String, String> firstEntry = params.entrySet().iterator().next();
+            String firstKey = firstEntry.getKey();
+            paramURL.append(firstKey).append("=").append(firstEntry.getValue());
+            // rest of the requirements need a "&" before inserting to URL
+            for (String param : params.keySet()) {
+                if (!param.equals(firstKey)) {
+                    paramURL.append("&").append(param).append("=").append(params.get(param));
+                }
             }
         }
 
@@ -64,7 +66,7 @@ public class ApiResults {
             // if there are results (there exists animals that match requirements)
             // keep first 5 results for use (present to user)
             // or keep all results if total results less than 5
-            if(!animalArray.isEmpty()) {
+            if (!animalArray.isEmpty()) {
                 for (int i = 0; i < min(animalArray.length(), 5); i++) {
                     animalList.add(String.valueOf(animalArray.getJSONObject(i)));
                 }

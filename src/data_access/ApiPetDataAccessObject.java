@@ -99,11 +99,18 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
     // helper function to transform certain pet data points to Map<String, String>
     public Map<String, String> toMapSS(JSONObject petJson, String param){
-        JSONObject row = (JSONObject) petJson.get(param); // changed from List<String> to Map<String, Object>
+        JSONObject row = new JSONObject(petJson.get(param)); // changed from List<String> to Map<String, Object>
         Map<String, Object> mapSO = row.toMap();
         Map<String, String> mapSS = new HashMap<String, String>();
         for (String key: mapSO.keySet()) {
-            mapSS.put(key, (String) mapSO.get(key));
+            String value = "False";
+            if (mapSO.get(key) == null) {
+                value = "null";
+            }
+            else {
+                value = mapSO.get(key).toString();
+            }
+            mapSS.put(key, value);
         }
         return mapSS;
     }
