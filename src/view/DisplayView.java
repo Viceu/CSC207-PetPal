@@ -48,7 +48,7 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                                 for (Map.Entry<String, Boolean> attributes: thisPet.getAttributes().entrySet()) {
                                     if (attributes.getValue()) {
                                         String key = attributes.getKey();
-                                        message += key + ": " + thisPet.getAll().get(key) + "\n";
+                                        message += key + thisPet.getAll().get(key) + "\n";
                                     }
                                 }
 
