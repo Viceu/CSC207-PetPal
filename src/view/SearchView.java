@@ -19,15 +19,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField colorField = new JTextField(15);
     private final JTextField cityField = new JTextField(15);
     private final JTextField stateField = new JTextField(15);
-    private final JComboBox<String> ageField = new JComboBox<String>(new String[] {"baby", "young", "adult", "senior"});
-    private final JComboBox<String> sexField = new JComboBox<String>(new String[] {"male", "female", "unknown"});
-    private final JComboBox<String> sizeField = new JComboBox<String>(new String[] {"small", "medium", "large", "xlarge"});
-    private final JComboBox<String> coatField = new JComboBox<String>(new String[] {"short", "medium", "long", "wire", "hairless", "curly"});
-    private final JComboBox<Boolean> houseTrainedField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> declawedField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> goodWithKidsField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> goodWithDogsField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> goodWithCatsField = new JComboBox<Boolean>(new Boolean[] {true, false});
+    private final JComboBox<String> ageField = new JComboBox<String>(new String[] {"choose", "baby", "young", "adult", "senior"});
+    private final JComboBox<String> sexField = new JComboBox<String>(new String[] {"choose", "male", "female", "unknown"});
+    private final JComboBox<String> sizeField = new JComboBox<String>(new String[] {"choose", "small", "medium", "large", "xlarge"});
+    private final JComboBox<String> coatField = new JComboBox<String>(new String[] {"choose", "short", "medium", "long", "wire", "hairless", "curly"});
+    private final JComboBox<String> houseTrainedField = new JComboBox<String>(new String[] {"choose", "yes"});
+    private final JComboBox<String> declawedField = new JComboBox<String>(new String[] {"choose", "yes"});
+    private final JComboBox<String> goodWithKidsField = new JComboBox<String>(new String[] {"choose", "yes"});
+    private final JComboBox<String> goodWithDogsField = new JComboBox<String>(new String[] {"choose", "yes"});
+    private final JComboBox<String> goodWithCatsField = new JComboBox<String>(new String[] {"choose", "yes"});
     private final SearchController searchController;
 
     private final JButton search;
