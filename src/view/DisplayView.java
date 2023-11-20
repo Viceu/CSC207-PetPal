@@ -37,46 +37,49 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                         new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
                 buttons.add(newButton);
             }
+
+            for (LabelButtonPanel button : buttons) {
+                button.addMouseListener(
+                        new MouseListener() {
+                            public void mouseClicked(MouseEvent evt) {
+                                if (evt.getSource().equals(seeMore)) {
+
+                                    Pet thisPet = button.getPet();
+
+                                    String message = "";
+
+                                    for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
+                                        if (attributes.getValue()) {
+                                            String key = attributes.getKey();
+                                            message += key + thisPet.getAll().get(key) + "\n";
+                                        }
+                                    }
+
+                                    JOptionPane.showMessageDialog(null, message);
+                                }
+                            }
+
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                            }
+                        }
+                );
+            }
         }
         else {
             buttons = null;
-        }
-
-        for (LabelButtonPanel button: buttons) {
-            button.addMouseListener(
-                    new MouseListener() {
-                        public void mouseClicked(MouseEvent evt) {
-                            if (evt.getSource().equals(seeMore)) {
-
-                                Pet thisPet = button.getPet();
-
-                                String message = "";
-
-                                for (Map.Entry<String, Boolean> attributes: thisPet.getAttributes().entrySet()) {
-                                    if (attributes.getValue()) {
-                                        String key = attributes.getKey();
-                                        message += key + thisPet.getAll().get(key) + "\n";
-                                    }
-                                }
-
-                                JOptionPane.showMessageDialog(null, message);
-                            }
-                        }
-
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                        }
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                        }
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-                        }
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-                        }
-                    }
-            );
         }
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

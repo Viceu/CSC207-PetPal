@@ -103,7 +103,7 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
         Map<String, Object> mapSO = row.toMap();
         Map<String, String> mapSS = new HashMap<String, String>();
         for (String key: mapSO.keySet()) {
-            String value = "False";
+            String value = "";
             if (mapSO.get(key) == null) {
                 value = "null";
             }
