@@ -2,6 +2,7 @@ package app;
 
 import data_access.ApiPetDataAccessObject;
 import entities.CommonPetFactory;
+import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.DisplayViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
@@ -39,6 +40,7 @@ public class Main {
         // be observed by the Views.
         SearchViewModel searchViewModel = new SearchViewModel();
         DisplayViewModel displayViewModel = new DisplayViewModel();
+        AdoptUserPreviewViewModel adoptUserPreviewViewModel = new AdoptUserPreviewViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject;
         try {
@@ -51,7 +53,7 @@ public class Main {
                 apiPetDataAccessObject);
         views.add(searchView, searchView.viewName);
 
-        DisplayView displayView = new DisplayView(displayViewModel);
+        DisplayView displayView = DisplayUseCaseFactory.create(viewManagerModel, displayViewModel, adoptUserPreviewViewModel);
         views.add(displayView, displayView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
