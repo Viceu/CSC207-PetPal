@@ -45,7 +45,7 @@ public class SearchUseCaseFactory {
         PetFactory petFactory = new CommonPetFactory();
 
         SearchInputBoundary searchInteractor = new SearchInteractor(
-                petDataAccessObject, searchOutputBoundary);
+                petDataAccessObject, searchOutputBoundary, petFactory);
 
         return new SearchController(searchInteractor);
     }
