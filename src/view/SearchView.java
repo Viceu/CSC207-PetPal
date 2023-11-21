@@ -19,15 +19,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField colorField = new JTextField(15);
     private final JTextField cityField = new JTextField(15);
     private final JTextField stateField = new JTextField(15);
-    private final JComboBox<String> ageField = new JComboBox<String>(new String[] {"baby", "young", "adult", "senior"});
-    private final JComboBox<String> sexField = new JComboBox<String>(new String[] {"male", "female", "unknown"});
-    private final JComboBox<String> sizeField = new JComboBox<String>(new String[] {"small", "medium", "large", "xlarge"});
-    private final JComboBox<String> coatField = new JComboBox<String>(new String[] {"short", "medium", "long", "wire", "hairless", "curly"});
-    private final JComboBox<Boolean> houseTrainedField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> declawedField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> goodWithKidsField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> goodWithDogsField = new JComboBox<Boolean>(new Boolean[] {true, false});
-    private final JComboBox<Boolean> goodWithCatsField = new JComboBox<Boolean>(new Boolean[] {true, false});
+    private final JComboBox<String> ageField = new JComboBox<String>(new String[] {"Choose", "Baby", "Young", "Adult", "Senior"});
+    private final JComboBox<String> sexField = new JComboBox<String>(new String[] {"Choose", "Male", "Female", "Unknown"});
+    private final JComboBox<String> sizeField = new JComboBox<String>(new String[] {"Choose", "Small", "Medium", "Large", "Xlarge"});
+    private final JComboBox<String> coatField = new JComboBox<String>(new String[] {"Choose", "Short", "Medium", "Long", "Wire", "Hairless", "Curly"});
+    private final JComboBox<String> houseTrainedField = new JComboBox<String>(new String[] {"Choose", "true", "false"});
+    private final JComboBox<String> declawedField = new JComboBox<String>(new String[] {"Choose", "true", "false"});
+    private final JComboBox<String> goodWithKidsField = new JComboBox<String>(new String[] {"Choose", "true", "false"});
+    private final JComboBox<String> goodWithDogsField = new JComboBox<String>(new String[] {"Choose", "true", "false"});
+    private final JComboBox<String> goodWithCatsField = new JComboBox<String>(new String[] {"Choose", "true", "false"});
     private final SearchController searchController;
 
     private final JButton search;
@@ -113,7 +113,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SearchState currentState = searchViewModel.getState();
-                        String text = speciesField.getText() + e.getKeyChar();
+                        String text = breedsField.getText() + e.getKeyChar();
                         currentState.addRequirement(SearchViewModel.BREED_LABEL, text);
                         searchViewModel.setState(currentState);
                     }
@@ -152,7 +152,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SearchState currentState = searchViewModel.getState();
-                        String text = colorField.getText() + e.getKeyChar();
+                        String text = cityField.getText() + e.getKeyChar();
                         currentState.addRequirement(SearchViewModel.CITY_LABEL, text);
                         searchViewModel.setState(currentState);
                     }
@@ -172,7 +172,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SearchState currentState = searchViewModel.getState();
-                        String text = colorField.getText() + e.getKeyChar();
+                        String text = stateField.getText() + e.getKeyChar();
                         currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
                         searchViewModel.setState(currentState);
                     }
@@ -194,7 +194,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = ageField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.AGE_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -208,7 +208,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = sexField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.SEX_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -222,7 +222,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = sizeField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.SIZE_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -236,7 +236,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = coatField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.COAT_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -250,7 +250,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = houseTrainedField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.HOUSE_TRAINED_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -264,7 +264,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = declawedField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.DECLAWED_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -278,7 +278,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = goodWithDogsField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.GOOD_WITH_DOGS_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -292,7 +292,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = goodWithCatsField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.GOOD_WITH_CATS_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -306,7 +306,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                             SearchState currentState = searchViewModel.getState();
                             String text = goodWithKidsField.getSelectedItem().toString();
-                            currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                            currentState.addRequirement(SearchViewModel.GOOD_WITH_KIDS_LABEL, text);
                             searchViewModel.setState(currentState);
                         }
                     }
@@ -324,6 +324,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(ageInfo);
         this.add(sexInfo);
         this.add(coatInfo);
+        this.add(sizeInfo);
         this.add(houseTrainedInfo);
         this.add(declawedInfo);
         this.add(goodWithCatsInfo);
