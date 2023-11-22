@@ -1,5 +1,8 @@
 package view;
 
+import interface_adaptor.home.HomeController;
+import interface_adaptor.home.HomeState;
+import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.search.SearchController;
 import interface_adaptor.search.SearchState;
 import interface_adaptor.search.SearchViewModel;
