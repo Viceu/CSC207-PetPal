@@ -10,7 +10,7 @@ class CommonPet implements Pet {
     private final String URL;
     private final String name;
     private final List<String> colors;
-    private final Map<String, String> breed;
+    private final Map<String, Object> breed;
     private final String species;
     private final String coat;
     private final String age;
@@ -23,7 +23,7 @@ class CommonPet implements Pet {
     private final String size;
 
     CommonPet(Integer petID, String organizationID, String URL, String name, List<String> colors,
-              Map<String, String> breed, String species, String coat, String age, Map<String,
+              Map<String, Object> breed, String species, String coat, String age, Map<String,
             Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
               Map<String, String> contact, String gender, String size)
     {
@@ -60,7 +60,7 @@ class CommonPet implements Pet {
     public List<String> getColors(){
         return colors;
     }
-    public Map<String, String> getBreed(){
+    public Map<String, Object> getBreed(){
         return breed;
     }
     public String getSpecies(){
