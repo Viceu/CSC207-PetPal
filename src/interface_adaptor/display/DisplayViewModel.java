@@ -13,13 +13,10 @@ public class DisplayViewModel extends ViewModel {
     private DisplayState state = new DisplayState();
 
     public DisplayViewModel() {
-        super("search");
+        super("display");
     }
     public DisplayState getState() {
         return state;
-    }
-
-    public void addPropertyChangeListener(DisplayView displayView) {
     }
 
     public void setState(DisplayState currentState) {
