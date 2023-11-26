@@ -56,29 +56,12 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             Boolean adoptable = status.equals("adoptable");
             String coat = String.valueOf(petJson.get("coat"));
 
+            Map<String, String> breed = toMapSS(petJson, "breeds");
             Map<String, String> colorsMap = toMapSS(petJson, "colors");
             List<String> colors = new ArrayList<>(colorsMap.values());
             Map<String, Boolean> attributes = toMapSB(petJson, "attributes");
             Map<String, Boolean> environment = toMapSB(petJson, "environment");
             Map<String, String> contact = toMapSS(petJson, "contact");
-
-            JSONObject BreedsRow = (JSONObject) petJson.get("breeds");
-            JSONArray keys = BreedsRow.names();
-            Map<String, Object> breed = new HashMap<>();
-            for (int i = 0; i < keys.length (); i++) {
-                String key = keys.getString (i);
-                if(BreedsRow.get(key)==JSONObject.NULL) {
-                    breed.put(key, null);
-                }
-                else if(BreedsRow.get(key) instanceof Boolean){
-                    Boolean value = (Boolean) BreedsRow.get(key);
-                    breed.put(key, value);
-                }
-                else {
-                    String value = (String) BreedsRow.get(key);
-                    breed.put(key, value);
-                }
-            }
 
             Pet pet = petFactory.create(petID, organizationID, profileURL, name, colors,
                     breed, species, coat, age, attributes, environment, description, adoptable,
