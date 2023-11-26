@@ -60,13 +60,23 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             List<String> colors = new ArrayList<>(colorsMap.values());
             Map<String, Boolean> attributes = toMapSB(petJson, "attributes");
             Map<String, Boolean> environment = toMapSB(petJson, "environment");
-            Map<String, String> contact = toMapSS(petJson, "contact");
+            JSONObject contactRow = (JSONObject) petJson.get("contact");
+            Map<String, String> contact = new HashMap<>();
+            for (int i = 0; i < 2; i++) {
+                String key = contactRow.names().getString (i);
+                if(contactRow.get(key)==JSONObject.NULL) {
+                    contact.put(key, null);
+                }
+                else {
+                    String value = (String) contactRow.get(key);
+                    contact.put(key, value);
+                }
+            }
 
             JSONObject BreedsRow = (JSONObject) petJson.get("breeds");
-            JSONArray keys = BreedsRow.names();
             Map<String, String> breed = new HashMap<>();
-            for (int i = 0; i < keys.length (); i++) {
-                String key = keys.getString (i);
+            for (int i = 0; i < BreedsRow.names().length (); i++) {
+                String key = BreedsRow.names().getString (i);
                 if(BreedsRow.get(key)==JSONObject.NULL) {
                     breed.put(key, null);
                 }
