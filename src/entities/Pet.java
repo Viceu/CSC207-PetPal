@@ -15,7 +15,7 @@ public interface Pet {
 
     List<String> getColors();
 
-    Map<String, String> getBreed();
+    Map<String, Object> getBreed();
 
     String getSpecies();
 
