@@ -67,7 +67,7 @@ public class ApiResults {
             // keep first 5 results for use (present to user)
             // or keep all results if total results less than 5
             if (!animalArray.isEmpty()) {
-                for (int i = 0; i < min(animalArray.length(), 5); i++) {
+                for (int i = 0; i < min(animalArray.length(), 100); i++) {
                     animalList.add(String.valueOf(animalArray.getJSONObject(i)));
                 }
             }
