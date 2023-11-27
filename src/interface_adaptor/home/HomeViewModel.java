@@ -9,6 +9,7 @@ import java.beans.PropertyChangeSupport;
 public class HomeViewModel extends ViewModel {
 
     public static final String TITLE_LABEL = "Home View";
+    public static final String EDIT_BUTTON_LABEL = "Edit Profile";
 
     private HomeState state = new HomeState();
 
