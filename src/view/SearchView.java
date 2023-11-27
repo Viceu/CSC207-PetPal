@@ -17,8 +17,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField speciesField = new JTextField(15);
     private final JTextField breedsField = new JTextField(15);
     private final JTextField colorField = new JTextField(15);
-    private final JTextField cityField = new JTextField(15);
-    private final JTextField stateField = new JTextField(15);
+    private final JTextField phoneField = new JTextField(15);
+    private final JTextField emailField = new JTextField(15);
     private final JComboBox<String> ageField = new JComboBox<String>(new String[] {"Choose", "Baby", "Young", "Adult", "Senior"});
     private final JComboBox<String> sexField = new JComboBox<String>(new String[] {"Choose", "Male", "Female", "Unknown"});
     private final JComboBox<String> sizeField = new JComboBox<String>(new String[] {"Choose", "Small", "Medium", "Large", "Xlarge"});
@@ -48,10 +48,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(SearchViewModel.BREED_LABEL), breedsField);
         LabelTextPanel colorInfo = new LabelTextPanel(
                 new JLabel(SearchViewModel.COLOR_LABEL), colorField);
-        LabelTextPanel stateInfo = new LabelTextPanel(
-                new JLabel(SearchViewModel.STATE_LABEL), stateField);
-        LabelTextPanel cityInfo = new LabelTextPanel(
-                new JLabel(SearchViewModel.CITY_LABEL), cityField);
+        LabelTextPanel phoneInfo = new LabelTextPanel(
+                new JLabel(SearchViewModel.PHONE_LABEL), phoneField);
+        LabelTextPanel emailInfo = new LabelTextPanel(
+                new JLabel(SearchViewModel.EMAIL_LABEL), emailField);
         LabelDropdownPanel ageInfo = new LabelDropdownPanel(
                 new JLabel(SearchViewModel.AGE_LABEL), ageField);
         LabelDropdownPanel sexInfo = new LabelDropdownPanel(
@@ -147,13 +147,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        cityField.addKeyListener(
+        phoneField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SearchState currentState = searchViewModel.getState();
-                        String text = cityField.getText() + e.getKeyChar();
-                        currentState.addRequirement(SearchViewModel.CITY_LABEL, text);
+                        String text = phoneField.getText() + e.getKeyChar();
+                        currentState.addRequirement(SearchViewModel.PHONE_LABEL, text);
                         searchViewModel.setState(currentState);
                     }
 
@@ -167,13 +167,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        stateField.addKeyListener(
+        emailField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SearchState currentState = searchViewModel.getState();
-                        String text = stateField.getText() + e.getKeyChar();
-                        currentState.addRequirement(SearchViewModel.STATE_LABEL, text);
+                        String text = emailField.getText() + e.getKeyChar();
+                        currentState.addRequirement(SearchViewModel.EMAIL_LABEL, text);
                         searchViewModel.setState(currentState);
                     }
 
@@ -319,8 +319,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(speciesInfo);
         this.add(breedInfo);
         this.add(colorInfo);
-        this.add(cityInfo);
-        this.add(stateInfo);
+        this.add(phoneInfo);
+        this.add(emailInfo);
         this.add(ageInfo);
         this.add(sexInfo);
         this.add(coatInfo);
