@@ -1,7 +1,7 @@
 package interface_adaptor.login;
 
-import interface_adaptor.logged_in.LoggedInState;
-import interface_adaptor.logged_in.LoggedInViewModel;
+import interface_adaptor.home.HomeState;
+import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.signup.SignupState;
 import use_case.login.LoginOutputBoundary;
@@ -11,26 +11,26 @@ import use_case.signup.SignupOutputData;
 
 public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
-    private final LoggedInViewModel loggedInViewModel;
+    private final HomeViewModel homeViewModel;
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
-                          LoggedInViewModel loggedInViewModel,
+                          HomeViewModel loggedInViewModel,
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.homeViewModel = homeViewModel;
         this.loginViewModel = loginViewModel;
     }
 
     @Override
     public void prepareSuccessView(LoginOutputData response) {
 
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername(response.getUsername());
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
+        HomeState homeState = homeViewModel.getState();
+        homeState.setUsername(response.getUsername());
+        this.homeViewModel.setState(homeState);
+        this.homeViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        this.viewManagerModel.setActiveView(homeViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 

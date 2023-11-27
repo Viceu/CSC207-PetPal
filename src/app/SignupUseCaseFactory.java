@@ -5,7 +5,7 @@ import interface_adaptor.signup.SignupController;
 import interface_adaptor.signup.SignupPresenter;
 import interface_adaptor.signup.SignupViewModel;
 import use_case.signup.SignupUserDataAccessInterface;
-import entities.CommonUserFactory;
+import entities.PersonalUserFactory;
 import entities.UserFactory;
 import interface_adaptor.*;
 import use_case.signup.SignupInputBoundary;
@@ -34,10 +34,9 @@ public class SignupUseCaseFactory {
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
-        UserFactory userFactory = new CommonUserFactory();
+        UserFactory userFactory = new PersonalUserFactory();
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);

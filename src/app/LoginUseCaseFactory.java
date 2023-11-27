@@ -1,9 +1,9 @@
 package app;
 
-import entities.CommonUserFactory;
+import entities.PersonalUserFactory;
 import entities.UserFactory;
 import interface_adaptor.ViewManagerModel;
-import interface_adaptor.logged_in.LoggedInViewModel;
+import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.login.LoginController;
 import interface_adaptor.login.LoginPresenter;
 import interface_adaptor.login.LoginViewModel;
@@ -22,11 +22,11 @@ public class LoginUseCaseFactory {
     public static LoginView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
+            HomeViewModel homeViewModel,
             LoginUserDataAccessInterface userDataAccessObject) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
             return new LoginView(loginViewModel, loginController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -38,12 +38,12 @@ public class LoginUseCaseFactory {
     private static LoginController createLoginUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
+            HomeViewModel homeViewModel,
             LoginUserDataAccessInterface userDataAccessObject) throws IOException {
 
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, homeViewModel, loginViewModel);
 
-        UserFactory userFactory = new CommonUserFactory();
+        UserFactory userFactory = new PersonalUserFactory();
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
