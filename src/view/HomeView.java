@@ -3,9 +3,6 @@ package view;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomeState;
 import interface_adaptor.home.HomeViewModel;
-import interface_adaptor.search.SearchController;
-import interface_adaptor.search.SearchState;
-import interface_adaptor.search.SearchViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +12,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
+    // TODO: usage in Main:
+    //  LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+    //  views.add(loggedInView, loggedInView.viewName);
     public final String viewName = "search";
 
     private final HomeViewModel homeViewModel;
@@ -29,7 +29,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.homeController = controller;
         this.homeViewModel = homeViewModel;
-        homeViewModel.addPropertyChangeListener(this);
+        this.homeViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
