@@ -89,9 +89,11 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             }
             Map<String, String> contact = toMapSS(petJson, "contact");
 
+            String bio = null;
+            String owner = null;
             Pet pet = petFactory.create(petID, organizationID, profileURL, name, colors,
                     breed, species, coat, age, attributes, environment, description, adoptable,
-                    contact, gender, size);
+                    contact, gender, size, bio, owner);
 
             profiles.put(petID, pet);
         }

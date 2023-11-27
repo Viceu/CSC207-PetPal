@@ -7,8 +7,8 @@ public class CommonPetFactory implements PetFactory{
     public Pet create(Integer petID, String organizationID, String URL, String name, List<String> colors,
                       Map<String, String> breed, String species, List<String> coat, String age, Map<String,
             Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
-                      Map<String, String> contact, String gender, String size){
+                      Map<String, String> contact, String gender, String size, String bio, String owner){
         return new CommonPet(petID, organizationID, URL, name, colors, breed, species, coat, age, attributes,
-                environment, description, adoptable, contact, gender, size);
+                environment, description, adoptable, contact, gender, size, bio, owner);
     }
 }

@@ -36,6 +36,7 @@ public interface Pet {
     String getGender();
 
     String getSize();
-
+    String getBio();
+    String getOwner();
     Map<String, String> getAll();
 }
