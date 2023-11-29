@@ -165,4 +165,13 @@ class CommonPet implements Pet {
         string_map = string_map.replace("False", "No");
         return string_map;
     }
+
+    public void setAdoptable(Boolean adoptable) {
+        // Need to pass in False as an argument
+        this.adoptable = adoptable;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }
