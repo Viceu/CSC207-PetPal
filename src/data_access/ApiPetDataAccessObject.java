@@ -56,12 +56,48 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             Boolean adoptable = status.equals("adoptable");
             String coat = String.valueOf(petJson.get("coat"));
 
-            Map<String, String> breed = toMapSS(petJson, "breeds");
             Map<String, String> colorsMap = toMapSS(petJson, "colors");
             List<String> colors = new ArrayList<>(colorsMap.values());
             Map<String, Boolean> attributes = toMapSB(petJson, "attributes");
             Map<String, Boolean> environment = toMapSB(petJson, "environment");
-            Map<String, String> contact = toMapSS(petJson, "contact");
+            JSONObject contactRow = (JSONObject) petJson.get("contact");
+            Map<String, String> contact = new HashMap<>();
+            if(contactRow.get("email")==JSONObject.NULL) {
+                contact.put("email", null);
+            }
+            else {
+                contact.put("email", (String) contactRow.get("email"));
+            }
+            if(contactRow.get("phone")==JSONObject.NULL) {
+                contact.put("phone", null);
+            }
+            else {
+                contact.put("phone", (String) contactRow.get("phone"));
+            }
+
+            JSONObject BreedsRow = (JSONObject) petJson.get("breeds");
+            Map<String, String> breed = new HashMap<>();
+            for (int i = 0; i < BreedsRow.names().length (); i++) {
+                String key = BreedsRow.names().getString (i);
+                if(BreedsRow.get(key)==JSONObject.NULL) {
+                    breed.put(key, null);
+                }
+                else if(BreedsRow.get(key) instanceof Boolean){
+                    Boolean boolValue = (Boolean) BreedsRow.get(key);
+                    String value = "";
+                    if(boolValue){
+                        value = "true";
+                    }
+                    else{
+                        value = "false";
+                    }
+                    breed.put(key, value);
+                }
+                else {
+                    String value = (String) BreedsRow.get(key);
+                    breed.put(key, value);
+                }
+            }
 
             Pet pet = petFactory.create(petID, organizationID, profileURL, name, colors,
                     breed, species, coat, age, attributes, environment, description, adoptable,

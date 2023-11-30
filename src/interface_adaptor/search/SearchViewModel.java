@@ -13,8 +13,8 @@ public class SearchViewModel extends ViewModel {
     public static final String COLOR_LABEL = "Color: ";
     public static final String SEARCH_BUTTON_LABEL = "Search!";
     public static final String BREED_LABEL = "Breed: ";
-    public static final String STATE_LABEL = "State: ";
-    public static final String CITY_LABEL = "City: ";
+    public static final String PHONE_LABEL = "Phone: ";
+    public static final String EMAIL_LABEL = "Email: ";
     public static final String AGE_LABEL = "Age: ";
     public static final String SEX_LABEL = "Sex: ";
     public static final String SIZE_LABEL = "Size: ";
