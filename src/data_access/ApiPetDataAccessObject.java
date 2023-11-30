@@ -7,6 +7,7 @@ import api.ApiResults;
 import java.io.*;
 import java.util.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.search.SearchPetDataAccessInterface;
 
@@ -53,41 +54,50 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
             String description = String.valueOf(petJson.get("description"));
             String status = String.valueOf(petJson.get("status"));
             Boolean adoptable = status.equals("adoptable");
+            String coat = String.valueOf(petJson.get("coat"));
 
-            Map<String, String> breed = toMapSS(petJson, "breeds");
             Map<String, String> colorsMap = toMapSS(petJson, "colors");
             List<String> colors = new ArrayList<>(colorsMap.values());
-            Map<String, String> coatMap = toMapSS(petJson, "coat");
-            List<String> coat = new ArrayList<>(coatMap.values());
-            Map<String, String> attributesSS = toMapSS(petJson, "attributes");
-            Map<String, Boolean> attributes = new HashMap<>();
-            for (String key: attributesSS.keySet()) {
-                String value = attributesSS.get(key);
-                if(value.equals("false")) {
-                    attributes.put(key, Boolean.FALSE);
+            Map<String, Boolean> attributes = toMapSB(petJson, "attributes");
+            Map<String, Boolean> environment = toMapSB(petJson, "environment");
+            JSONObject contactRow = (JSONObject) petJson.get("contact");
+            Map<String, String> contact = new HashMap<>();
+            if(contactRow.get("email")==JSONObject.NULL) {
+                contact.put("email", null);
+            }
+            else {
+                contact.put("email", (String) contactRow.get("email"));
+            }
+            if(contactRow.get("phone")==JSONObject.NULL) {
+                contact.put("phone", null);
+            }
+            else {
+                contact.put("phone", (String) contactRow.get("phone"));
+            }
+
+            JSONObject BreedsRow = (JSONObject) petJson.get("breeds");
+            Map<String, String> breed = new HashMap<>();
+            for (int i = 0; i < BreedsRow.names().length (); i++) {
+                String key = BreedsRow.names().getString (i);
+                if(BreedsRow.get(key)==JSONObject.NULL) {
+                    breed.put(key, null);
                 }
-                else if(value.equals("true")) {
-                    attributes.put(key, Boolean.TRUE);
+                else if(BreedsRow.get(key) instanceof Boolean){
+                    Boolean boolValue = (Boolean) BreedsRow.get(key);
+                    String value = "";
+                    if(boolValue){
+                        value = "true";
+                    }
+                    else{
+                        value = "false";
+                    }
+                    breed.put(key, value);
                 }
-                else{
-                    attributes.put(key, null);
+                else {
+                    String value = (String) BreedsRow.get(key);
+                    breed.put(key, value);
                 }
             }
-            Map<String, String> environmentSS = toMapSS(petJson, "environment");
-            Map<String, Boolean> environment = new HashMap<>();
-            for (String key: environmentSS.keySet()) {
-                String value = environmentSS.get(key);
-                if(value.equals("false")) {
-                    environment.put(key, Boolean.FALSE);
-                }
-                else if(value.equals("true")) {
-                    environment.put(key, Boolean.TRUE);
-                }
-                else{
-                    environment.put(key, null);
-                }
-            }
-            Map<String, String> contact = toMapSS(petJson, "contact");
 
             String bio = null;
             String owner = null;
@@ -101,20 +111,39 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
     // helper function to transform certain pet data points to Map<String, String>
     public Map<String, String> toMapSS(JSONObject petJson, String param){
-        JSONObject row = new JSONObject(petJson.get(param)); // changed from List<String> to Map<String, Object>
-        Map<String, Object> mapSO = row.toMap();
-        Map<String, String> mapSS = new HashMap<String, String>();
-        for (String key: mapSO.keySet()) {
-            String value = "";
-            if (mapSO.get(key) == null) {
-                value = "null";
+        JSONObject row = (JSONObject) petJson.get(param);
+        JSONArray keys = row.names();
+
+        Map<String, String> mapped = new HashMap<>();
+        for (int i = 0; i < keys.length (); i++) {
+            String key = keys.getString (i);
+            if(row.get(key)==JSONObject.NULL) {
+                mapped.put(key, null);
             }
             else {
-                value = mapSO.get(key).toString();
+                String value = (String) row.get(key);
+                mapped.put(key, value);
             }
-            mapSS.put(key, value);
         }
-        return mapSS;
+        return mapped;
+    }
+    // transform pet data to Map(String, Boolean)
+    public Map<String, Boolean> toMapSB(JSONObject petJson, String param){
+        JSONObject row = (JSONObject) petJson.get(param);
+        JSONArray keys = row.names();
+
+        Map<String, Boolean> mapped = new HashMap<>();
+        for (int i = 0; i < keys.length (); i++) {
+            String key = keys.getString (i);
+            if(row.get(key)==JSONObject.NULL) {
+                mapped.put(key, null);
+            }
+            else {
+                Boolean value = (Boolean) row.get(key);
+                mapped.put(key, value);
+            }
+        }
+        return mapped;
     }
 
     @Override

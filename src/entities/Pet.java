@@ -19,7 +19,7 @@ public interface Pet {
 
     String getSpecies();
 
-    List<String> getCoat();
+    String getCoat();
 
     String getAge();
 
