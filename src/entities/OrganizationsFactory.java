@@ -2,16 +2,15 @@ package entities;
 
 import java.util.Map;
 
-public class PersonalUserFactory implements UserFactory{
+public class OrganizationsFactory implements UserFactory {
     /**
-     * Requires: password is valid.
+     * Requires:
      * @param name
      * @param password
      * @return
      */
     @Override
     public User create(String name, String password, String bio) {
-        return new PersonalUser(name, password, bio);
+        return new Organizations(name, password, bio);
     }
-
 }
