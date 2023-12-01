@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -9,16 +10,18 @@ class PersonalUser implements User{
     private String password;
     private Map<String, Pet> pets; // unique pet names to pet objects
     private String bio;
+    private LocalDateTime ltd;
     /**
      * Requires: password is valid.
      * @param name
      * @param password
      */
 
-    public PersonalUser(String name, String password, Map<String, Pet> pets, String bio) {
+    public PersonalUser(String name, String password, Map<String, Pet> pets, String bio, LocalDateTime ltd) {
         this.name = name;
         this.password = password;
         this.pets = pets;
+        this.ltd = ltd;
         bio = bio;
     }
 
@@ -60,6 +63,11 @@ class PersonalUser implements User{
     @Override
     public void add_pets(Pet pet) {
         pets.put(pet.getName(), pet);
+    }
+
+    @Override
+    public LocalDateTime getCreationTime() {
+        return ltd;
     }
 
 

@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public interface User {
@@ -11,4 +12,6 @@ public interface User {
     Map<String, Pet> getPets();
     String getPetsNames();
     void add_pets(Pet pet);
+
+    LocalDateTime getCreationTime();
 }
