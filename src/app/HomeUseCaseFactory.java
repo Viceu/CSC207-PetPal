@@ -1,5 +1,7 @@
 package app;
 
+import entities.CommonPetFactory;
+import entities.PetFactory;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomePresenter;
@@ -16,9 +18,9 @@ import java.io.IOException;
 public class HomeUseCaseFactory {
     private HomeUseCaseFactory(){}
 
-    public static HomeView create(
-            ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, SearchPetDataAccessInterface searchPetDataAccessObject) {
-
+    public static HomeView create(ViewManagerModel viewManagerModel,
+                                  HomeViewModel homeViewModel,
+                                  SearchPetDataAccessInterface searchPetDataAccessObject) {
         try {
             HomeController homeController = createHomeUseCase(viewManagerModel, homeViewModel, searchPetDataAccessObject);
             return new HomeView(homeController, homeViewModel);
@@ -29,11 +31,9 @@ public class HomeUseCaseFactory {
     }
 
     private static HomeController createHomeUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, SearchPetDataAccessInterface searchPetDataAccessObject) throws IOException {
-
         HomeOutputBoundary homePresenter = new HomePresenter(homeViewModel, viewManagerModel);
-
-        HomeInputBoundary homeInteractor = new HomeInteractor(searchPetDataAccessObject, homePresenter);
-
+        PetFactory petFactory = new CommonPetFactory();
+        HomeInputBoundary homeInteractor = new HomeInteractor(searchPetDataAccessObject, homePresenter, petFactory);
         return new HomeController(homeInteractor);
     }
 }

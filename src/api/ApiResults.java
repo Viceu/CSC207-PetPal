@@ -87,27 +87,34 @@ public class ApiResults {
     public static void main(String[] args) {
         // to test, manually inputted some sample requirements
         HashMap<String, String> exParam = new HashMap<>();
-        exParam.put("type", "dog");
+        exParam.put("age", "young");
         exParam.put("name", "Serenity");
         List<String> exResults = getAnimals(exParam);
 
-        JSONObject petJson = new JSONObject(exResults.get(2));
-
-        JSONObject row = (JSONObject) petJson.get("attributes");
-        JSONArray keys = row.names ();
-
-        Map<String, Boolean> environment = new HashMap<>();
-        for (int i = 0; i < keys.length (); i++) {
-            String key = keys.getString (i);
-            if(row.get(key)==JSONObject.NULL) {
-                environment.put(key, null);
-            }
-            else {
-                Boolean value = (Boolean) row.get(key);
-                environment.put(key, value);
-            }
+        List<String> types = new ArrayList<>();
+        for(int i = 0; i < exResults.size(); i++) {
+            JSONObject petJson = new JSONObject(exResults.get(i));
+            String type = (String) petJson.get("age");
+            types.add(type);
         }
-        System.out.println(environment);
+
+//        JSONObject petJson = new JSONObject(exResults.get(2));
+//        JSONObject row = (JSONObject) petJson.get("type");
+//
+//        JSONArray keys = row.names ();
+//
+//        Map<String, Boolean> environment = new HashMap<>();
+//        for (int i = 0; i < keys.length (); i++) {
+//            String key = keys.getString (i);
+//            if(row.get(key)==JSONObject.NULL) {
+//                environment.put(key, null);
+//            }
+//            else {
+//                Boolean value = (Boolean) row.get(key);
+//                environment.put(key, value);
+//            }
+//        }
+        System.out.println(types);
 
     }
 
