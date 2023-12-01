@@ -10,9 +10,9 @@ public class HomeController {
         this.homeUseCaseInteractor = homeUseCaseInteractor;
     }
 
-    public void execute(Map<String, String> requirements) {
-        HomeInputData searchInputData = new HomeInputData();
+    public void execute(String viewName) {
+        HomeInputData homeInputData = new HomeInputData();
 
-        homeUseCaseInteractor.execute(searchInputData);
+        homeUseCaseInteractor.execute(homeInputData);
     }
 }
