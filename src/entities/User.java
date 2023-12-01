@@ -8,7 +8,4 @@ public interface User {
     void setPassword(String password);
     String getBio();
     void setBio(String bio);
-    Map<String, Pet> getPets();
-    String getPetsNames();
-    void add_pets(Pet pet);
 }
