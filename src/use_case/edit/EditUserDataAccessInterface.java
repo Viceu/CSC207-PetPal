@@ -1,9 +1,4 @@
 package use_case.edit;
-import java.util.List;
-import java.util.Map;
-
-import entities.Pet;
-import entities.PetFactory;
 import entities.User;
 
 public interface EditUserDataAccessInterface {
