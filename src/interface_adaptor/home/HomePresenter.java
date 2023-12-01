@@ -9,16 +9,20 @@ public class HomePresenter implements HomeOutputBoundary{
 
     private final ViewManagerModel viewManagerModel;
 
+    //private final DisplayViewModel resultViewModel;
+
     public HomePresenter(HomeViewModel homeViewModel,
-                           ViewManagerModel viewManagerModel) {
+                           ViewManagerModel viewManagerModel) { // add parameter DisplayViewModel resultViewModel
         this.homeViewModel = homeViewModel;
         this.viewManagerModel = viewManagerModel;
+        //this.resultViewModel = resultViewModel
     }
 
     @Override
     public void prepareSuccessView(HomeOutputData result) {
-        // on success, switch to the result-displaying view
+        // on success, switch to the respective next view
 
+        // all this but for resultViewModel
         HomeState homeState = homeViewModel.getState();
         homeState.setResults(result.getResults());
         this.homeViewModel.setState(homeState);

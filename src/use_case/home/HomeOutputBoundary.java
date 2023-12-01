@@ -4,5 +4,5 @@ public interface HomeOutputBoundary {
 
     void prepareSuccessView(HomeOutputData result);
 
-    void prepareFailView(String failmessage);
+    void prepareFailView(String failMessage);
 }
