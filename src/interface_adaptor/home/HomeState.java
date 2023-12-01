@@ -26,15 +26,13 @@ public class HomeState {
         this.username = username;
     }
 
-    public void setHomeFailMessage(String failmessage) {
-    }
+    public void setHomeFailMessage(String failmessage) {this.failMessage = failmessage;}
     public Object getFetchError() {
         return failMessage;
     }
     public Map<Integer, Pet> getPets() {
         return pets;
     }
-
     public void setResults(Map<Integer, Pet> results) {
     }
 }

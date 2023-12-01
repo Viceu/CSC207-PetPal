@@ -33,6 +33,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     JLabel username;
     final JButton logOut;
     final JButton edit;
+    private final JButton search;
     private final JButton seeMore = new JButton("See more");
     private final JButton adopt = new JButton("Adopt!");
 
@@ -47,19 +48,52 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel();
+        username = new JLabel(homeViewModel.getLoggedInUser());
 
-        // TODO: reference DisplayView once that's finished debugging
         JPanel buttons = new JPanel();
+        search = new JButton(HomeViewModel.SEARCH_BUTTON_LABEL);
+        buttons.add(search);
+        search.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(search)) {
+
+                            HomeState currentState = homeViewModel.getState();
+                            homeController.execute("search");
+                        }
+                    }
+                }
+        );
+
         edit = new JButton(HomeViewModel.EDIT_BUTTON_LABEL);
         buttons.add(edit);
-        edit.addActionListener(this);
-        // TODO: click edit button sends to Edit use case
+        edit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(edit)) {
+
+                            HomeState currentState = homeViewModel.getState();
+                            homeController.execute("edit");
+                        }
+                    }
+                }
+        );
 
         logOut = new JButton(HomeViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
-        logOut.addActionListener(this);
-        // TODO: click logout button sends to LoggedOut use case
+        logOut.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logOut)) {
+
+                            HomeState currentState = homeViewModel.getState();
+                            homeController.execute("logOut");
+                        }
+                    }
+                }
+        );
+
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -71,7 +105,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        JOptionPane.showConfirmDialog(this, "This is not implemented yet.");
     }
 
     @Override

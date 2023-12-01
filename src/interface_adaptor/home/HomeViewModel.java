@@ -8,13 +8,12 @@ import java.beans.PropertyChangeSupport;
 
 public class HomeViewModel extends ViewModel {
 
-    public static final String TITLE_LABEL = "Home View";
+    public static final String TITLE_LABEL = "Home";
     public static final String EDIT_BUTTON_LABEL = "Edit Profile";
-
-    private HomeState state = new HomeState();
-
+    public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     private String loggedInUser;
+    private HomeState state = new HomeState();
 
     // super = ViewModel
     public HomeViewModel() {
@@ -24,10 +23,12 @@ public class HomeViewModel extends ViewModel {
     public void setState(HomeState state) {
         this.state = state;
     }
+    public HomeState getState() {
+        return state;
+    }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // Login Presenter will call to let ViewModel know to alert View
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
@@ -35,11 +36,6 @@ public class HomeViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
-    public HomeState getState() {
-        return state;
-    }
-
 
     public String getLoggedInUser() {
         return loggedInUser;
