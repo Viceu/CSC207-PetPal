@@ -5,8 +5,8 @@ import interface_adaptor.home.HomeState;
 import interface_adaptor.home.HomeViewModel;
 
 // for organization homepage
-import interface_adaptor.organization.OrganizationHomeState;
-import interface_adaptor.organization.OrganizationHomeViewModel;
+import interface_adaptor.organization.OrgHomeState;
+import interface_adaptor.organization.OrgHomeViewModel;
 
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.signup.SignupState;
@@ -18,11 +18,11 @@ import use_case.signup.SignupOutputData;
 public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final HomeViewModel homeViewModel;
-    private final OrganizationViewModel orgViewModel;
+    private final OrgHomeViewModel orgViewModel;
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
-                          HomeViewModel homeViewModel, OrganizationViewModel orgViewModel,
+                          HomeViewModel homeViewModel, OrgHomeViewModel orgViewModel,
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.homeViewModel = homeViewModel;
@@ -45,7 +45,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         }
         else if (response.getType().equals("organization"))
         { // displays organization home page
-            OrganizationHomeState orgHomeState = orgViewModel.getState();
+            OrgHomeState orgHomeState = orgViewModel.getState();
             orgHomeState.setUsername(response.getUsername());
             this.orgViewModel.setState(orgHomeState);
             this.orgViewModel.firePropertyChanged();
