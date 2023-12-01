@@ -3,15 +3,14 @@ package data_access;
 import entities.Organizations;
 import entities.OrganizationsFactory;
 import entities.Pet;
-import use_case.adopt_user_preview.AdoptUserPreviewDataAccessObject;
+import use_case.adopt_user_preview.AdoptUserPreviewDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileOrganizationDataAccessObject implements AdoptUserPreviewDataAccessInterface {
+public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAccessInterface {
 
     private final File csvFile;
 
@@ -21,11 +20,11 @@ public class FileOrganizationDataAccessObject implements AdoptUserPreviewDataAcc
 
     private OrganizationsFactory organizationsFactory;
 
-    public FileOrganizationDataAccessObject(File csvFile) {
+    public FileOrganizationsDataAccessObject(File csvFile) {
         this.csvFile = csvFile;
     }
 
-    public FileOrganizationDataAccessObject(String csvPath, OrganizationsFactory organizationsFactory) throws IOException {
+    public FileOrganizationsDataAccessObject(String csvPath, OrganizationsFactory organizationsFactory) throws IOException {
         this.organizationsFactory = organizationsFactory;
 
         csvFile = new File(csvPath);
@@ -70,7 +69,7 @@ public class FileOrganizationDataAccessObject implements AdoptUserPreviewDataAcc
     }
 
     @Override
-    public Organizations get(String username) {
+    public Organizations getUsername(String username) {
         return orgAccounts.get(username);
     }
 
@@ -82,7 +81,7 @@ public class FileOrganizationDataAccessObject implements AdoptUserPreviewDataAcc
             writer.newLine();
 
             for (Organizations organizations : orgAccounts.values()) {
-                String line = String.format("%s,%s,%s",
+                String line = String.format("%s,%s,%s,%s",
                         organizations.getName(), organizations.getPassword(), organizations.getPets(), organizations.getBio());
                 writer.write(line);
                 writer.newLine();
