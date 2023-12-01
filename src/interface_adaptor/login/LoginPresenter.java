@@ -47,7 +47,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         { // displays organization home page
             OrganizationHomeState orgHomeState = orgViewModel.getState();
             orgHomeState.setUsername(response.getUsername());
-            this.orgViewModel.setState(homeState);
+            this.orgViewModel.setState(orgHomeState);
             this.orgViewModel.firePropertyChanged();
 
             this.viewManagerModel.setActiveView(homeViewModel.getViewName());
