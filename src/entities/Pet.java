@@ -36,6 +36,15 @@ public interface Pet {
     String getGender();
 
     String getSize();
+    String getBio();
+    String getOwner();
+
+    void setAdoptable(Boolean adoptable);
+
+    void setOwner(String owner);
+
+    void setBio(String bio);
 
     Map<String, String> getAll();
+
 }

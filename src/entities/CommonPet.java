@@ -6,26 +6,29 @@ import java.util.Map;
 
 class CommonPet implements Pet {
     private final Integer petID;
-    private final String organizationID;
-    private final String URL;
-    private final String name;
+    private final String organizationID; // null for user pet
+    private final String URL; // null for user pet
+    private String name;
     private final List<String> colors;
     private final Map<String, String> breed;
     private final String species;
     private final String coat;
     private final String age;
-    private final Map<String,Boolean> attributes;
+    private final Map<String,Boolean> attributes; // null for user pet
     private final Map<String, Boolean> environment;
-    private final String description;
-    private final Boolean adoptable;
-    private final Map<String, String> contact;
+    private final String description; //
+    private Boolean adoptable;
+    private final Map<String, String> contact; // null for user pet
     private final String gender;
     private final String size;
+    private String bio;
+
+    private String owner;
 
     CommonPet(Integer petID, String organizationID, String URL, String name, List<String> colors,
               Map<String, String> breed, String species, String coat, String age, Map<String,
             Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
-              Map<String, String> contact, String gender, String size)
+              Map<String, String> contact, String gender, String size, String bio, String owner)
     {
         this.petID = petID;
         this.organizationID = organizationID;
@@ -43,6 +46,8 @@ class CommonPet implements Pet {
         this.contact = contact;
         this.gender = gender;
         this.size = size;
+        this.bio = bio;
+        this.owner = owner;
     }
 
     public Integer getPetID(){
@@ -93,6 +98,14 @@ class CommonPet implements Pet {
     public String getSize(){
         return size;
     }
+
+    public String getBio() {
+        return bio;
+    }
+    public String getOwner() {
+        return owner;
+    }
+
     public Map<String, String> getAll()
         // Return all attributes for a pet inside a hashmap
     {
@@ -151,5 +164,16 @@ class CommonPet implements Pet {
         string_map = string_map.replace("True", "Yes");
         string_map = string_map.replace("False", "No");
         return string_map;
+    }
+
+    public void setAdoptable(Boolean adoptable) {
+        // Need to pass in False as an argument
+        this.adoptable = adoptable;
+    }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
