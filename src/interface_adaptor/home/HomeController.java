@@ -10,6 +10,7 @@ public class HomeController {
         this.homeUseCaseInteractor = homeUseCaseInteractor;
     }
 
+    // displayController has (Pet thisPet) in parameter and creates InputData(thisPet)
     public void execute(String viewName) {
         HomeInputData homeInputData = new HomeInputData();
 

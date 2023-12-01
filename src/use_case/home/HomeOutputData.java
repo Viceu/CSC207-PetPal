@@ -16,4 +16,14 @@ public class HomeOutputData {
     public Map<Integer, Pet> getResults() {
         return results;
     }
+
+//    private final Pet thisPet;
+//    public Pet getPet() {return thisPet;}
+//
+//    private boolean searchFail;
+//
+//    public HomeOutputData(Pet thisPet, boolean searchFail) {
+//        this.thisPet = thisPet;
+//        this.searchFail = searchFail;
+//    }
 }

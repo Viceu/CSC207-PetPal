@@ -17,7 +17,7 @@ public class HomeViewModel extends ViewModel {
 
     // super = ViewModel
     public HomeViewModel() {
-        super("logged in");
+        super("home");
     }
 
     public void setState(HomeState state) {

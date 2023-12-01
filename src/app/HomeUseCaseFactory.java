@@ -3,6 +3,7 @@ package app;
 import entities.CommonPetFactory;
 import entities.PetFactory;
 import interface_adaptor.ViewManagerModel;
+import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomePresenter;
 import interface_adaptor.home.HomeViewModel;
@@ -20,9 +21,11 @@ public class HomeUseCaseFactory {
 
     public static HomeView create(ViewManagerModel viewManagerModel,
                                   HomeViewModel homeViewModel,
+                                  AdoptUserPreviewViewModel adoptUserPreviewViewModel,
                                   SearchPetDataAccessInterface searchPetDataAccessObject) {
         try {
-            HomeController homeController = createHomeUseCase(viewManagerModel, homeViewModel, searchPetDataAccessObject);
+            HomeController homeController = createHomeUseCase(viewManagerModel, homeViewModel,
+                    adoptUserPreviewViewModel, searchPetDataAccessObject);
             return new HomeView(homeController, homeViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open access adopt page.");
@@ -30,8 +33,10 @@ public class HomeUseCaseFactory {
         return null;
     }
 
-    private static HomeController createHomeUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, SearchPetDataAccessInterface searchPetDataAccessObject) throws IOException {
-        HomeOutputBoundary homePresenter = new HomePresenter(homeViewModel, viewManagerModel);
+    private static HomeController createHomeUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
+                                                    AdoptUserPreviewViewModel adoptUserPreviewViewModel,
+                                                    SearchPetDataAccessInterface searchPetDataAccessObject) throws IOException {
+        HomeOutputBoundary homePresenter = new HomePresenter(homeViewModel, viewManagerModel, adoptUserPreviewViewModel);
         PetFactory petFactory = new CommonPetFactory();
         HomeInputBoundary homeInteractor = new HomeInteractor(searchPetDataAccessObject, homePresenter, petFactory);
         return new HomeController(homeInteractor);

@@ -10,29 +10,23 @@ public class HomeState {
     private String failMessage = null;
     private Map<Integer, Pet> pets;
 
-    public HomeState(HomeState copy) {
-        username = copy.username;
-    }
-
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public HomeState() {}
 
     public String getUsername() {
         return username;
     }
-
     // TODO: call from LoginPresenter
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setHomeFailMessage(String failmessage) {this.failMessage = failmessage;}
+    public void setHomeFailMessage(String failMessage) {this.failMessage = failMessage;}
     public Object getFetchError() {
         return failMessage;
     }
+
+    public void setResults(Map<Integer, Pet> results) {this.pets = results;}
     public Map<Integer, Pet> getPets() {
         return pets;
-    }
-    public void setResults(Map<Integer, Pet> results) {
     }
 }

@@ -29,14 +29,16 @@ public class HomeInteractor implements HomeInputBoundary{
         Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(null);
 
         for (Integer id : resultPetMap.keySet()) {
-            Pet pet = petDataAccessObject.getPet(id);
+            Pet pet = resultPetMap.get(id);
             if (!pet.getAdoptable()) {
                 continue;
             }
-            displayPetMap.put(id, pet);
-            petDataAccessObject.save(pet);
+            // only add first 5 results to display
+            if(displayPetMap.size() < 5) {
+                displayPetMap.put(id, pet);
+                petDataAccessObject.save(pet);
+            }
         }
-
 
         if (displayPetMap.isEmpty()) {
             homePresenter.prepareFailView("There are no pets to adopt right now, please check back later.");
