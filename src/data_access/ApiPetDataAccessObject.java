@@ -13,26 +13,70 @@ import use_case.search.SearchPetDataAccessInterface;
 
 public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
-    private final File csvFile;
-    private final Map<String, Integer> headers = new LinkedHashMap<>();
-
     private final Map<Integer, Pet> profiles = new HashMap<>();
 
     private PetFactory petFactory;
 
-    public ApiPetDataAccessObject(HashMap<String, String> params, String csvPath, PetFactory petFactory) throws IOException {
+    public ApiPetDataAccessObject(PetFactory petFactory) throws IOException {
         this.petFactory = petFactory;
+    }
 
-        csvFile = new File(csvPath);
-        headers.put("username", 0);
-        headers.put("password", 1);
-        headers.put("creation_time", 2);
+    // helper function to transform certain pet data points to Map<String, String>
+    public Map<String, String> toMapSS(JSONObject petJson, String param){
+        JSONObject row = (JSONObject) petJson.get(param);
+        JSONArray keys = row.names();
 
+        Map<String, String> mapped = new HashMap<>();
+        for (int i = 0; i < keys.length (); i++) {
+            String key = keys.getString (i);
+            if(row.get(key)==JSONObject.NULL) {
+                mapped.put(key, null);
+            }
+            else {
+                String value = (String) row.get(key);
+                mapped.put(key, value);
+            }
+        }
+        return mapped;
+    }
+    // transform pet data to Map(String, Boolean)
+    public Map<String, Boolean> toMapSB(JSONObject petJson, String param){
+        JSONObject row = (JSONObject) petJson.get(param);
+        JSONArray keys = row.names();
 
-        List<Pet> listPets = new ArrayList<Pet>();
+        Map<String, Boolean> mapped = new HashMap<>();
+        for (int i = 0; i < keys.length (); i++) {
+            String key = keys.getString (i);
+            if(row.get(key)==JSONObject.NULL) {
+                mapped.put(key, null);
+            }
+            else {
+                Boolean value = (Boolean) row.get(key);
+                mapped.put(key, value);
+            }
+        }
+        return mapped;
+    }
 
-        String jsonString;
-        JSONObject jsonObject;
+    @Override
+    public void save(Pet pet) {
+        profiles.put(pet.getPetID(), pet);
+    }
+
+    @Override
+    public boolean existsByName(Integer id) {
+        return profiles.containsKey(id);
+    }
+
+    @Override
+    public Pet getPet(Integer id) {
+        assert existsByName(id);
+        return profiles.get(id);
+    }
+
+    @Override
+    public Map<Integer, Pet> accessApi(Map<String, String> params) {
+        Map<Integer, Pet> resultPets = new HashMap<>();
 
         // Read API retrieved results (List of String)
         List<String> apiResults = ApiResults.getAnimals(params);
@@ -99,104 +143,21 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
                 }
             }
 
+            String bio = null;
+            String owner = null;
             Pet pet = petFactory.create(petID, organizationID, profileURL, name, colors,
                     breed, species, coat, age, attributes, environment, description, adoptable,
-                    contact, gender, size);
+                    contact, gender, size, bio, owner);
 
-            profiles.put(petID, pet);
+            resultPets.put(petID, pet);
         }
-    }
 
-    // helper function to transform certain pet data points to Map<String, String>
-    public Map<String, String> toMapSS(JSONObject petJson, String param){
-        JSONObject row = (JSONObject) petJson.get(param);
-        JSONArray keys = row.names();
-
-        Map<String, String> mapped = new HashMap<>();
-        for (int i = 0; i < keys.length (); i++) {
-            String key = keys.getString (i);
-            if(row.get(key)==JSONObject.NULL) {
-                mapped.put(key, null);
-            }
-            else {
-                String value = (String) row.get(key);
-                mapped.put(key, value);
-            }
-        }
-        return mapped;
-    }
-    // transform pet data to Map(String, Boolean)
-    public Map<String, Boolean> toMapSB(JSONObject petJson, String param){
-        JSONObject row = (JSONObject) petJson.get(param);
-        JSONArray keys = row.names();
-
-        Map<String, Boolean> mapped = new HashMap<>();
-        for (int i = 0; i < keys.length (); i++) {
-            String key = keys.getString (i);
-            if(row.get(key)==JSONObject.NULL) {
-                mapped.put(key, null);
-            }
-            else {
-                Boolean value = (Boolean) row.get(key);
-                mapped.put(key, value);
-            }
-        }
-        return mapped;
-    }
-
-    @Override
-    public void save(Pet pet) {
-        profiles.put(pet.getPetID(), pet);
-        this.save();
-    }
-
-    private void save() {
-        BufferedWriter writer;
-        try {
-            writer = new BufferedWriter(new FileWriter(csvFile));
-            writer.write(String.join(",", headers.keySet()));
-            writer.newLine();
-
-            for (Pet pet : profiles.values()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                        pet.getPetID(), pet.getOrganizationID(), pet.getURL(), pet.getName(), pet.getColors(),
-                        pet.getBreed(), pet.getSpecies(), pet.getCoat(), pet.getAge(), pet.getAttributes(),
-                        pet.getEnvironment(), pet.getDescription(), pet.getAdoptable(), pet.getContact(),
-                        pet.getGender(), pet.getSize());
-                /** how would Integer and Map format
-                 + change getter if that changes (attributes and environments)
-                 **/
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean existsByName(Integer id) {
-        return profiles.containsKey(id);
-    }
-
-    @Override
-    public Pet getPet(Integer id) {
-        assert existsByName(id);
-        return profiles.get(id);
-    }
-
-    @Override
-    public void accessApi() {
-
+        return resultPets;
     }
 
     @Override
     public void deleteAll() {
         profiles.clear();
-        this.save();
     }
 
     @Override

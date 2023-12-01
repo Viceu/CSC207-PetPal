@@ -44,7 +44,7 @@ public class Main {
 
         ApiPetDataAccessObject apiPetDataAccessObject;
         try {
-            apiPetDataAccessObject = new ApiPetDataAccessObject(new HashMap<>(), "./users.csv", new CommonPetFactory());
+            apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

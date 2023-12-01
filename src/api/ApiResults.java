@@ -16,7 +16,7 @@ import static org.apache.oltu.oauth2.common.OAuth.ContentType.JSON;
 
 public class ApiResults {
 
-    public static List<String> getAnimals(HashMap<String, String> params) throws JSONException {
+    public static List<String> getAnimals(Map<String, String> params) throws JSONException {
 
         // first get live API access token
         String API_TOKEN;
