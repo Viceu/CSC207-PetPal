@@ -30,8 +30,7 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
         csvFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("password", 1);
-        headers.put("pets", 2);
-        headers.put("bio", 3);
+        headers.put("bio", 2);
 
         if (csvFile.length() == 0) {
             save();
@@ -40,16 +39,15 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,pets,bio");
+                assert header.equals("username,password,bio");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
-                    Map<String, Pet> pets = col[headers.get("pets")];
                     String bio = String.valueOf(col[headers.get("bio")]);
-                    Organizations organizations = organizationsFactory.create(username, password, pets, bio);
+                    Organizations organizations = (Organizations) organizationsFactory.create(username, password, bio);
                     orgAccounts.put(username, organizations);
                 }
             }
@@ -73,6 +71,16 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
         return orgAccounts.get(username);
     }
 
+    @Override
+    public Organizations getPassword(String password) {
+        return orgAccounts.get(password);
+    }
+
+    @Override
+    public Organizations getBio(String bio) {
+        return orgAccounts.get(bio);
+    }
+
     private void save() {
         BufferedWriter writer;
         try {
@@ -81,8 +89,8 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
             writer.newLine();
 
             for (Organizations organizations : orgAccounts.values()) {
-                String line = String.format("%s,%s,%s,%s",
-                        organizations.getName(), organizations.getPassword(), organizations.getPets(), organizations.getBio());
+                String line = String.format("%s,%s,%s",
+                        organizations.getName(), organizations.getPassword(), organizations.getBio());
                 writer.write(line);
                 writer.newLine();
             }

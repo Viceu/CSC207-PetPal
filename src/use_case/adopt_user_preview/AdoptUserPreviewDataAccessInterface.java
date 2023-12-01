@@ -5,4 +5,8 @@ public interface AdoptUserPreviewDataAccessInterface {
     boolean existsByName(String identifier);
     void save(Organizations organizations);
     Organizations getUsername(String username);
+
+    Organizations getPassword(String password);
+
+    Organizations getBio(String bio);
 }
