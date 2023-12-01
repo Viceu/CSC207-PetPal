@@ -4,7 +4,7 @@ import entities.PersonalUserFactory;
 import entities.UserFactory;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.home.HomeViewModel;
-import interface_adaptor.organization.OrganizationViewModel;
+import interface_adaptor.organization.OrgHomeViewModel;
 import interface_adaptor.login.LoginController;
 import interface_adaptor.login.LoginPresenter;
 import interface_adaptor.login.LoginViewModel;
@@ -40,7 +40,7 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             HomeViewModel homeViewModel,
-            OrganizationViewModel orgViewModel,
+            OrgHomeViewModel orgViewModel,
             LoginUserDataAccessInterface userDataAccessObject) throws IOException {
 
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, homeViewModel, orgViewModel, loginViewModel);
