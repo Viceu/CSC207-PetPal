@@ -170,8 +170,10 @@ class CommonPet implements Pet {
         // Need to pass in False as an argument
         this.adoptable = adoptable;
     }
-
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
