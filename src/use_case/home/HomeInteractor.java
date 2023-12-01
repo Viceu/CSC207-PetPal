@@ -12,24 +12,31 @@ import java.util.*;
 public class HomeInteractor implements HomeInputBoundary{
     final SearchPetDataAccessInterface petDataAccessObject;
     final HomeOutputBoundary homePresenter;
+    final PetFactory petFactory;
 
 
     public HomeInteractor(SearchPetDataAccessInterface petDataAccessInterface,
-                            HomeOutputBoundary homeOutputBoundary) {
+                            HomeOutputBoundary homeOutputBoundary,
+                          PetFactory petFactory) {
         this.petDataAccessObject = petDataAccessInterface;
         this.homePresenter = homeOutputBoundary;
+        this.petFactory = petFactory;
     }
 
     @Override
     public void execute(HomeInputData homeInputData) {
-
-        List<Integer> petIDs = petDataAccessObject.getIDs();
         Map<Integer, Pet> displayPetMap = new HashMap<>();
+        Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(null);
 
-        for (Integer id : petIDs) {
+        for (Integer id : resultPetMap.keySet()) {
             Pet pet = petDataAccessObject.getPet(id);
+            if (!pet.getAdoptable()) {
+                continue;
+            }
             displayPetMap.put(id, pet);
+            petDataAccessObject.save(pet);
         }
+
 
         if (displayPetMap.isEmpty()) {
             homePresenter.prepareFailView("There are no pets to adopt right now, please check back later.");

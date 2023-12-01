@@ -44,6 +44,5 @@ public class SearchInteractor implements SearchInputBoundary {
             searchPresenter.prepareSuccessView(searchOutputData);
 
         }
-
     }
 }
