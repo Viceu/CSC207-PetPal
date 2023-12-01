@@ -1,6 +1,5 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 class PersonalUser implements User{
@@ -11,11 +10,12 @@ class PersonalUser implements User{
     private String bio;
     /**
      * Requires: password is valid.
+     *
      * @param name
      * @param password
      */
 
-    public PersonalUser(String name, String password, Map<String, Pet> pets, String bio) {
+    public PersonalUser(String name, String password, String bio) {
         this.name = name;
         this.password = password;
         this.pets = pets;
@@ -43,24 +43,5 @@ class PersonalUser implements User{
     public void setBio(String bio) {
         bio = bio;
     }
-
-    @Override
-    public Map<String, Pet> getPets() {
-        return pets;
-    }
-    public String getPetsNames(){
-        String petsNames = "";
-        for (Pet pet: pets.values()){
-            petsNames += pet.getName();
-            petsNames += "-";
-        }
-        return petsNames;
-
-    }
-    @Override
-    public void add_pets(Pet pet) {
-        pets.put(pet.getName(), pet);
-    }
-
 
 }
