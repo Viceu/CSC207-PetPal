@@ -22,8 +22,6 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
 
     private final DisplayViewModel displayViewModel;
     private final DisplayController displayController;
-    private final JButton seeMore = new JButton("See more");
-
     private final JButton adopt = new JButton("Adopt!");
 
 
@@ -36,9 +34,6 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
         JLabel title = new JLabel(DisplayViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
-
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
@@ -46,34 +41,31 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayState state = (DisplayState) evt.getNewValue();
-
         if (this.displayViewModel.getState().getPets() == null) {
             this.add(new JLabel("No results found for this search, please change your search."));
         }
         else {
+
             ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
             for (Map.Entry<Integer, Pet> entry : this.displayViewModel.getState().getPets().entrySet()) {
+                JButton seeMore = new JButton("See more");
                 LabelButtonPanel newButton = new LabelButtonPanel(
                         new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
                 buttons.add(newButton);
-            }
 
-            for (LabelButtonPanel button : buttons) {
-                button.addMouseListener(
+                seeMore.addMouseListener(
                         new MouseListener() {
                             public void mouseClicked(MouseEvent evt) {
                                 if (evt.getSource().equals(seeMore)) {
+                                    System.out.println("HI");
 
-                                    Pet thisPet = button.getPet();
+                                    Pet thisPet = newButton.getPet();
 
                                     String message = "";
 
-                                    for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
-                                        if (attributes.getValue()) {
-                                            String key = attributes.getKey();
-                                            message += key + thisPet.getAll().get(key) + "\n";
-                                        }
+                                    for (Map.Entry<String, String> attributes : thisPet.getAll().entrySet()) {
+                                        String key = attributes.getKey();
+                                        message += key + " " + thisPet.getAll().get(key) + "\n";
                                     }
 
                                     Object[] options = {"Adopt!",
@@ -103,11 +95,16 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                         });
             }
 
+            for (LabelButtonPanel button : buttons) {
+
+            }
+
             for (LabelButtonPanel someButton : buttons) {
                 this.add(someButton);
             }
         }
 
+        DisplayState state = (DisplayState) evt.getNewValue();
         if (state.getRequirementsError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequirementsError());
         }
