@@ -27,4 +27,8 @@ public class AdoptUserPreviewState {
     public String getUserMessage() {
         return userMessage;
     }
+
+    public String getRequirementsError() {
+        return failMessage;
+    }
 }
