@@ -37,9 +37,22 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
 
-        if (this.displayViewModel.getState().getPets() != null) {
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        DisplayState state = (DisplayState) evt.getNewValue();
+
+        if (this.displayViewModel.getState().getPets() == null) {
+            this.add(new JLabel("No results found for this search, please change your search."));
+        }
+        else {
+            ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
             for (Map.Entry<Integer, Pet> entry : this.displayViewModel.getState().getPets().entrySet()) {
                 LabelButtonPanel newButton = new LabelButtonPanel(
                         new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
@@ -87,30 +100,13 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                             @Override
                             public void mouseExited(MouseEvent e) {
                             }
-                        }
-                );
+                        });
             }
-        }
-        else {
-            buttons = null;
-        }
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
-        if (buttons != null) {
             for (LabelButtonPanel someButton : buttons) {
                 this.add(someButton);
             }
         }
-        else {
-            this.add(new JLabel("No results found for this search, please change your search."));
-        }
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        DisplayState state = (DisplayState) evt.getNewValue();
 
         if (state.getRequirementsError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequirementsError());
