@@ -5,6 +5,7 @@ import entities.Pet;
 public class AdoptUserPreviewState {
     private Pet thisPet;
     private String failMessage = null;
+    private String userMessage;
 
     public void setPet(Pet pet) {
         thisPet = pet;
@@ -17,5 +18,13 @@ public class AdoptUserPreviewState {
     }
     public Object getPetError() {
         return failMessage;
+    }
+
+    public void addUserMessage(String text) {
+        userMessage = text;
+    }
+
+    public String getUserMessage() {
+        return userMessage;
     }
 }
