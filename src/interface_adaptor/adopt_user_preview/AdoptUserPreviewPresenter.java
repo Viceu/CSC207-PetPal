@@ -1,32 +1,33 @@
 package interface_adaptor.adopt_user_preview;
 
 import interface_adaptor.ViewManagerModel;
+import interface_adaptor.home.HomeState;
+import interface_adaptor.home.HomeViewModel;
 import use_case.adopt_user_preview.AdoptUserPreviewOutputBoundary;
 import use_case.adopt_user_preview.AdoptUserPreviewOutputData;
 
 public class AdoptUserPreviewPresenter implements AdoptUserPreviewOutputBoundary {
     private final AdoptUserPreviewViewModel adoptUserPreviewViewModel;
     private final ViewManagerModel viewManagerModel;
-    // TODO: private final AdoptUserPreviewViewModel adoptUserPreviewViewModel;
+    private HomeViewModel homeViewModel;
 
-    public AdoptUserPreviewPresenter(AdoptUserPreviewViewModel displayViewModel, ViewManagerModel viewManagerModel /*, TODO: AdoptUserPreviewViewModel adoptUserPreviewViewModel */) {
-        this.adoptUserPreviewViewModel = displayViewModel;
+    public AdoptUserPreviewPresenter(AdoptUserPreviewViewModel adoptUserPreviewViewModel, ViewManagerModel viewManagerModel, HomeViewModel homeViewModel) {
+        this.adoptUserPreviewViewModel = adoptUserPreviewViewModel;
         this.viewManagerModel = viewManagerModel;
-        // TODO: this.adoptUserPreviewViewModel = adoptUserPreviewViewModel;
+        this.homeViewModel = homeViewModel;
     }
     public void prepareSuccessView(AdoptUserPreviewOutputData petData){
-        AdoptUserPreviewState newState = adoptUserPreviewViewModel.getState();
-        newState.setPet(petData.getPet());
-        this.adoptUserPreviewViewModel.setState(newState);
-        adoptUserPreviewViewModel.firePropertyChanged();
+        HomeState newState = homeViewModel.getState();
+        this.homeViewModel.setState(newState);
+        homeViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(adoptUserPreviewViewModel.getViewName());
+        viewManagerModel.setActiveView(homeViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
     public void prepareFailView(String failmessage) {
-        AdoptUserPreviewState displayState = adoptUserPreviewViewModel.getState();
-        displayState.setSearchFailMessage(failmessage);
-        adoptUserPreviewViewModel.firePropertyChanged();
+        HomeState homeState = homeViewModel.getState();
+        // homeState.setSearchFailMessage(failmessage);
+        homeViewModel.firePropertyChanged();
     }
 }

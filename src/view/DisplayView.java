@@ -57,7 +57,6 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                         new MouseListener() {
                             public void mouseClicked(MouseEvent evt) {
                                 if (evt.getSource().equals(seeMore)) {
-                                    System.out.println("HI");
 
                                     Pet thisPet = newButton.getPet();
 
