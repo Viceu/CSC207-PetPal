@@ -4,8 +4,10 @@ import data_access.ApiPetDataAccessObject;
 import entities.CommonPetFactory;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.DisplayViewModel;
+import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
+import view.AdoptUserPreviewView;
 import view.DisplayView;
 import view.SearchView;
 import view.ViewManager;
@@ -41,6 +43,7 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         DisplayViewModel displayViewModel = new DisplayViewModel();
         AdoptUserPreviewViewModel adoptUserPreviewViewModel = new AdoptUserPreviewViewModel();
+        HomeViewModel homeViewModel = new HomeViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject;
         try {
@@ -55,6 +58,9 @@ public class Main {
 
         DisplayView displayView = DisplayUseCaseFactory.create(viewManagerModel, displayViewModel, adoptUserPreviewViewModel);
         views.add(displayView, displayView.viewName);
+
+        AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel);
+        views.add(requestView, requestView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
         viewManagerModel.firePropertyChanged();
