@@ -163,6 +163,7 @@ class CommonPet implements Pet {
         string_map = string_map.replace("}", "");
         string_map = string_map.replace("True", "Yes");
         string_map = string_map.replace("False", "No");
+        string_map = string_map.replace("null", "No data");
         return string_map;
     }
 
