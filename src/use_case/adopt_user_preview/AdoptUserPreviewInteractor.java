@@ -1,8 +1,7 @@
 package use_case.adopt_user_preview;
 
-import entities.Organizations;
-import entities.Pet;
-import entities.Requests;
+import data_access.FileOrganizationsDataAccessObject;
+import entities.*;
 import use_case.display.DisplayInputData;
 import use_case.display.DisplayOutputBoundary;
 import use_case.display.DisplayOutputData;
@@ -11,13 +10,13 @@ import use_case.search.SearchPetDataAccessInterface;
 public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary {
     final AdoptUserPreviewOutputBoundary adoptUserPreviewPresenter;
     // TODO: final AdoptUserPreviewDataAccessInterface userDataAccessObject;
-    // TODO: final OrganizationFactory orgFactory;
+    final OrganizationsFactory orgFactory;
 
 
-    public AdoptUserPreviewInteractor(AdoptUserPreviewOutputBoundary adoptUserPreviewOutputBoundary /*, AdoptUserPreviewDataAccessInterface userDAO, OrganizationFactory orgFactory*/) {
+    public AdoptUserPreviewInteractor(AdoptUserPreviewOutputBoundary adoptUserPreviewOutputBoundary /*, AdoptUserPreviewDataAccessInterface userDAO,*/, OrganizationsFactory orgFactory) {
         this.adoptUserPreviewPresenter = adoptUserPreviewOutputBoundary;
         //this.userDataAccessObject = userDAO;
-        //this.orgFactory = orgFactory;
+        this.orgFactory = orgFactory;
     }
 
     @Override
@@ -28,16 +27,24 @@ public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary
         if (!thisPet.getAdoptable()) {
             adoptUserPreviewPresenter.prepareFailView("This pet is no longer adoptable.");
         } else {
-            //Organizations petOrg = userDataAccessObject.getOrg(thisPet);
-            //if (userDataAccessObject.getOrg(thisPet) == null) {
-            //    Organizations newOrg = orgFactory.create(AdoptUserPreviewInputData.getID());
-            //    userDataAccessObject.save(newOrg);
-            //}
+            String orgId = thisPet.getOrganizationID();
 
-            //UserDataAcccessInterface userDAO = new UserDataAccessInterface();
+            // Assumign we have the dao
 
-            Requests newRequest = new Requests(thisPet, /*TODO: check if this is how Cailyn is implementing it and if I can actually use this to get the user that's currently logged in*/ userDAO.getUser(), userMessage, petOrg);
-            //petOrg.addRequest(newRequest);
+            FileOrganizationsDataAccessObject orgData = new FileOrganizationsDataAccessObject();
+            if (orgData.existsByName(orgId)) {
+                Organizations petOrg = orgData.getUsername(orgId);
+                Requests newRequest = new Requests(thisPet, /*TODO: check if this is how Cailyn is implementing it and if I can actually use this to get the user that's currently logged in*/ userDAO.getUser(), userMessage, petOrg);
+                petOrg.addRequest(newRequest);
+                // If the user also has one of these, add later
+            }
+            else {
+                // use the dao here, placeholders for now
+                Organizations petOrg = orgFactory.create(orgId, "1234", "We love pets!");
+                orgData.save(petOrg);
+                Requests newRequest = new Requests(thisPet, /*TODO: check if this is how Cailyn is implementing it and if I can actually use this to get the user that's currently logged in*/ userDAO.getUser(), userMessage, petOrg);
+                petOrg.addRequest(newRequest);
+            }
 
             AdoptUserPreviewOutputData adoptUserPreviewOutputData = new AdoptUserPreviewOutputData(thisPet, false);
             adoptUserPreviewPresenter.prepareSuccessView(adoptUserPreviewOutputData);
