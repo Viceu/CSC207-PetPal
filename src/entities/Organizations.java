@@ -10,7 +10,7 @@ public class Organizations implements User {
     private final String id;
     private ArrayList<Requests> requestList = new ArrayList<Requests>();
 
-    public Organizations(String name, Map<String, Pet> pets, String bio) {
+    public Organizations(String name, String password, String bio) {
         super(name, pets, bio);
         this.id = getOrgID(pets);
     }
