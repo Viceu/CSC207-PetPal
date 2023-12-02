@@ -29,7 +29,7 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
         this.adoptUserPreviewViewModel.addPropertyChangeListener(this);
         this.adoptUserPreviewController = newAdoptUserPreviewController;
 
-        JLabel title = new JLabel(DisplayViewModel.TITLE_LABEL);
+        JLabel title = new JLabel(AdoptUserPreviewViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel userMessageInfo = new LabelTextPanel(
@@ -75,12 +75,13 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
+        this.add(userMessageInfo);
         this.add(next);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayState state = (DisplayState) evt.getNewValue();
+        AdoptUserPreviewState state = (AdoptUserPreviewState) evt.getNewValue();
 
         if (state.getRequirementsError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequirementsError());

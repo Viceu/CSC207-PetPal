@@ -1,7 +1,6 @@
 package entities;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 class PersonalUser implements User{
 
@@ -12,6 +11,7 @@ class PersonalUser implements User{
     private LocalDateTime ltd;
     /**
      * Requires: password is valid.
+     *
      * @param name
      * @param password
      */
@@ -50,4 +50,5 @@ class PersonalUser implements User{
         return ltd;
     }
 
+}
 }
