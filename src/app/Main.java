@@ -5,6 +5,7 @@ import entities.CommonPetFactory;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.DisplayViewModel;
 import interface_adaptor.home.HomeViewModel;
+import interface_adaptor.login.LoginViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
 import use_case.search.SearchPetDataAccessInterface;
@@ -42,6 +43,8 @@ public class Main {
         DisplayViewModel displayViewModel = new DisplayViewModel();
         AdoptUserPreviewViewModel adoptUserPreviewViewModel = new AdoptUserPreviewViewModel();
         HomeViewModel homeViewModel = new HomeViewModel();
+        EditViewModel editViewModel = new EditViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject;
         try {
@@ -60,13 +63,8 @@ public class Main {
         AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel);
         views.add(requestView, requestView.viewName);
 
-        ApiPetDataAccessObject homePetDataAccessObject;
-        try {
-            homePetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, homePetDataAccessObject);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, adoptUserPreviewViewModel,
+                searchViewModel, editViewModel, loginViewModel);
         views.add(homeView, homeView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
