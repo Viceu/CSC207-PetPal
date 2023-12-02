@@ -1,6 +1,9 @@
 package app;
 
+import data_access.ApiPetDataAccessObject;
+import entities.CommonPetFactory;
 import entities.PersonalUserFactory;
+import entities.PetFactory;
 import entities.UserFactory;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.home.HomeViewModel;
@@ -12,6 +15,7 @@ import use_case.login.LoginInputBoundary;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.search.SearchPetDataAccessInterface;
 import view.LoginView;
 
 import javax.swing.*;
@@ -23,11 +27,13 @@ public class LoginUseCaseFactory {
     public static LoginView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            HomeViewModel homeViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) {
+            HomeViewModel homeViewModel, OrgHomeViewModel orgViewModel,
+            LoginUserDataAccessInterface userDataAccessObject,
+            SearchPetDataAccessInterface petDataAccessObject) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, homeViewModel,
+                    orgViewModel, userDataAccessObject, petDataAccessObject);
             return new LoginView(loginViewModel, loginController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -41,14 +47,15 @@ public class LoginUseCaseFactory {
             LoginViewModel loginViewModel,
             HomeViewModel homeViewModel,
             OrgHomeViewModel orgViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) throws IOException {
+            LoginUserDataAccessInterface userDataAccessObject,
+            SearchPetDataAccessInterface petDataAccessObject) throws IOException {
 
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, homeViewModel, orgViewModel, loginViewModel);
 
-        UserFactory userFactory = new PersonalUserFactory();
+        PetFactory petFactory = new CommonPetFactory();
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
+                userDataAccessObject, loginOutputBoundary, petDataAccessObject, petFactory);
 
         return new LoginController(loginInteractor);
     }
