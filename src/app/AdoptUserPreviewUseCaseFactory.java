@@ -1,11 +1,14 @@
 package app;
 
+import data_access.FileOrganizationsDataAccessObject;
+import entities.OrganizationsFactory;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewController;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewPresenter;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.*;
 import interface_adaptor.home.HomeViewModel;
+import use_case.adopt_user_preview.AdoptUserPreviewDataAccessInterface;
 import use_case.adopt_user_preview.AdoptUserPreviewInputBoundary;
 import use_case.adopt_user_preview.AdoptUserPreviewInteractor;
 import use_case.adopt_user_preview.AdoptUserPreviewOutputBoundary;
@@ -19,10 +22,11 @@ public class AdoptUserPreviewUseCaseFactory {
     private AdoptUserPreviewUseCaseFactory() {}
 
     public static AdoptUserPreviewView create(
-            ViewManagerModel viewManagerModel, AdoptUserPreviewViewModel requestViewModel, HomeViewModel homeViewModel) {
+            ViewManagerModel viewManagerModel, AdoptUserPreviewViewModel requestViewModel, HomeViewModel homeViewModel, AdoptUserPreviewDataAccessInterface orgDataAccessObject,
+            OrganizationsFactory organizationsFactory) {
 
         try {
-            AdoptUserPreviewController requestController = createSearchUseCase(viewManagerModel, requestViewModel, homeViewModel);
+            AdoptUserPreviewController requestController = createSearchUseCase(viewManagerModel, requestViewModel, homeViewModel, orgDataAccessObject, organizationsFactory);
             return new AdoptUserPreviewView(requestViewModel, requestController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not send adoption request.");
@@ -30,11 +34,13 @@ public class AdoptUserPreviewUseCaseFactory {
         return null;
     }
 
-    private static AdoptUserPreviewController createSearchUseCase(ViewManagerModel viewManagerModel, AdoptUserPreviewViewModel requestViewModel, HomeViewModel homeViewModel) throws IOException {
+    private static AdoptUserPreviewController createSearchUseCase(ViewManagerModel viewManagerModel,
+                                                                  AdoptUserPreviewViewModel requestViewModel, HomeViewModel homeViewModel, AdoptUserPreviewDataAccessInterface orgDataAccessObject,
+                                                                  OrganizationsFactory organizationsFactory) throws IOException {
 
         AdoptUserPreviewOutputBoundary requestOutputBoundary = new AdoptUserPreviewPresenter(requestViewModel, viewManagerModel, homeViewModel);
 
-        AdoptUserPreviewInputBoundary requestInteractor = new AdoptUserPreviewInteractor(requestOutputBoundary);
+        AdoptUserPreviewInputBoundary requestInteractor = new AdoptUserPreviewInteractor(requestOutputBoundary, orgDataAccessObject, organizationsFactory);
 
         return new AdoptUserPreviewController(requestInteractor);
     }
