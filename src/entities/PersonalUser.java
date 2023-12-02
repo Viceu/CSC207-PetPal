@@ -2,7 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 
-class PersonalUser implements User{
+public class PersonalUser implements User{
 
     private final String name;
     private String password;
