@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class CommonPet implements Pet {
+public class CommonPet implements Pet {
     private final Integer petID;
     private final String organizationID; // null for user pet
     private final String URL; // null for user pet
@@ -25,10 +25,10 @@ class CommonPet implements Pet {
 
     private String owner;
 
-    CommonPet(Integer petID, String organizationID, String URL, String name, List<String> colors,
-              Map<String, String> breed, String species, String coat, String age, Map<String,
+    public CommonPet(Integer petID, String organizationID, String URL, String name, List<String> colors,
+                     Map<String, String> breed, String species, String coat, String age, Map<String,
             Boolean> attributes, Map<String, Boolean> environment, String description, Boolean adoptable,
-              Map<String, String> contact, String gender, String size, String bio, String owner)
+                     Map<String, String> contact, String gender, String size, String bio, String owner)
     {
         this.petID = petID;
         this.organizationID = organizationID;

@@ -3,7 +3,6 @@ package view;
 import interface_adaptor.login.LoginController;
 import interface_adaptor.login.LoginState;
 import interface_adaptor.login.LoginViewModel;
-import interface_adaptor.signup.SignupState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "log in";
@@ -57,9 +58,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             loginController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword()
-                            );
+                                    );
+                            }
                         }
-                    }
                 }
         );
 

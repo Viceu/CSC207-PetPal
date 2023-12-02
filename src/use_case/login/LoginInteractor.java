@@ -2,6 +2,9 @@ package use_case.login;
 
 import entities.User;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;
@@ -19,17 +22,29 @@ public class LoginInteractor implements LoginInputBoundary {
         String password = loginInputData.getPassword();
         if (!userDataAccessObject.existsByName(username)) {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
-        } else {
+        } else { //if the account exists:
             String pwd = userDataAccessObject.get(username).getPassword();
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
-            } else {
+            } else { // if the account exists and the password is correct:
 
                 User user = userDataAccessObject.get(loginInputData.getUsername());
 
-                LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
-                loginPresenter.prepareSuccessView(loginOutputData);
+                // checks if the username is an organizationID
+                String regex = "[0-9]+";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(username);
+                if (m.matches()) {
+                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "organization", false);
+                    loginPresenter.prepareSuccessView(loginOutputData);
+
+                } else {
+                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "user", false);
+                    loginPresenter.prepareSuccessView(loginOutputData);
+
+                }
             }
+
         }
     }
 }
