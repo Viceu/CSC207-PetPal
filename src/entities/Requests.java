@@ -6,20 +6,19 @@ public class Requests {
     //Since most of the traits are TBD will have to be updated when it's decided
     private final Pet pet;
     private final Organizations organization;
-    private final PersonalUser user;
+    private final User user;
     private final String userMessage;
     private String orgMessage;
     private String status;
     private boolean acceptedOrNot;
-    public Requests(Pet pet, PersonalUser user, String message) {
+    public Requests(Pet pet, User user, String message, Organizations organization) {
         this.pet = pet;
         this.user = user;
         this.userMessage = message;
         this.orgMessage = "The organization has not reviewed this request yet.";
         this.status = "Unreviewed";
         this.acceptedOrNot = false;
-        this.organization = null; // TODO: USEDTOSAVEORGS.getOrg(pet.getOrganizationID());
-
+        this.organization = organization;
     }
     public void setStatus(String newStatus) {
         this.status = newStatus;
@@ -28,7 +27,7 @@ public class Requests {
     public Pet getPet() {
         return pet;
     }
-    public PersonalUser getUser() {
+    public User getUser() {
         return user;
     }
 

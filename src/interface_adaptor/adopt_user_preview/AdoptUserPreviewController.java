@@ -10,9 +10,9 @@ public class AdoptUserPreviewController {
         this.adoptUserPreviewUseCaseInteractor = adoptUserPreviewUseCaseInteractor;
     }
 
-    public void execute(Pet thisPet, String userMessage) {
+    public void execute(Pet thisPet, String userMessage, String username) {
 
-        AdoptUserPreviewInputData adoptUserPreviewInputData = new AdoptUserPreviewInputData(thisPet, userMessage);
+        AdoptUserPreviewInputData adoptUserPreviewInputData = new AdoptUserPreviewInputData(thisPet, userMessage, username);
         adoptUserPreviewUseCaseInteractor.execute(adoptUserPreviewInputData);
     }
 }
