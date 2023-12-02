@@ -6,6 +6,7 @@ public class AdoptUserPreviewState {
     private Pet thisPet;
     private String failMessage = null;
     private String userMessage;
+    private String username;
 
     public void setPet(Pet pet) {
         thisPet = pet;
@@ -30,5 +31,12 @@ public class AdoptUserPreviewState {
 
     public String getRequirementsError() {
         return failMessage;
+    }
+
+    public void addUsername(String text) {
+        this.username = text;
+    }
+    public String getUsername() {
+        return username;
     }
 }

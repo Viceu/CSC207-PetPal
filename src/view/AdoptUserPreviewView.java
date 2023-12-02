@@ -20,6 +20,7 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
     private final AdoptUserPreviewViewModel adoptUserPreviewViewModel;
     private final AdoptUserPreviewController adoptUserPreviewController;
     private final JTextField userMessage = new JTextField(15);
+    private final JTextField username = new JTextField(15);
     private final JButton next;
 
 
@@ -54,6 +55,28 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
                     }
                 });
 
+        LabelTextPanel usernameInfo = new LabelTextPanel(
+                new JLabel(AdoptUserPreviewViewModel.USERNAME_LABEL), username);
+
+        username.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        AdoptUserPreviewState currentState = adoptUserPreviewViewModel.getState();
+                        String text = username.getText() + e.getKeyChar();
+                        currentState.addUsername(text);
+                        adoptUserPreviewViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+
 
         next = new JButton(AdoptUserPreviewViewModel.SUBMIT_BUTTON_LABEL);
 
@@ -64,7 +87,7 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
                         if (e.getSource().equals(next)) {
                             AdoptUserPreviewState currentState = adoptUserPreviewViewModel.getState();
 
-                            adoptUserPreviewController.execute(currentState.getPet(), currentState.getUserMessage());
+                            adoptUserPreviewController.execute(currentState.getPet(), currentState.getUserMessage(), currentState.getUsername());
                         }
                     }
                 }
