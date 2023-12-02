@@ -23,11 +23,7 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 
 public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
-    // TODO: usage in Main:
-    //  LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-    //  views.add(loggedInView, loggedInView.viewName);
     public final String viewName = "home";
-
     private final HomeViewModel homeViewModel;
     private final HomeController homeController;
 
