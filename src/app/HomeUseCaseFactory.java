@@ -7,6 +7,7 @@ import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomePresenter;
 import interface_adaptor.home.HomeViewModel;
+import interface_adaptor.login.LoginViewModel;
 import interface_adaptor.search.SearchViewModel;
 import use_case.home.HomeInputBoundary;
 import use_case.home.HomeInteractor;
@@ -40,7 +41,6 @@ public class HomeUseCaseFactory {
                                                     LoginViewModel loginViewModel) throws IOException {
         HomeOutputBoundary homePresenter = new HomePresenter(homeViewModel, viewManagerModel, adoptUserPreviewViewModel,
                 searchViewModel, editViewModel, loginViewModel);
-        PetFactory petFactory = new CommonPetFactory();
         HomeInputBoundary homeInteractor = new HomeInteractor(homePresenter);
         return new HomeController(homeInteractor);
     }
