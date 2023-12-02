@@ -45,7 +45,7 @@ public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary
             }
             else {
                 // use the dao here, placeholders for now
-                Organizations petOrg = orgFactory.create(orgId, "1234", "We love pets!");
+                Organizations petOrg = orgFactory.create(orgId, "1234", "We love pets!", null);
                 userDataAccessObject.save(petOrg);
                 EditInMemoryUserDataAccessObject newUser = new EditInMemoryUserDataAccessObject();
                 Requests newRequest = new Requests(thisPet, newUser.getUser(username), userMessage, petOrg);
