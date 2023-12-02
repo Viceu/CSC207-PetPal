@@ -1,7 +1,12 @@
 package use_case.login;
 
+import entities.Pet;
+import entities.PetFactory;
 import entities.User;
+import use_case.search.SearchPetDataAccessInterface;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,15 +14,30 @@ import java.util.regex.Pattern;
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
+    final SearchPetDataAccessInterface petDataAccessObject;
+    final PetFactory petFactory;
 
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+                           LoginOutputBoundary loginOutputBoundary, SearchPetDataAccessInterface petDataAccessObject, PetFactory petFactory) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.petDataAccessObject = petDataAccessObject;
+        this.petFactory = petFactory;
     }
 
     @Override
     public void execute(LoginInputData loginInputData) {
+        Map<Integer, Pet> displayPetMap = new HashMap<>();
+        Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(null);
+        for (Integer id : resultPetMap.keySet()) {
+            Pet pet = resultPetMap.get(id);
+            if (!pet.getAdoptable()) {
+                continue;
+            }
+            displayPetMap.put(id, pet);
+            petDataAccessObject.save(pet);
+        }
+
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();
         if (!userDataAccessObject.existsByName(username)) {
@@ -35,11 +55,11 @@ public class LoginInteractor implements LoginInputBoundary {
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(username);
                 if (m.matches()) {
-                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "organization", false);
+                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "organization", false, null);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 } else {
-                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "user", false);
+                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "user", false, displayPetMap);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 }
