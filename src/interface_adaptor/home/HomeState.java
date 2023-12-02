@@ -1,12 +1,12 @@
 package interface_adaptor.home;
 
 import entities.Pet;
+import entities.User;
 
 import java.util.Map;
 
 public class HomeState {
-    private String username = "";
-    private String bio = "";
+    private User user;
 
     private String failMessage = null;
     private Map<Integer, Pet> pets;
@@ -14,21 +14,17 @@ public class HomeState {
     public HomeState() {}
 
     public String getUsername() {
-        return username;
+        return user.getName();
     }
     public String getBio() {
-        return bio;
+        return user.getBio();
     }
     public Map<Integer, Pet> getPets() {
         return pets;
     }
 
-    // TODO: call set()s from LoginPresenter
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public void setUserBio(String bio) {
-        this.bio = bio;
+    public void setUser(User user) {
+        this.user = user;
     }
     public void setResults(Map<Integer, Pet> results) {this.pets = results;}
 

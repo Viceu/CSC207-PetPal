@@ -12,8 +12,6 @@ public class HomeViewModel extends ViewModel {
     public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     private User loggedInUser;
-    private String username;
-    private String userBio;
     private HomeState state = new HomeState();
 
     // super = ViewModel
