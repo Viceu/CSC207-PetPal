@@ -1,9 +1,6 @@
 package use_case.home;
 import entities.Pet;
 import entities.PetFactory;
-import use_case.search.SearchInputData;
-import use_case.search.SearchOutputBoundary;
-import use_case.search.SearchOutputData;
 import use_case.search.SearchPetDataAccessInterface;
 
 import java.util.*;
@@ -27,6 +24,7 @@ public class HomeInteractor implements HomeInputBoundary{
     public void execute(HomeInputData homeInputData) {
         Map<Integer, Pet> displayPetMap = new HashMap<>();
         Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(null);
+        String nextView = homeInputData.getNextView();
 
         for (Integer id : resultPetMap.keySet()) {
             Pet pet = resultPetMap.get(id);
@@ -39,13 +37,8 @@ public class HomeInteractor implements HomeInputBoundary{
                 petDataAccessObject.save(pet);
             }
         }
-
-        if (displayPetMap.isEmpty()) {
-            homePresenter.prepareFailView("There are no pets to adopt right now, please check back later.");
-        } else {
-            HomeOutputData homeOutputData = new HomeOutputData(displayPetMap, false);
-            homePresenter.prepareSuccessView(homeOutputData);
-        }
+        HomeOutputData homeOutputData = new HomeOutputData(nextView, displayPetMap, false);
+        homePresenter.prepareSuccessView(homeOutputData);
 
     }
 }

@@ -1,4 +1,5 @@
 package interface_adaptor.home;
+import entities.Pet;
 import use_case.home.HomeInputBoundary;
 import use_case.home.HomeInputData;
 
@@ -11,9 +12,13 @@ public class HomeController {
     }
 
     // displayController has (Pet thisPet) in parameter and creates InputData(thisPet)
-    public void execute(String viewName) {
-        HomeInputData homeInputData = new HomeInputData();
+    public void executeView(String viewName) {
+        HomeInputData homeInputData = new HomeInputData(viewName,null);
+        homeUseCaseInteractor.execute(homeInputData);
+    }
 
+    public void executeRec(Pet thisPet) {
+        HomeInputData homeInputData = new HomeInputData("adopt", thisPet);
         homeUseCaseInteractor.execute(homeInputData);
     }
 }

@@ -41,7 +41,7 @@ public class HomeViewModel extends ViewModel {
         return loggedInUser;
     }
 
-    // TODO: To call from Login Presenter, alongside when HomeState sets username
+    // TODO: To call from Login Presenter prepareSuccessView, alongside when HomeState sets username
     public void setLoggedInUser(String loggedInUser) {
         this.loggedInUser = loggedInUser;
     }

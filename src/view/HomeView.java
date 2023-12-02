@@ -59,7 +59,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(search)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.execute("search");
+                            homeController.executeView("search");
                         }
                     }
                 }
@@ -73,7 +73,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(edit)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.execute("edit");
+                            homeController.executeView("edit");
                         }
                     }
                 }
@@ -87,7 +87,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(logOut)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.execute("logOut");
+                            homeController.executeView("logOut");
                         }
                     }
                 }
@@ -112,8 +112,64 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         HomeState state = (HomeState) evt.getNewValue();
         username.setText(state.getUsername());
+
         if (state.getFetchError() != null) {
             JOptionPane.showMessageDialog(this, state.getFetchError());
         }
+
+        if (this.homeViewModel.getState().getPets() == null) {
+            this.add(new JLabel("There are currently no pets to adopt, please come back later."));
+        }
+        else {
+            ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
+            for (Map.Entry<Integer, Pet> entry : this.homeViewModel.getState().getPets().entrySet()) {
+                LabelButtonPanel newButton = new LabelButtonPanel(
+                        new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
+                buttons.add(newButton);
+            }
+
+            for (LabelButtonPanel button : buttons) {
+                button.addMouseListener(
+                    new MouseListener() {
+                        public void mouseClicked(MouseEvent evt) {
+                            if (evt.getSource().equals(seeMore)) {
+
+                                Pet thisPet = button.getPet();
+
+                                String message = "";
+
+                                for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
+                                    if (attributes.getValue()) {
+                                        String key = attributes.getKey();
+                                        message += key + thisPet.getAll().get(key) + "\n";
+                                    }
+                                }
+
+                                Object[] options = {"Adopt!",
+                                        "Return to search"};
+                                int optionChosen = JOptionPane.showOptionDialog(null, message, null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[1]);
+                                if (optionChosen == 0) {
+                                    homeController.executeRec(thisPet);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {}
+                        @Override
+                        public void mouseReleased(MouseEvent e) {}
+                        @Override
+                        public void mouseEntered(MouseEvent e) {}
+                        @Override
+                        public void mouseExited(MouseEvent e) {}
+                    }
+                );
+            }
+
+            for (LabelButtonPanel someButton : buttons) {
+                this.add(someButton);
+            }
+        }
+
     }
 }
