@@ -6,33 +6,35 @@ import java.util.Map;
 
 public class HomeState {
     private String username = "";
+    private String bio = "";
 
     private String failMessage = null;
     private Map<Integer, Pet> pets;
 
-    public HomeState(HomeState copy) {
-        username = copy.username;
-    }
-
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public HomeState() {}
 
     public String getUsername() {
         return username;
     }
-
-    // TODO: call from LoginPresenter
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setHomeFailMessage(String failmessage) {this.failMessage = failmessage;}
-    public Object getFetchError() {
-        return failMessage;
+    public String getBio() {
+        return bio;
     }
     public Map<Integer, Pet> getPets() {
         return pets;
     }
-    public void setResults(Map<Integer, Pet> results) {
+
+    // TODO: call set()s from LoginPresenter
+    public void setUsername(String username) {
+        this.username = username;
     }
+    public void setUserBio(String bio) {
+        this.bio = bio;
+    }
+    public void setResults(Map<Integer, Pet> results) {this.pets = results;}
+
+    public void setHomeFailMessage(String failMessage) {this.failMessage = failMessage;}
+    public Object getFetchError() {
+        return failMessage;
+    }
+
 }

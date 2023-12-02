@@ -10,7 +10,7 @@ public class OrganizationsFactory implements UserFactory {
      * @return
      */
     @Override
-    public User create(String name, String password, String bio) {
+    public Organizations create(String name, String password, String bio) {
         return new Organizations(name, password, bio);
     }
 }
