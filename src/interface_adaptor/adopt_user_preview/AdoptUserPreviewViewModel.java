@@ -9,6 +9,7 @@ import java.beans.PropertyChangeSupport;
 public class AdoptUserPreviewViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Submit your request to adopt!";
     public static final String SUBMIT_BUTTON_LABEL = "Submit Request!";
+    public static final String MESSAGE_LABEL = "If you would like to send a message to the organization, please type it here: ";
     private AdoptUserPreviewState state = new AdoptUserPreviewState();
 
     public AdoptUserPreviewViewModel() {
