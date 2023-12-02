@@ -10,8 +10,8 @@ public class PersonalUserFactory implements UserFactory{
      * @return
      */
     @Override
-    public User create(String name, String password, Map<String, Pet> pets, String bio, LocalDateTime ltd) {
-        return new PersonalUser(name, password, pets, bio, ltd);
+    public User create(String name, String password, String bio, LocalDateTime ltd) {
+        return new PersonalUser(name, password, bio, ltd);
     }
 
 }

@@ -44,11 +44,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
-                    Map pets = new HashMap();
                     String bio = "";
                     String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, pets, bio, ldt);
+                    User user = userFactory.create(username, password, bio, ldt);
                     accounts.put(username, user);
                 }
             }
