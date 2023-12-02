@@ -35,10 +35,6 @@ public class HomeViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
-
-
-    // TODO: To call from Login Presenter prepareSuccessView, alongside when HomeState sets username
     public void setUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
