@@ -16,7 +16,7 @@ public class DisplayInteractor implements DisplayInputBoundary {
     public void execute(DisplayInputData displayInputData) {
         Pet thisPet = displayInputData.getPet();
 
-        if (thisPet.getAdoptable()) {
+        if (!thisPet.getAdoptable()) {
             displayPresenter.prepareFailView("This pet is no longer adoptable.");
         } else {
             DisplayOutputData displayOutputData = new DisplayOutputData(thisPet, false);

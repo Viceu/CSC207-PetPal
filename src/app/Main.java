@@ -4,11 +4,11 @@ import data_access.ApiPetDataAccessObject;
 import entities.CommonPetFactory;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.DisplayViewModel;
+import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
-import view.DisplayView;
-import view.SearchView;
-import view.ViewManager;
+import use_case.search.SearchPetDataAccessInterface;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +41,7 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         DisplayViewModel displayViewModel = new DisplayViewModel();
         AdoptUserPreviewViewModel adoptUserPreviewViewModel = new AdoptUserPreviewViewModel();
+        HomeViewModel homeViewModel = new HomeViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject;
         try {
@@ -55,6 +56,18 @@ public class Main {
 
         DisplayView displayView = DisplayUseCaseFactory.create(viewManagerModel, displayViewModel, adoptUserPreviewViewModel);
         views.add(displayView, displayView.viewName);
+
+        AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel);
+        views.add(requestView, requestView.viewName);
+
+        ApiPetDataAccessObject homePetDataAccessObject;
+        try {
+            homePetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, homePetDataAccessObject);
+        views.add(homeView, homeView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
         viewManagerModel.firePropertyChanged();
