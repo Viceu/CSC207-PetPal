@@ -36,9 +36,8 @@ public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary
 
             // Assumign we have the dao
 
-            FileOrganizationsDataAccessObject orgData = new FileOrganizationsDataAccessObject();
-            if (orgData.existsByName(orgId)) {
-                Organizations petOrg = orgData.getUsername(orgId);
+            if (userDataAccessObject.existsByName(orgId)) {
+                Organizations petOrg = userDataAccessObject.getUsername(orgId);
                 EditInMemoryUserDataAccessObject newUser = new EditInMemoryUserDataAccessObject();
                 Requests newRequest = new Requests(thisPet, newUser.getUser(username), userMessage, petOrg);
                 petOrg.addRequest(newRequest);
@@ -47,7 +46,7 @@ public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary
             else {
                 // use the dao here, placeholders for now
                 Organizations petOrg = orgFactory.create(orgId, "1234", "We love pets!");
-                orgData.save(petOrg);
+                userDataAccessObject.save(petOrg);
                 EditInMemoryUserDataAccessObject newUser = new EditInMemoryUserDataAccessObject();
                 Requests newRequest = new Requests(thisPet, newUser.getUser(username), userMessage, petOrg);
                 petOrg.addRequest(newRequest);
