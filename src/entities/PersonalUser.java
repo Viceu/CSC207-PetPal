@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Map;
 
-class PersonalUser implements User{
+public class PersonalUser implements User{
 
     private final String name;
     private String password;
