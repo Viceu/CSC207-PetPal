@@ -5,26 +5,22 @@ import java.util.Map;
 
 public class Organizations implements User {
     private final String name;
-    private final Map<String, Pet> pets;
-    private String bio;
-    private final String id;
+
     private String password;
+    private String bio;
+
     private ArrayList<Requests> requestList = new ArrayList<Requests>();
 
-    public Organizations(String name, Map<String, Pet> pets, String bio) {
+    public Organizations(String name, String password, String bio) {
         this.name = name;
-        this.pets = pets;
+        this.password = password; // org is automatically created with password: "1234"
         this.bio = bio;
-        this.password = "1234";
-        this.id = getOrgID(pets);
     }
     private String getOrgID(Map<String, Pet> pets) {
         Pet firstPet = (Pet) pets.values().toArray()[0];
         return firstPet.getOrganizationID();
     }
-    public void add_pets(Pet pet) {
-        pets.put(pet.getName(), pet);
-    }
+
     public void addRequest(Requests request) {
         requestList.add(request);
     }
@@ -53,20 +49,6 @@ public class Organizations implements User {
     @Override
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    @Override
-    public Map<String, Pet> getPets() {
-        return pets;
-    }
-
-    @Override
-    public String getPetsNames() {
-        String petNames = "";
-        for (Map.Entry<String, Pet> entry : pets.entrySet()) {
-            petNames += entry.getValue().getName();
-        }
-        return petNames;
     }
 
     public void acceptRequest(Requests request, String message) {
