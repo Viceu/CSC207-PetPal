@@ -12,7 +12,6 @@ public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary
     // TODO: final AdoptUserPreviewDataAccessInterface userDataAccessObject;
     final OrganizationsFactory orgFactory;
 
-
     public AdoptUserPreviewInteractor(AdoptUserPreviewOutputBoundary adoptUserPreviewOutputBoundary /*, AdoptUserPreviewDataAccessInterface userDAO,*/, OrganizationsFactory orgFactory) {
         this.adoptUserPreviewPresenter = adoptUserPreviewOutputBoundary;
         //this.userDataAccessObject = userDAO;
