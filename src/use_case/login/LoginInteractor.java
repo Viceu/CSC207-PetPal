@@ -55,11 +55,11 @@ public class LoginInteractor implements LoginInputBoundary {
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(username);
                 if (m.matches()) {
-                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "organization", false, null);
+                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "organization", false, null, user);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 } else {
-                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "user", false, displayPetMap);
+                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "user", false, displayPetMap, user);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 }
