@@ -57,8 +57,8 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                                 Object[] options = {"Accept request",
                                         "Deny request", "Return to list of requests"};
                                 int optionChosen = JOptionPane.showOptionDialog(null, req.toString(), null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
-                                if (optionChosen != 2) {
-                                    orgHomeController.execute("see request", req);
+                                if (optionChosen != JOptionPane.CANCEL_OPTION) {
+                                    orgHomeController.execute("see request", req, optionChosen);
                                 }
                             }
                         }
@@ -93,7 +93,7 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                         if (evt.getSource().equals(logOut)) {
 
                             OrgHomeState currentState = orgHomeViewModel.getState();
-                            orgHomeController.execute("log out", null);
+                            orgHomeController.execute("log out", null, null);
                         }
                     }
                 }
