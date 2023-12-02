@@ -13,6 +13,7 @@ public class HomeViewModel extends ViewModel {
     public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     private String loggedInUser;
+    private String userBio;
     private HomeState state = new HomeState();
 
     // super = ViewModel
@@ -46,4 +47,8 @@ public class HomeViewModel extends ViewModel {
         this.loggedInUser = loggedInUser;
     }
 
+    public void setUserBio(String userBio) {
+        this.userBio = userBio;
+    }
+    public String getUserBio() {return userBio;}
 }
