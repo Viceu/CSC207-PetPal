@@ -1,24 +1,24 @@
 package app;
 
+import data_access.FileUserDataAccessObject;
+import entities.PersonalUserFactory;
+import interface_adaptor.login.LoginViewModel;
+import interface_adaptor.signup.SignupViewModel;
 import data_access.ApiPetDataAccessObject;
 import data_access.FileOrganizationsDataAccessObject;
-import data_access.FileUserDataAccessObject;
 import entities.CommonPetFactory;
 import entities.OrganizationsFactory;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.DisplayViewModel;
 import interface_adaptor.home.HomeViewModel;
-import interface_adaptor.login.LoginViewModel;
 import interface_adaptor.org_adopt.OrgHomeViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
-import use_case.search.SearchPetDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -43,6 +43,7 @@ public class Main {
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
+        SignupViewModel signupViewModel = new SignupViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         DisplayViewModel displayViewModel = new DisplayViewModel();
         AdoptUserPreviewViewModel adoptUserPreviewViewModel = new AdoptUserPreviewViewModel();
@@ -65,7 +66,21 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        FileUserDataAccessObject userDataAccessObject;
+        try {
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new PersonalUserFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         OrganizationsFactory organizationsFactory = new OrganizationsFactory();
+
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        views.add(signupView, signupView.viewName);
+
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, orgHomeViewModel,
+                userDataAccessObject, apiPetDataAccessObject);
+        views.add(loginView, loginView.viewName);
 
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, displayViewModel,
                 apiPetDataAccessObject);

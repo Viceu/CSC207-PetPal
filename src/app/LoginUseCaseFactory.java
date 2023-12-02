@@ -4,7 +4,7 @@ import entities.CommonPetFactory;
 import entities.PetFactory;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.home.HomeViewModel;
-import interface_adaptor.organization.OrgHomeViewModel;
+import interface_adaptor.org_adopt.OrgHomeViewModel;
 import interface_adaptor.login.LoginController;
 import interface_adaptor.login.LoginPresenter;
 import interface_adaptor.login.LoginViewModel;
