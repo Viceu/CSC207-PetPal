@@ -18,7 +18,7 @@ public class Requests {
         this.orgMessage = "The organization has not reviewed this request yet.";
         this.status = "Unreviewed";
         this.acceptedOrNot = false;
-        this.organization = USEDTOSAVEORGS.getOrg(pet.getOrganizationID());
+        this.organization = null; // TODO: USEDTOSAVEORGS.getOrg(pet.getOrganizationID());
 
     }
     public void setStatus(String newStatus) {
@@ -32,7 +32,7 @@ public class Requests {
         return user;
     }
 
-    public void setMessage(String message) {
+    public void setOrgMessage(String message) {
         this.orgMessage = message;
     }
     public String toString() {
