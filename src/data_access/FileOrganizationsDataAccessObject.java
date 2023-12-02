@@ -21,10 +21,6 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
 
     private OrganizationsFactory organizationsFactory;
 
-    public FileOrganizationsDataAccessObject(File csvFile) {
-        this.csvFile = csvFile;
-    }
-
     public FileOrganizationsDataAccessObject(String csvPath, OrganizationsFactory organizationsFactory) throws IOException {
         this.organizationsFactory = organizationsFactory;
 
