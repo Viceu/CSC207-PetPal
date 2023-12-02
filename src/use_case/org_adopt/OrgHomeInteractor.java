@@ -1,5 +1,6 @@
 package use_case.org_adopt;
 
+import entities.Organizations;
 import entities.Requests;
 import use_case.home.HomeOutputData;
 
@@ -15,21 +16,25 @@ public class OrgHomeInteractor implements OrgHomeInputBoundary {
     public void execute(OrgHomeInputData orgHomeInputData) {
         Integer optionChosen = orgHomeInputData.getChosenOption();
         Requests request = orgHomeInputData.getRequest();
+        Organizations org = request.getOrganization();
 
         if (request == null) {
             orgHomePresenter.prepareFailView("There are no requests to view right now");
         } else {
-            if (optionChosen == JOptionPane.YES_OPTION) {
+            OrgHomeOutputData orgHomeOutputData = new OrgHomeOutputData(request,false);
 
+            if (optionChosen == JOptionPane.YES_OPTION) {
+                org.acceptRequest(request, "We've accepted your adoption request :) !");
+                orgHomeOutputData.setViewName("org home");
             }
             else if (optionChosen == JOptionPane.NO_OPTION) {
-
+                org.rejectRequest(request, "We've decided to unfortunately reject your request :(");
+                orgHomeOutputData.setViewName("org home");
             }
             else {
-                // return to the login screen
+               orgHomeOutputData.setViewName("log in");
             }
 
-            OrgHomeOutputData orgHomeOutputData = new OrgHomeOutputData( request,false);
             orgHomePresenter.prepareSuccessView(orgHomeOutputData);
         }
     }

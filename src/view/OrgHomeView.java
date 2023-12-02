@@ -41,8 +41,10 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
         this.add(title);
         this.add(username);
 
+        JLabel pendingRequests = new JLabel("See pending requests");
+        this.add(pendingRequests);
         ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
-        for (Requests req: this.orgHomeViewModel.getState().getRequestList()) {
+        for (Requests req: this.orgHomeViewModel.getState().getPendingRequests()) {
 
             JButton seeRequest = new JButton("See request");
             LabelButtonPanel newButton = new LabelButtonPanel(
@@ -53,7 +55,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                     new MouseListener() {
                         public void mouseClicked(MouseEvent evt) {
                             if (evt.getSource().equals(seeRequest)) {
-
                                 Object[] options = {"Accept request",
                                         "Deny request", "Return to list of requests"};
                                 int optionChosen = JOptionPane.showOptionDialog(null, req.toString(), null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
@@ -85,14 +86,24 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
             this.add(someButton);
         }
 
+        JLabel acceptedRequests = new JLabel("These are the requests you have accepted!");
+        this.add(acceptedRequests);
+        for (Requests req: this.orgHomeViewModel.getState().getAcceptedRequests()) {
+            this.add(new JLabel(req.toString()));
+        }
+
+        JLabel deniedRequests = new JLabel("These are the requests you have denied!");
+        this.add(deniedRequests);
+        for (Requests req: this.orgHomeViewModel.getState().getDeniedRequests()) {
+            this.add(new JLabel(req.toString()));
+        }
+
         logOut = new JButton(OrgHomeViewModel.LOGOUT_BUTTON_LABEL);
         this.add(logOut);
         logOut.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logOut)) {
-
-                            OrgHomeState currentState = orgHomeViewModel.getState();
                             orgHomeController.execute("log out", null, null);
                         }
                     }
