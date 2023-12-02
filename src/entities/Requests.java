@@ -30,11 +30,16 @@ public class Requests {
     public User getUser() {
         return user;
     }
-
+    public Organizations getOrganization() {return organization;}
     public void setOrgMessage(String message) {
         this.orgMessage = message;
     }
+    public String getStatus() {return status;}
     public String toString() {
         return "Pet: " + pet.getName() + "\n" + "Organization: " + organization.getName() + "\n" + "User: " + user.getName() + "\n" + "User's message: " + userMessage + "\n" + "Organization's message: " + orgMessage;
+    }
+
+    public boolean getAcceptedOrNot() {
+        return acceptedOrNot;
     }
 }
