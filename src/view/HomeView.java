@@ -1,6 +1,7 @@
 package view;
 
 import entities.Pet;
+import entities.User;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomeState;
 import interface_adaptor.home.HomeViewModel;
@@ -49,7 +50,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel(homeViewModel.getLoggedInUser());
+        username = new JLabel(homeViewModel.getUsername());
         bio = new JLabel(homeViewModel.getUserBio());
 
         JPanel buttons = new JPanel();
@@ -61,7 +62,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(search)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.executeView("search");
+                            homeController.execute("search", null, null);
                         }
                     }
                 }
@@ -75,7 +76,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(edit)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.executeView("edit");
+                            User user = homeViewModel.getUser();
+                            homeController.execute("edit", user, null);
                         }
                     }
                 }
@@ -89,7 +91,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(logOut)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.executeView("logOut");
+                            homeController.execute("logOut", null, null);
                         }
                     }
                 }
@@ -128,7 +130,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
             ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
             for (Map.Entry<Integer, Pet> entry : this.homeViewModel.getState().getPets().entrySet()) {
                 LabelButtonPanel newButton = new LabelButtonPanel(
-                        new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()), seeMore, entry.getValue());
+                        new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()),
+                        seeMore, entry.getValue());
                 buttons.add(newButton);
             }
 
@@ -151,9 +154,10 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
                                 Object[] options = {"Adopt!",
                                         "Return to search"};
-                                int optionChosen = JOptionPane.showOptionDialog(null, message, null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[1]);
+                                int optionChosen = JOptionPane.showOptionDialog(null, message,
+                                        null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[1]);
                                 if (optionChosen == 0) {
-                                    homeController.executeRec(thisPet);
+                                    homeController.execute("adopt", null, thisPet);
                                 }
                             }
                         }

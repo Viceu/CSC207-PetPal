@@ -1,7 +1,6 @@
 package interface_adaptor.home;
-
 import interface_adaptor.ViewModel;
-import view.HomeView;
+import entities.User;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -12,7 +11,8 @@ public class HomeViewModel extends ViewModel {
     public static final String EDIT_BUTTON_LABEL = "Edit Profile";
     public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
-    private String loggedInUser;
+    private User loggedInUser;
+    private String username;
     private String userBio;
     private HomeState state = new HomeState();
 
@@ -38,17 +38,16 @@ public class HomeViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public String getLoggedInUser() {
-        return loggedInUser;
-    }
+
 
     // TODO: To call from Login Presenter prepareSuccessView, alongside when HomeState sets username
-    public void setLoggedInUser(String loggedInUser) {
+    public void setUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
 
-    public void setUserBio(String userBio) {
-        this.userBio = userBio;
+    public User getUser() {
+        return loggedInUser;
     }
-    public String getUserBio() {return userBio;}
+    public String getUserBio() {return loggedInUser.getBio();}
+    public String getUsername() {return loggedInUser.getName();}
 }

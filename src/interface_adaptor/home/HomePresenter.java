@@ -2,6 +2,7 @@ package interface_adaptor.home;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewState;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
+import interface_adaptor.search.SearchState;
 import interface_adaptor.search.SearchViewModel;
 import use_case.home.HomeOutputBoundary;
 import use_case.home.HomeOutputData;
@@ -11,15 +12,19 @@ public class HomePresenter implements HomeOutputBoundary{
     private final HomeViewModel homeViewModel;
     private final ViewManagerModel viewManagerModel;
     private final AdoptUserPreviewViewModel adoptUserPreviewViewModel;
+    private final SearchViewModel searchViewModel;
+    private final EditViewModel editViewModel;
+    private final LoginViewModel loginViewModel;
 
-    //private final DisplayViewModel resultViewModel;
-
-    public HomePresenter(HomeViewModel homeViewModel,
-                           ViewManagerModel viewManagerModel,
-                         AdoptUserPreviewViewModel adoptUserPreviewViewModel) {
+    public HomePresenter(HomeViewModel homeViewModel, ViewManagerModel viewManagerModel,
+                         AdoptUserPreviewViewModel adoptUserPreviewViewModel,
+                         SearchViewModel searchViewModel, EditViewModel editViewModel, LoginViewModel loginViewModel) {
         this.homeViewModel = homeViewModel;
         this.viewManagerModel = viewManagerModel;
         this.adoptUserPreviewViewModel = adoptUserPreviewViewModel;
+        this.searchViewModel = searchViewModel;
+        this.editViewModel = editViewModel;
+        this.loginViewModel = loginViewModel;
     }
 
     @Override
@@ -35,20 +40,20 @@ public class HomePresenter implements HomeOutputBoundary{
             viewManagerModel.setActiveView(adoptUserPreviewViewModel.getViewName());
         }
         else if(nextView.equals("search")) {
-            SearchViewModel newState = searchViewModel.getState();
+            SearchState newState = searchViewModel.getState();
             this.searchViewModel.setState(newState);
             searchViewModel.firePropertyChanged();
             viewManagerModel.setActiveView(searchViewModel.getViewName());
         }
         else if(nextView.equals("edit")) {
-            EditViewModel newState = editViewModel.getState();
+            EditState newState = editViewModel.getState();
             newState.setUser(result.getUser());
             this.editViewModel.setState(newState);
             editViewModel.firePropertyChanged();
             viewManagerModel.setActiveView(editViewModel.getViewName());
         }
         else if(nextView.equals("logout")) {
-            LoginViewModel newState = loginViewModel.getState();
+            LoginState newState = loginViewModel.getState();
             this.loginViewModel.setState(newState);
             loginViewModel.firePropertyChanged();
             viewManagerModel.setActiveView(loginViewModel.getViewName());

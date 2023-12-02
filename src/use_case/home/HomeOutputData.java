@@ -1,35 +1,27 @@
 package use_case.home;
 import entities.Pet;
+import entities.User;
 
 import java.util.Map;
 
 public class HomeOutputData {
     private final String nextView;
-    private final Map<Integer, Pet> results;
-
+    private final Pet thisPet;
+    private final User thisUser;
     private boolean searchFail;
 
-    public HomeOutputData(String nextView, Map<Integer, Pet> results, boolean searchFail) {
+    public HomeOutputData(String nextView, Pet thisPet, User thisUser, boolean searchFail) {
         this.nextView = nextView;
-        this.results = results;
+        this.thisPet = thisPet;
+        this.thisUser = thisUser;
         this.searchFail = searchFail;
     }
 
-    public Map<Integer, Pet> getResults() {
-        return results;
-    }
+    public Pet getPet() {return thisPet;}
 
     public String getNextView() {
         return nextView;
     }
 
-//    private final Pet thisPet;
-//    public Pet getPet() {return thisPet;}
-//
-//    private boolean searchFail;
-//
-//    public HomeOutputData(Pet thisPet, boolean searchFail) {
-//        this.thisPet = thisPet;
-//        this.searchFail = searchFail;
-//    }
+    public User getUser() {return thisUser;}
 }
