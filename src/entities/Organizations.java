@@ -48,7 +48,7 @@ public class Organizations implements User {
 
     @Override
     public LocalDateTime getCreationTime() {
-        return null;
+        return date;
     }
 
     public void acceptRequest(Requests request, String message) {

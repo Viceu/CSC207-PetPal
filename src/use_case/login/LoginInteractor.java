@@ -52,7 +52,7 @@ public class LoginInteractor implements LoginInputBoundary {
                 User user = userDataAccessObject.get(loginInputData.getUsername());
 
                 // checks if the username is an organizationID
-                String regex = "[0-9]+";
+                String regex = "[A-Z][A-Z][0-9]+";
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(username);
                 if (m.matches()) {
