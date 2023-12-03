@@ -1,13 +1,10 @@
 package app;
 
-import data_access.ApiPetDataAccessObject;
 import entities.CommonPetFactory;
-import entities.PersonalUserFactory;
 import entities.PetFactory;
-import entities.UserFactory;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.home.HomeViewModel;
-import interface_adaptor.organization.OrgHomeViewModel;
+import interface_adaptor.org_adopt.OrgHomeViewModel;
 import interface_adaptor.login.LoginController;
 import interface_adaptor.login.LoginPresenter;
 import interface_adaptor.login.LoginViewModel;
@@ -20,6 +17,7 @@ import view.LoginView;
 
 import javax.swing.*;
 import java.io.IOException;
+
 public class LoginUseCaseFactory {
 
     private LoginUseCaseFactory() {}

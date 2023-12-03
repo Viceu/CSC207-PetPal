@@ -3,8 +3,6 @@ package interface_adaptor.login;
 
 import use_case.login.LoginInputData;
 import use_case.login.LoginInputBoundary;
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInputData;
 
 public class LoginController {
     final LoginInputBoundary loginUseCaseInteractor;
