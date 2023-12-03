@@ -11,25 +11,23 @@ public class HomeInteractor implements HomeInputBoundary{
 
     @Override
     public void execute(HomeInputData homeInputData) {
+        String nextView = homeInputData.getNextView();
         if (homeInputData.getPet() != null) {
             Pet thisPet = homeInputData.getPet();
             if (!thisPet.getAdoptable()) {
                 homePresenter.prepareFailView("This pet is no longer adoptable, sorry.");
             } else {
-                String nextView = homeInputData.getNextView();
                 HomeOutputData homeOutputData = new HomeOutputData(nextView, thisPet, null, false);
                 homePresenter.prepareSuccessView(homeOutputData);
             }
         }
-        else if (homeInputData.getUser() != null) {
+        else if (nextView.equals("edit")) {
             User user = homeInputData.getUser();
-            String nextView = homeInputData.getNextView();
             HomeOutputData homeOutputData = new HomeOutputData(nextView, null, user, false);
             homePresenter.prepareSuccessView(homeOutputData);
         }
         else{
-            String nextView = homeInputData.getNextView();
-            if(nextView.equals("search") || nextView.equals("logout")) {
+            if(nextView.equals("search") || nextView.equals("logOut")) {
                 HomeOutputData homeOutputData = new HomeOutputData(nextView, null, null, false);
                 homePresenter.prepareSuccessView(homeOutputData);
             } else{
