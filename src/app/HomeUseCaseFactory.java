@@ -25,14 +25,9 @@ public class HomeUseCaseFactory {
                                   AdoptUserPreviewViewModel adoptUserPreviewViewModel,
                                   SearchViewModel searchViewModel, EditViewModel editViewModel,
                                   LoginViewModel loginViewModel) {
-        try {
-            HomeController homeController = createHomeUseCase(viewManagerModel, homeViewModel,
-                    adoptUserPreviewViewModel, searchViewModel, editViewModel, loginViewModel);
-            return new HomeView(homeController, homeViewModel);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open access adopt page.");
-        }
-        return null;
+        HomeController homeController = createHomeUseCase(viewManagerModel, homeViewModel,
+                adoptUserPreviewViewModel, searchViewModel, editViewModel, loginViewModel);
+        return new HomeView(homeController, homeViewModel);
     }
 
     private static HomeController createHomeUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,

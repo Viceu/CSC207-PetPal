@@ -17,7 +17,7 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
     private PetFactory petFactory;
 
-    public ApiPetDataAccessObject(PetFactory petFactory) throws IOException {
+    public ApiPetDataAccessObject(PetFactory petFactory){
         this.petFactory = petFactory;
     }
 

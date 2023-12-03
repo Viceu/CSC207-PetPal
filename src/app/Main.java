@@ -46,12 +46,7 @@ public class Main {
         EditViewModel editViewModel = new EditViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
 
-        ApiPetDataAccessObject apiPetDataAccessObject;
-        try {
-            apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        ApiPetDataAccessObject apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
 
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, displayViewModel,
                 apiPetDataAccessObject);
