@@ -5,6 +5,7 @@ import entities.PetFactory;
 import entities.User;
 import use_case.search.SearchPetDataAccessInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -28,7 +29,7 @@ public class LoginInteractor implements LoginInputBoundary {
     @Override
     public void execute(LoginInputData loginInputData) {
         Map<Integer, Pet> displayPetMap = new HashMap<>();
-        Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(null);
+        Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(new HashMap<>());
         for (Integer id : resultPetMap.keySet()) {
             Pet pet = resultPetMap.get(id);
             if (!pet.getAdoptable()) {
