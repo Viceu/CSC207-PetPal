@@ -10,10 +10,13 @@ public class Organizations implements User {
     private String bio;
     private ArrayList<Requests> requestList = new ArrayList<Requests>();
 
-    public Organizations(String name, String password, String bio) {
+    private LocalDateTime date;
+
+    public Organizations(String name, String password, String bio, LocalDateTime date) {
         this.name = name;
         this.password = password; // org is automatically created with password: "1234"
         this.bio = bio;
+        this.date = date;
     }
 
     public void addRequest(Requests request) {
@@ -45,7 +48,7 @@ public class Organizations implements User {
 
     @Override
     public LocalDateTime getCreationTime() {
-        return null;
+        return date;
     }
 
     public void acceptRequest(Requests request, String message) {

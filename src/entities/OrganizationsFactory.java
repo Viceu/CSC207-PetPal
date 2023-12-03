@@ -11,6 +11,6 @@ public class OrganizationsFactory implements UserFactory {
      */
     @Override
     public Organizations create(String name, String password, String bio, LocalDateTime date) {
-        return new Organizations(name, password, bio);
+        return new Organizations(name, password, bio, date);
     }
 }
