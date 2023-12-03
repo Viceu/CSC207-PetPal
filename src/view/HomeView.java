@@ -29,9 +29,9 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
     JLabel username;
     JLabel bio;
-    final JButton logOut;
-    final JButton edit;
-    private final JButton search;
+    JButton logOut;
+    JButton edit;
+    private JButton search;
     private final JButton seeMore = new JButton("See more");
     private final JButton adopt = new JButton("Adopt!");
 
@@ -45,9 +45,27 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        JOptionPane.showConfirmDialog(this, "This is not implemented yet.");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        HomeState state = (HomeState) evt.getNewValue();
+
         JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel(homeViewModel.getUsername());
         bio = new JLabel(homeViewModel.getUserBio());
+        username.setText(state.getUsername());
+        bio.setText(state.getBio());
 
         JPanel buttons = new JPanel();
         search = new JButton(HomeViewModel.SEARCH_BUTTON_LABEL);
@@ -93,27 +111,10 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
-
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
         this.add(usernameInfo);
         this.add(username);
         this.add(bio);
         this.add(buttons);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "This is not implemented yet.");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        HomeState state = (HomeState) evt.getNewValue();
-        username.setText(state.getUsername());
-        bio.setText(state.getBio());
 
         if (state.getFetchError() != null) {
             JOptionPane.showMessageDialog(this, state.getFetchError());
@@ -123,15 +124,15 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
             this.add(new JLabel("There are currently no pets to adopt, please come back later."));
         }
         else {
-            ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
+            ArrayList<LabelButtonPanel> petButtons = new ArrayList<LabelButtonPanel>();
             for (Map.Entry<Integer, Pet> entry : this.homeViewModel.getState().getPets().entrySet()) {
                 LabelButtonPanel newButton = new LabelButtonPanel(
                         new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()),
                         seeMore, entry.getValue());
-                buttons.add(newButton);
+                petButtons.add(newButton);
             }
 
-            for (LabelButtonPanel button : buttons) {
+            for (LabelButtonPanel button : petButtons) {
                 button.addMouseListener(
                     new MouseListener() {
                         public void mouseClicked(MouseEvent evt) {
@@ -170,7 +171,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                 );
             }
 
-            for (LabelButtonPanel someButton : buttons) {
+            for (LabelButtonPanel someButton : petButtons) {
                 this.add(someButton);
             }
         }
