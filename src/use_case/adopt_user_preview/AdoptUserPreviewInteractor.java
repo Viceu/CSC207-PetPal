@@ -11,6 +11,8 @@ import use_case.display.DisplayOutputBoundary;
 import use_case.display.DisplayOutputData;
 import use_case.search.SearchPetDataAccessInterface;
 
+import java.time.LocalDateTime;
+
 public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary {
     final AdoptUserPreviewOutputBoundary adoptUserPreviewPresenter;
     final AdoptUserPreviewDataAccessInterface userDataAccessObject;
@@ -45,7 +47,7 @@ public class AdoptUserPreviewInteractor implements AdoptUserPreviewInputBoundary
             }
             else {
                 // use the dao here, placeholders for now
-                Organizations petOrg = orgFactory.create(orgId, "1234", "We love pets!", null);
+                Organizations petOrg = orgFactory.create(orgId, "1234", "We love pets!", LocalDateTime.now());
                 userDataAccessObject.save(petOrg);
                 EditInMemoryUserDataAccessObject newUser = new EditInMemoryUserDataAccessObject();
                 Requests newRequest = new Requests(thisPet, newUser.getUser(username), userMessage, petOrg);
