@@ -52,12 +52,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         OrgHomeViewModel orgHomeViewModel = new OrgHomeViewModel();
 
-        ApiPetDataAccessObject apiPetDataAccessObject;
-        try {
-            apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        ApiPetDataAccessObject apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
 
         FileOrganizationsDataAccessObject fileOrganizationsDataAccessObject;
         try {
