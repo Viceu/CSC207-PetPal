@@ -48,54 +48,78 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         JLabel pendingRequests = new JLabel("See pending requests");
         this.add(pendingRequests);
-        for (Requests req: this.orgHomeViewModel.getState().getOrg().getPendingRequests()) {
-            JButton seeRequest = new JButton("See request");
-            LabelButtonPanel newButton = new LabelButtonPanel(
-                    new JLabel(req.getPet().getName()), seeRequest, null);
 
-            seeRequest.addMouseListener(
-                    new MouseListener() {
-                        public void mouseClicked(MouseEvent evt) {
-                            if (evt.getSource().equals(seeRequest)) {
-                                Object[] options = {"Accept request",
-                                        "Deny request", "Return to list of requests"};
-                                int optionChosen = JOptionPane.showOptionDialog(null, "req.toString()", null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
-                                if (optionChosen != JOptionPane.CANCEL_OPTION) {
-                                    orgHomeController.execute("see request", req, optionChosen);
+        ArrayList<Requests> pendingReqs = this.orgHomeViewModel.getState().getOrg().getPendingRequests();
+        if (!pendingReqs.isEmpty()) {
+            for (Requests req : pendingReqs) {
+                JButton seeRequest = new JButton("See request");
+                LabelButtonPanel newButton = new LabelButtonPanel(
+                        new JLabel(req.getPet().getName()), seeRequest, null);
+
+                seeRequest.addMouseListener(
+                        new MouseListener() {
+                            public void mouseClicked(MouseEvent evt) {
+                                if (evt.getSource().equals(seeRequest)) {
+                                    Object[] options = {"Accept request",
+                                            "Deny request", "Return to list of requests"};
+                                    int optionChosen = JOptionPane.showOptionDialog(null, "req.toString()", null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
+                                    if (optionChosen != JOptionPane.CANCEL_OPTION) {
+                                        orgHomeController.execute("see request", req, optionChosen);
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                        }
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                            }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                        }
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                            }
 
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-                        }
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                            }
 
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-                        }
-                    });
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                            }
+                        });
 
-            this.add(newButton);
+                this.add(newButton);
+            }
+        }
+        else {
+            JLabel noReqs = new JLabel("There are no pending requests");
+            this.add(noReqs);
         }
 
         JLabel acceptedRequests = new JLabel("These are the requests you have accepted!");
         this.add(acceptedRequests);
-        for (Requests req: this.orgHomeViewModel.getState().getOrg().getAcceptedRequests()) {
-            this.add(new JLabel(req.toString()));
+
+        ArrayList<Requests> acceptedReqs = this.orgHomeViewModel.getState().getOrg().getAcceptedRequests();
+        if (!acceptedReqs.isEmpty()) {
+            for (Requests req : this.orgHomeViewModel.getState().getOrg().getAcceptedRequests()) {
+                this.add(new JLabel(req.toString()));
+            }
+        }
+        else {
+            JLabel noReqs = new JLabel("               There are no accepted requests");
+            this.add(noReqs);
         }
 
         JLabel deniedRequests = new JLabel("These are the requests you have denied!");
         this.add(deniedRequests);
-        for (Requests req: this.orgHomeViewModel.getState().getOrg().getDeniedRequests()) {
-            this.add(new JLabel(req.toString()));
+
+        ArrayList<Requests> deniedReqs = this.orgHomeViewModel.getState().getOrg().getDeniedRequests();
+        if (!deniedReqs.isEmpty()) {
+            for (Requests req : deniedReqs) {
+                this.add(new JLabel(req.toString()));
+            }
+        }
+        else {
+            JLabel noReqs = new JLabel("               There are no denied requests");
+            this.add(noReqs);
         }
 
         this.add(logOut);
