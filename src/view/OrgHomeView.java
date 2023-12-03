@@ -23,8 +23,7 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
     public final String viewName = "org home";
     private final OrgHomeViewModel orgHomeViewModel;
     private final OrgHomeController orgHomeController;
-    JLabel username;
-    private JButton logOut;
+    private final JButton logOut = new JButton(OrgHomeViewModel.LOGOUT_BUTTON_LABEL);
 
 
     public OrgHomeView(OrgHomeController controller, OrgHomeViewModel orgHomeViewModel) {
@@ -32,14 +31,12 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
         this.orgHomeController = controller;
         this.orgHomeViewModel = orgHomeViewModel;
         this.orgHomeViewModel.addPropertyChangeListener(this);
-        this.username = new JLabel(orgHomeViewModel.getLoggedInOrg());
 
         JLabel title = new JLabel(OrgHomeViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(username);
     }
 
     @Override
@@ -51,13 +48,10 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         JLabel pendingRequests = new JLabel("See pending requests");
         this.add(pendingRequests);
-        ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
         for (Requests req: this.orgHomeViewModel.getState().getOrg().getPendingRequests()) {
-
             JButton seeRequest = new JButton("See request");
             LabelButtonPanel newButton = new LabelButtonPanel(
                     new JLabel(req.getPet().getName()), seeRequest, null);
-            buttons.add(newButton);
 
             seeRequest.addMouseListener(
                     new MouseListener() {
@@ -65,7 +59,7 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                             if (evt.getSource().equals(seeRequest)) {
                                 Object[] options = {"Accept request",
                                         "Deny request", "Return to list of requests"};
-                                int optionChosen = JOptionPane.showOptionDialog(null, req.toString(), null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
+                                int optionChosen = JOptionPane.showOptionDialog(null, "req.toString()", null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
                                 if (optionChosen != JOptionPane.CANCEL_OPTION) {
                                     orgHomeController.execute("see request", req, optionChosen);
                                 }
@@ -88,10 +82,8 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                         public void mouseExited(MouseEvent e) {
                         }
                     });
-        }
 
-        for (LabelButtonPanel someButton : buttons) {
-            this.add(someButton);
+            this.add(newButton);
         }
 
         JLabel acceptedRequests = new JLabel("These are the requests you have accepted!");
@@ -106,7 +98,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
             this.add(new JLabel(req.toString()));
         }
 
-        logOut = new JButton(OrgHomeViewModel.LOGOUT_BUTTON_LABEL);
         this.add(logOut);
         logOut.addActionListener(
                 new ActionListener() {
@@ -119,7 +110,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
         );
 
         OrgHomeState state = (OrgHomeState) evt.getNewValue();
-        username.setText(state.getID());
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
         }
