@@ -96,7 +96,7 @@ public class Main {
                 searchViewModel, editViewModel, loginViewModel);
         views.add(homeView, homeView.viewName);
 
-        viewManagerModel.setActiveView(searchView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
