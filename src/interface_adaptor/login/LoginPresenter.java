@@ -1,6 +1,7 @@
 package interface_adaptor.login;
 
 // for user homepage
+import entities.Organizations;
 import interface_adaptor.home.HomeState;
 import interface_adaptor.home.HomeViewModel;
 
@@ -45,10 +46,11 @@ public class LoginPresenter implements LoginOutputBoundary {
         else if (response.getType().equals("organization"))
         { // displays organization home page
             OrgHomeState orgHomeState = orgViewModel.getState();
+            orgHomeState.setOrg((Organizations) response.getUser());
             this.orgViewModel.setState(orgHomeState);
             this.orgViewModel.firePropertyChanged();
 
-            this.viewManagerModel.setActiveView(homeViewModel.getViewName());
+            this.viewManagerModel.setActiveView(orgViewModel.getViewName());
             this.viewManagerModel.firePropertyChanged();
         }
     }

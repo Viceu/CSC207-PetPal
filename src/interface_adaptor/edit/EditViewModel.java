@@ -13,7 +13,7 @@ public class EditViewModel extends ViewModel {
     private EditState state = new EditState();
 
     public EditViewModel() {
-        super("Add");
+        super("user profile");
     }
     public EditState getState() {
         return state;

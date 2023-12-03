@@ -1,5 +1,6 @@
 package app;
 
+import data_access.EditInFilePetDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import entities.PersonalUserFactory;
 import interface_adaptor.edit.EditViewModel;
@@ -15,6 +16,7 @@ import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.org_adopt.OrgHomeViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
+import use_case.edit.EditPetDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -52,6 +54,7 @@ public class Main {
         EditViewModel editViewModel = new EditViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         OrgHomeViewModel orgHomeViewModel = new OrgHomeViewModel();
+        EditViewModel editViewModel1 = new EditViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
 
@@ -69,13 +72,20 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        EditInFilePetDataAccessObject petDataAccessObject;
+        try {
+            petDataAccessObject = new EditInFilePetDataAccessObject("./pets.csv", new CommonPetFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         OrganizationsFactory organizationsFactory = new OrganizationsFactory();
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, orgHomeViewModel,
-                userDataAccessObject, apiPetDataAccessObject);
+                userDataAccessObject, fileOrganizationsDataAccessObject, apiPetDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, displayViewModel,
@@ -86,11 +96,14 @@ public class Main {
         views.add(displayView, displayView.viewName);
 
         AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel, fileOrganizationsDataAccessObject,
-                organizationsFactory);
+                organizationsFactory, orgHomeViewModel);
         views.add(requestView, requestView.viewName);
 
         OrgHomeView orgHomeView = OrgHomeUseCaseFactory.create(viewManagerModel, orgHomeViewModel, loginViewModel);
         views.add(orgHomeView, orgHomeView.viewName);
+
+        EditView editView = EditUseCaseFactory.create(viewManagerModel, editViewModel, homeViewModel, petDataAccessObject);
+        views.add(editView, editView.viewName);
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, adoptUserPreviewViewModel,
                 searchViewModel, editViewModel, loginViewModel);
