@@ -18,17 +18,25 @@ public class EditInteractor implements EditInputBoundary{
 
     @Override
     public void execute(EditInputData editInputData) {
+        System.out.println("EditInteractor executes");
         if (petDataAccessObject.existsByName(editInputData.getPetname())) {
             petPresenter.prepareFailView("Pet Name already exists.");
         } else {
-            Pet pet = petFactory.create(null, null, null, editInputData.getPetname(), null, null,
-                    null, null, null, null, null, null, false,
-                    null, null, null, editInputData.getPet_bio(), editInputData.getOwner());
-            petDataAccessObject.save(pet);
+            EditOutputData editOutputData;
 
-            User user = editInputData.getUser();
+            if (editInputData.getPetname() != null) {
+                Pet pet = petFactory.create(null, null, null, editInputData.getPetname(), null, null,
+                        null, null, null, null, null, null, false,
+                        null, null, null, editInputData.getPet_bio(), editInputData.getOwner());
+                petDataAccessObject.save(pet);
 
-            EditOutputData editOutputData = new EditOutputData(user, pet.getName(), pet.getBio(), pet.getOwner(), false);
+                User user = editInputData.getUser();
+                editOutputData = new EditOutputData(user, pet.getName(), pet.getBio(), pet.getOwner(), pet, false);
+            }
+            else {
+                editOutputData = null;
+            }
+
             petPresenter.prepareSuccessView(editOutputData);
         }
     }
