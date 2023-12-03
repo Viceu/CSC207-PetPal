@@ -38,7 +38,7 @@ class HomeInteractorTest {
     // This tests for a success view for the edit case (user wants to edit their own profile)
     @Test
     void successEditTest(){
-        User user = new PersonalUser("Tname", "Tpw", "TBio", LocalDateTime.now();)
+        User user = new PersonalUser("Tname", "Tpw", "TBio", LocalDateTime.now());
         HomeInputData inputData = new HomeInputData("edit", null, user);
         HomeOutputBoundary successPresenter = new HomeOutputBoundary() {
             @Override
@@ -47,8 +47,8 @@ class HomeInteractorTest {
                 assertEquals("edit", outputData.getNextView());
                 assertNull(outputData.getPet());
                 assertNotNull(outputData.getUser());
-                assertEquals("Tname", outputData.getUser().getName())
-                assertEquals("TBio", outputData.getUser().getBio())
+                assertEquals("Tname", outputData.getUser().getName());
+                assertEquals("TBio", outputData.getUser().getBio());
             }
 
             @Override
@@ -90,7 +90,7 @@ class HomeInteractorTest {
         Pet pet = new CommonPet(null, null, null, "TPName", null, null,
                 null, null, null, null, null, null, true,
                 null, null, null, "I am a dog.", "Vivian");
-        HomeInputData inputData = new HomeInputData("adopt", null, user);
+        HomeInputData inputData = new HomeInputData("adopt", null, null);
         HomeOutputBoundary successPresenter = new HomeOutputBoundary() {
             @Override
             public void prepareSuccessView(HomeOutputData outputData) {
