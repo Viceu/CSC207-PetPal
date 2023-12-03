@@ -134,7 +134,7 @@ class HomeInteractorTest {
             }
         };
 
-        HomeInputBoundary interactor = new HomeInteractor(successPresenter);
+        HomeInputBoundary interactor = new HomeInteractor(failurePresenter);
         interactor.execute(inputData);
     }
 
@@ -157,7 +157,7 @@ class HomeInteractorTest {
             }
         };
 
-        HomeInputBoundary interactor = new HomeInteractor(successPresenter);
+        HomeInputBoundary interactor = new HomeInteractor(failurePresenter);
         interactor.execute(inputData);
     }
 }
