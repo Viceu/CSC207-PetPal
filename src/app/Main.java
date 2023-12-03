@@ -2,6 +2,7 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entities.PersonalUserFactory;
+import interface_adaptor.edit.EditViewModel;
 import interface_adaptor.login.LoginViewModel;
 import interface_adaptor.signup.SignupViewModel;
 import data_access.ApiPetDataAccessObject;

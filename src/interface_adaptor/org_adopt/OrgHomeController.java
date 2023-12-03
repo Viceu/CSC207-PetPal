@@ -11,7 +11,7 @@ public class OrgHomeController {
     }
 
     public void execute(String viewname, Requests request, Integer optionChosen) {
-        OrgHomeInputData orghomeInputData = new OrgHomeInputData(viewname, request, optionChosen);
+        OrgHomeInputData orgHomeInputData = new OrgHomeInputData(viewname, request, optionChosen);
 
         orgHomeInteractor.execute(orgHomeInputData);
     }

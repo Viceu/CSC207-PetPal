@@ -2,6 +2,8 @@ package interface_adaptor.home;
 import interface_adaptor.ViewManagerModel;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewState;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
+import interface_adaptor.edit.EditState;
+import interface_adaptor.edit.EditViewModel;
 import interface_adaptor.login.LoginViewModel;
 import interface_adaptor.login.LoginState;
 import interface_adaptor.search.SearchState;
