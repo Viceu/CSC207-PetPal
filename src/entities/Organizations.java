@@ -77,7 +77,6 @@ public class Organizations implements User {
     public void acceptRequest(Requests request, String message) {
         request.setStatus("Accepted");
         request.getPet().setAdoptable(false);
-        request.getPet().setOwner(request.getUser().getName());
         request.setOrgMessage(message);
     }
     public void rejectRequest(Requests request, String message) {
