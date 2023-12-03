@@ -60,7 +60,7 @@ public class Main {
 
         FileOrganizationsDataAccessObject fileOrganizationsDataAccessObject;
         try {
-            fileOrganizationsDataAccessObject = new FileOrganizationsDataAccessObject("./users.csv", new OrganizationsFactory());
+            fileOrganizationsDataAccessObject = new FileOrganizationsDataAccessObject("./organizations.csv", new OrganizationsFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
