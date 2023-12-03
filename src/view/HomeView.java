@@ -55,10 +55,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         HomeState state = (HomeState) evt.getNewValue();
 
-        JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel(homeViewModel.getUsername());
+        JLabel usernameInfo = new JLabel("Currently logged in: "+ homeViewModel.getUsername());
         bio = new JLabel(homeViewModel.getUserBio());
-        username.setText(state.getUsername());
         bio.setText(state.getBio());
 
         JPanel buttons = new JPanel();
@@ -77,7 +75,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         edit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        System.out.println("heree");
                         homeController.execute("edit", homeViewModel.getUser(), null);
                     }
                 }
@@ -94,7 +91,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         );
 
         this.add(usernameInfo);
-        this.add(username);
         this.add(bio);
         this.add(buttons);
 

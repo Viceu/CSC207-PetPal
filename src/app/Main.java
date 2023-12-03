@@ -54,7 +54,6 @@ public class Main {
         EditViewModel editViewModel = new EditViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         OrgHomeViewModel orgHomeViewModel = new OrgHomeViewModel();
-        EditViewModel editViewModel1 = new EditViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
 
