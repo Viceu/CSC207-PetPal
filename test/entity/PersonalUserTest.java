@@ -4,6 +4,8 @@ import entities.PersonalUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PersonalUserTest {
@@ -11,7 +13,7 @@ class PersonalUserTest {
 
     @BeforeEach
     void init(){
-        user = new PersonalUser("Jessica", "123", "cat person");
+        user = new PersonalUser("Jessica", "123", "cat person", LocalDateTime.now());
     }
 
     @Test
