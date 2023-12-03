@@ -1,6 +1,6 @@
 package entities;
 
-import java.util.Map;
+import java.time.LocalDateTime;
 
 public class OrganizationsFactory implements UserFactory {
     /**
@@ -10,7 +10,7 @@ public class OrganizationsFactory implements UserFactory {
      * @return
      */
     @Override
-    public User create(String name, String password, String bio) {
+    public Organizations create(String name, String password, String bio, LocalDateTime date) {
         return new Organizations(name, password, bio);
     }
 }

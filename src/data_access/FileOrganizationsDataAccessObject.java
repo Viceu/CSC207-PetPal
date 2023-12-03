@@ -6,10 +6,12 @@ import entities.Pet;
 import use_case.adopt_user_preview.AdoptUserPreviewDataAccessInterface;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+//
 public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAccessInterface {
 
     private final File csvFile;
@@ -20,10 +22,6 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
 
     private OrganizationsFactory organizationsFactory;
 
-    public FileOrganizationsDataAccessObject(File csvFile) {
-        this.csvFile = csvFile;
-    }
-
     public FileOrganizationsDataAccessObject(String csvPath, OrganizationsFactory organizationsFactory) throws IOException {
         this.organizationsFactory = organizationsFactory;
 
@@ -31,6 +29,7 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("bio", 2);
+        headers.put("creation_time", 3);
 
         if (csvFile.length() == 0) {
             save();
@@ -39,7 +38,7 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,bio");
+                assert header.equals("username,password,bio,creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -47,13 +46,16 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String bio = String.valueOf(col[headers.get("bio")]);
-                    Organizations organizations = (Organizations) organizationsFactory.create(username, password, bio);
+                    String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+                    LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+                    Organizations organizations = organizationsFactory.create(username, password, bio, ldt);
                     orgAccounts.put(username, organizations);
                 }
             }
         }
 
     }
+
 
     @Override
     public boolean existsByName(String identifier) {
@@ -89,8 +91,8 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
             writer.newLine();
 
             for (Organizations organizations : orgAccounts.values()) {
-                String line = String.format("%s,%s,%s",
-                        organizations.getName(), organizations.getPassword(), organizations.getBio());
+                String line = String.format("%s,%s,%s,%s",
+                        organizations.getName(), organizations.getPassword(), organizations.getBio(), organizations.getCreationTime());
                 writer.write(line);
                 writer.newLine();
             }

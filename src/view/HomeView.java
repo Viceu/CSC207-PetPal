@@ -1,6 +1,7 @@
 package view;
 
 import entities.Pet;
+import entities.User;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomeState;
 import interface_adaptor.home.HomeViewModel;
@@ -22,15 +23,12 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 
 public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
-    // TODO: usage in Main:
-    //  LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-    //  views.add(loggedInView, loggedInView.viewName);
     public final String viewName = "home";
-
     private final HomeViewModel homeViewModel;
     private final HomeController homeController;
 
     JLabel username;
+    JLabel bio;
     final JButton logOut;
     final JButton edit;
     private final JButton search;
@@ -48,7 +46,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel(homeViewModel.getLoggedInUser());
+        username = new JLabel(homeViewModel.getUsername());
+        bio = new JLabel(homeViewModel.getUserBio());
 
         JPanel buttons = new JPanel();
         search = new JButton(HomeViewModel.SEARCH_BUTTON_LABEL);
@@ -59,7 +58,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(search)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.execute("search");
+                            homeController.execute("search", null, null);
                         }
                     }
                 }
@@ -73,7 +72,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(edit)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.execute("edit");
+                            User user = homeViewModel.getUser();
+                            homeController.execute("edit", user, null);
                         }
                     }
                 }
@@ -87,7 +87,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(logOut)) {
 
                             HomeState currentState = homeViewModel.getState();
-                            homeController.execute("logOut");
+                            homeController.execute("logOut", null, null);
                         }
                     }
                 }
@@ -100,6 +100,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(title);
         this.add(usernameInfo);
         this.add(username);
+        this.add(bio);
         this.add(buttons);
     }
 
@@ -112,8 +113,67 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         HomeState state = (HomeState) evt.getNewValue();
         username.setText(state.getUsername());
+        bio.setText(state.getBio());
+
         if (state.getFetchError() != null) {
             JOptionPane.showMessageDialog(this, state.getFetchError());
         }
+
+        if (this.homeViewModel.getState().getPets() == null) {
+            this.add(new JLabel("There are currently no pets to adopt, please come back later."));
+        }
+        else {
+            ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
+            for (Map.Entry<Integer, Pet> entry : this.homeViewModel.getState().getPets().entrySet()) {
+                LabelButtonPanel newButton = new LabelButtonPanel(
+                        new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()),
+                        seeMore, entry.getValue());
+                buttons.add(newButton);
+            }
+
+            for (LabelButtonPanel button : buttons) {
+                button.addMouseListener(
+                    new MouseListener() {
+                        public void mouseClicked(MouseEvent evt) {
+                            if (evt.getSource().equals(seeMore)) {
+
+                                Pet thisPet = button.getPet();
+
+                                String message = "";
+
+                                for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
+                                    if (attributes.getValue()) {
+                                        String key = attributes.getKey();
+                                        message += key + thisPet.getAll().get(key) + "\n";
+                                    }
+                                }
+
+                                Object[] options = {"Adopt!",
+                                        "Return to search"};
+                                int optionChosen = JOptionPane.showOptionDialog(null, message,
+                                        null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[1]);
+                                if (optionChosen == 0) {
+                                    homeController.execute("adopt", null, thisPet);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {}
+                        @Override
+                        public void mouseReleased(MouseEvent e) {}
+                        @Override
+                        public void mouseEntered(MouseEvent e) {}
+                        @Override
+                        public void mouseExited(MouseEvent e) {}
+                    }
+                );
+            }
+
+            for (LabelButtonPanel someButton : buttons) {
+                this.add(someButton);
+            }
+        }
+
     }
 }

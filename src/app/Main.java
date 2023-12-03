@@ -1,19 +1,24 @@
 package app;
 
+import data_access.FileUserDataAccessObject;
+import entities.PersonalUserFactory;
+import interface_adaptor.login.LoginViewModel;
+import interface_adaptor.signup.SignupViewModel;
 import data_access.ApiPetDataAccessObject;
+import data_access.FileOrganizationsDataAccessObject;
 import entities.CommonPetFactory;
+import entities.OrganizationsFactory;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.DisplayViewModel;
 import interface_adaptor.home.HomeViewModel;
+import interface_adaptor.org_adopt.OrgHomeViewModel;
 import interface_adaptor.search.SearchViewModel;
 import interface_adaptor.ViewManagerModel;
-import use_case.search.SearchPetDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,10 +43,14 @@ public class Main {
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
+        SignupViewModel signupViewModel = new SignupViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         DisplayViewModel displayViewModel = new DisplayViewModel();
         AdoptUserPreviewViewModel adoptUserPreviewViewModel = new AdoptUserPreviewViewModel();
         HomeViewModel homeViewModel = new HomeViewModel();
+        EditViewModel editViewModel = new EditViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        OrgHomeViewModel orgHomeViewModel = new OrgHomeViewModel();
 
         ApiPetDataAccessObject apiPetDataAccessObject;
         try {
@@ -50,6 +59,29 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        FileOrganizationsDataAccessObject fileOrganizationsDataAccessObject;
+        try {
+            fileOrganizationsDataAccessObject = new FileOrganizationsDataAccessObject("./organizations.csv", new OrganizationsFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        FileUserDataAccessObject userDataAccessObject;
+        try {
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new PersonalUserFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        OrganizationsFactory organizationsFactory = new OrganizationsFactory();
+
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        views.add(signupView, signupView.viewName);
+
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, orgHomeViewModel,
+                userDataAccessObject, apiPetDataAccessObject);
+        views.add(loginView, loginView.viewName);
+
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, displayViewModel,
                 apiPetDataAccessObject);
         views.add(searchView, searchView.viewName);
@@ -57,16 +89,15 @@ public class Main {
         DisplayView displayView = DisplayUseCaseFactory.create(viewManagerModel, displayViewModel, adoptUserPreviewViewModel);
         views.add(displayView, displayView.viewName);
 
-        AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel);
+        AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel, fileOrganizationsDataAccessObject,
+                organizationsFactory);
         views.add(requestView, requestView.viewName);
 
-        ApiPetDataAccessObject homePetDataAccessObject;
-        try {
-            homePetDataAccessObject = new ApiPetDataAccessObject(new CommonPetFactory());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, homePetDataAccessObject);
+        OrgHomeView orgHomeView = OrgHomeUseCaseFactory.create(viewManagerModel, orgHomeViewModel, loginViewModel);
+        views.add(orgHomeView, orgHomeView.viewName);
+
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, adoptUserPreviewViewModel,
+                searchViewModel, editViewModel, loginViewModel);
         views.add(homeView, homeView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
