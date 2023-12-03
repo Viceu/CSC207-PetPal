@@ -86,7 +86,7 @@ public class Main {
         views.add(displayView, displayView.viewName);
 
         AdoptUserPreviewView requestView = AdoptUserPreviewUseCaseFactory.create(viewManagerModel, adoptUserPreviewViewModel, homeViewModel, fileOrganizationsDataAccessObject,
-                organizationsFactory);
+                organizationsFactory, orgHomeViewModel);
         views.add(requestView, requestView.viewName);
 
         OrgHomeView orgHomeView = OrgHomeUseCaseFactory.create(viewManagerModel, orgHomeViewModel, loginViewModel);

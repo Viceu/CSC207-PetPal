@@ -8,6 +8,7 @@ import interface_adaptor.adopt_user_preview.AdoptUserPreviewPresenter;
 import interface_adaptor.adopt_user_preview.AdoptUserPreviewViewModel;
 import interface_adaptor.display.*;
 import interface_adaptor.home.HomeViewModel;
+import interface_adaptor.org_adopt.OrgHomeViewModel;
 import use_case.adopt_user_preview.AdoptUserPreviewDataAccessInterface;
 import use_case.adopt_user_preview.AdoptUserPreviewInputBoundary;
 import use_case.adopt_user_preview.AdoptUserPreviewInteractor;
@@ -23,10 +24,10 @@ public class AdoptUserPreviewUseCaseFactory {
 
     public static AdoptUserPreviewView create(
             ViewManagerModel viewManagerModel, AdoptUserPreviewViewModel requestViewModel, HomeViewModel homeViewModel, AdoptUserPreviewDataAccessInterface orgDataAccessObject,
-            OrganizationsFactory organizationsFactory) {
+            OrganizationsFactory organizationsFactory, OrgHomeViewModel orgHomeViewModel) {
 
         try {
-            AdoptUserPreviewController requestController = createSearchUseCase(viewManagerModel, requestViewModel, homeViewModel, orgDataAccessObject, organizationsFactory);
+            AdoptUserPreviewController requestController = createSearchUseCase(viewManagerModel, requestViewModel, homeViewModel, orgDataAccessObject, organizationsFactory, orgHomeViewModel);
             return new AdoptUserPreviewView(requestViewModel, requestController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not send adoption request.");
@@ -36,9 +37,9 @@ public class AdoptUserPreviewUseCaseFactory {
 
     private static AdoptUserPreviewController createSearchUseCase(ViewManagerModel viewManagerModel,
                                                                   AdoptUserPreviewViewModel requestViewModel, HomeViewModel homeViewModel, AdoptUserPreviewDataAccessInterface orgDataAccessObject,
-                                                                  OrganizationsFactory organizationsFactory) throws IOException {
+                                                                  OrganizationsFactory organizationsFactory, OrgHomeViewModel orgHomeViewModel) throws IOException {
 
-        AdoptUserPreviewOutputBoundary requestOutputBoundary = new AdoptUserPreviewPresenter(requestViewModel, viewManagerModel, homeViewModel);
+        AdoptUserPreviewOutputBoundary requestOutputBoundary = new AdoptUserPreviewPresenter(requestViewModel, viewManagerModel, homeViewModel, orgHomeViewModel);
 
         AdoptUserPreviewInputBoundary requestInteractor = new AdoptUserPreviewInteractor(requestOutputBoundary, orgDataAccessObject, organizationsFactory);
 

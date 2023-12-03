@@ -65,7 +65,7 @@ public class LoginInteractor implements LoginInputBoundary {
                 Matcher m = p.matcher(username);
                 if (m.matches()) {
                     Organizations org = orgDAO.getUsername(username);
-                    LoginOutputData loginOutputData = new LoginOutputData(org.getName(), "organization", false, null, user);
+                    LoginOutputData loginOutputData = new LoginOutputData(org.getName(), "organization", false, null, org);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 } else {

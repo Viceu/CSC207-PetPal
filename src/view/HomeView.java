@@ -70,11 +70,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         search.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(search)) {
-
-                            HomeState currentState = homeViewModel.getState();
-                            homeController.execute("search", null, null);
-                        }
+                        HomeState currentState = homeViewModel.getState();
+                        homeController.execute("search", null, null);
                     }
                 }
         );
@@ -84,12 +81,9 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         edit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(edit)) {
-
-                            HomeState currentState = homeViewModel.getState();
-                            User user = homeViewModel.getUser();
-                            homeController.execute("edit", user, null);
-                        }
+                        HomeState currentState = homeViewModel.getState();
+                        User user = homeViewModel.getUser();
+                        homeController.execute("edit", user, null);
                     }
                 }
         );
@@ -99,11 +93,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         logOut.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logOut)) {
-
-                            HomeState currentState = homeViewModel.getState();
-                            homeController.execute("logOut", null, null);
-                        }
+                        HomeState currentState = homeViewModel.getState();
+                        homeController.execute("logOut", null, null);
                     }
                 }
         );
