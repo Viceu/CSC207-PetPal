@@ -22,7 +22,7 @@ public class EditPresenter implements EditOutputBoundary {
     public void prepareSuccessView(EditOutputData edited) {
         // on success, switch to the home page
         HomeState homeState = homeViewModel.getState();
-        homeState.setUsername(edited.getOwner());
+        homeState.setUser(edited.getUser());
         this.homeViewModel.setState(homeState);
         this.homeViewModel.firePropertyChanged();
 

@@ -2,6 +2,7 @@ package use_case.edit;
 
 import entities.Pet;
 import entities.PetFactory;
+import entities.User;
 
 public class EditInteractor implements EditInputBoundary{
     final EditPetDataAccessInterface petDataAccessObject;
@@ -25,7 +26,9 @@ public class EditInteractor implements EditInputBoundary{
                     null, null, null, editInputData.getPet_bio(), editInputData.getOwner());
             petDataAccessObject.save(pet);
 
-            EditOutputData editOutputData = new EditOutputData(pet.getName(), pet.getBio(), pet.getOwner(), false);
+            User user = editInputData.getUser();
+
+            EditOutputData editOutputData = new EditOutputData(user, pet.getName(), pet.getBio(), pet.getOwner(), false);
             petPresenter.prepareSuccessView(editOutputData);
         }
     }

@@ -1,6 +1,7 @@
 package view;
 
 import entities.Pet;
+import entities.User;
 import interface_adaptor.edit.EditController;
 import interface_adaptor.edit.EditState;
 import interface_adaptor.edit.EditViewModel;
@@ -46,17 +47,17 @@ public class EditView extends JPanel implements PropertyChangeListener {
         exit = new JButton(EditViewModel.EXIT_BUTTON_LABEL);
         buttons.add(exit);
 
-
         add.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(add)) {
 
+                            User user = editviewModel.getState().getUser();
                             String petname = JOptionPane.showInputDialog("Pet name:");
                             String petbio = JOptionPane.showInputDialog("Pet bio:");
 
-                            editController.execute(petname, petbio, editviewModel.getState().getUser().getName());
+                            editController.execute(user, petname, petbio, editviewModel.getState().getUser().getName());
                         }
                     }
                 }
@@ -67,7 +68,8 @@ public class EditView extends JPanel implements PropertyChangeListener {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(exit)) {
-                            editController.execute(null, null, null);
+                            User user = editviewModel.getState().getUser();
+                            editController.execute(user, null, null, null);
                         }
                     }
                 }

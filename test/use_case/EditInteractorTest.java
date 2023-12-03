@@ -2,19 +2,20 @@ package use_case;
 
 import data_access.EditInMemoryPetDataAccessObject;
 import data_access.EditInMemoryUserDataAccessObject;
-import entities.CommonPetFactory;
-import entities.PetFactory;
+import entities.*;
 import org.junit.jupiter.api.Test;
 import use_case.edit.*;
 import use_case.signup.SignupInputData;
-import entities.Pet;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EditInteractorTest {
     @Test
     void successTest(){
-        EditInputData inputData = new EditInputData("Coco13",
+        User user = new PersonalUser("Jess", "123", "cat person", LocalDateTime.now());
+        EditInputData inputData = new EditInputData(user, "Coco13",
                 "I am a rabbit.", "Jess");
         EditUserDataAccessInterface userRepository = new EditInMemoryUserDataAccessObject();
         EditPetDataAccessInterface petRepository = new EditInMemoryPetDataAccessObject();
@@ -42,7 +43,8 @@ class EditInteractorTest {
 
     @Test
     void failPetNameExistsTest() {
-        EditInputData inputData = new EditInputData("Coco13",
+        User user = new PersonalUser("Jess", "123", "cat person", LocalDateTime.now());
+        EditInputData inputData = new EditInputData(user, "Coco13",
                 "I am a rabbit.", "Jess");
         EditPetDataAccessInterface petRepository = new EditInMemoryPetDataAccessObject();
 

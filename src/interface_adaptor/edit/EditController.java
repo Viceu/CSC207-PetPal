@@ -1,5 +1,6 @@
 package interface_adaptor.edit;
 
+import entities.User;
 import use_case.edit.EditInputBoundary;
 import use_case.edit.EditInputData;
 import use_case.signup.SignupInputData;
@@ -11,8 +12,8 @@ public class EditController {
         this.userEditCaseInteractor = userEditCaseInteractor;
     }
 
-    public void execute(String petname, String pet_bio, String owner) {
-        EditInputData editInputData = new EditInputData(
+    public void execute(User user, String petname, String pet_bio, String owner) {
+        EditInputData editInputData = new EditInputData(user,
                 petname, pet_bio, owner);
 
         userEditCaseInteractor.execute(editInputData);
