@@ -21,6 +21,7 @@ public class HomeViewModel extends ViewModel {
 
     public void setState(HomeState state) {
         this.state = state;
+        loggedInUser = state.getUser();
     }
     public HomeState getState() {
         return state;
