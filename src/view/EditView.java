@@ -31,7 +31,9 @@ public class EditView extends JPanel implements PropertyChangeListener {
 
     private final JButton exit;
 
-    public EditView(EditPetDataAccessInterface editPetDataAccessInterface, EditViewModel editviewModel, EditController editController, JButton submit) throws IOException {
+    public EditView(EditPetDataAccessInterface editPetDataAccessInterface,
+                    EditViewModel editviewModel,
+                    EditController editController) throws IOException {
         this.editviewModel = editviewModel;
         this.editController = editController;
 
