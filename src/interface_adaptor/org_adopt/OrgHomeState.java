@@ -1,15 +1,13 @@
 package interface_adaptor.org_adopt;
 
-import entities.Pet;
+import entities.Organizations;
 import entities.Requests;
-import interface_adaptor.home.HomeState;
-
 import java.util.ArrayList;
-import java.util.Map;
 
 public class OrgHomeState {
     private String id = "";
     private String failMessage = null;
+    private Organizations org;
     private ArrayList<Requests> requestList = new ArrayList<Requests>();
     private ArrayList<Requests> deniedRequests = new ArrayList<Requests>();
     private ArrayList<Requests> acceptedRequests = new ArrayList<Requests>();
@@ -60,4 +58,6 @@ public class OrgHomeState {
     public ArrayList<Requests> getRequestList() {
         return requestList;
     }
+    public void setOrg(Organizations newOrg) {this.org = newOrg;}
+    public Organizations getOrg() {return org;}
 }
