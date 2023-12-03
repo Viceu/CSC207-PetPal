@@ -32,9 +32,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     JButton logOut;
     JButton edit;
     private JButton search;
-    private final JButton seeMore = new JButton("See more");
-    private final JButton adopt = new JButton("Adopt!");
-
 
     public HomeView(HomeController controller, HomeViewModel homeViewModel) {
 
@@ -126,48 +123,54 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         else {
             ArrayList<LabelButtonPanel> petButtons = new ArrayList<LabelButtonPanel>();
             for (Map.Entry<Integer, Pet> entry : this.homeViewModel.getState().getPets().entrySet()) {
+                JButton seeMore = new JButton("See More");
                 LabelButtonPanel newButton = new LabelButtonPanel(
                         new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()),
                         seeMore, entry.getValue());
                 petButtons.add(newButton);
-            }
 
-            for (LabelButtonPanel button : petButtons) {
-                button.addMouseListener(
-                    new MouseListener() {
-                        public void mouseClicked(MouseEvent evt) {
-                            if (evt.getSource().equals(seeMore)) {
+                seeMore.addMouseListener(
+                        new MouseListener() {
+                            public void mouseClicked(MouseEvent evt) {
+                                if (evt.getSource().equals(seeMore)) {
 
-                                Pet thisPet = button.getPet();
+                                    Pet thisPet = newButton.getPet();
 
-                                String message = "";
+                                    String message = "";
 
-                                for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
-                                    if (attributes.getValue()) {
-                                        String key = attributes.getKey();
-                                        message += key + thisPet.getAll().get(key) + "\n";
+                                    for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
+                                        if (attributes.getValue()) {
+                                            String key = attributes.getKey();
+                                            message += key + thisPet.getAll().get(key) + "\n";
+                                        }
+                                    }
+
+                                    Object[] options = {"Adopt!",
+                                            "Return to search"};
+                                    int optionChosen = JOptionPane.showOptionDialog(null, message,
+                                            null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[1]);
+                                    if (optionChosen == 0) {
+                                        homeController.execute("adopt", null, thisPet);
                                     }
                                 }
+                            }
 
-                                Object[] options = {"Adopt!",
-                                        "Return to search"};
-                                int optionChosen = JOptionPane.showOptionDialog(null, message,
-                                        null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[1]);
-                                if (optionChosen == 0) {
-                                    homeController.execute("adopt", null, thisPet);
-                                }
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
                             }
                         }
-
-                        @Override
-                        public void mousePressed(MouseEvent e) {}
-                        @Override
-                        public void mouseReleased(MouseEvent e) {}
-                        @Override
-                        public void mouseEntered(MouseEvent e) {}
-                        @Override
-                        public void mouseExited(MouseEvent e) {}
-                    }
                 );
             }
 
