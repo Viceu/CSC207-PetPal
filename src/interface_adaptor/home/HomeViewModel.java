@@ -36,9 +36,6 @@ public class HomeViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-    public void setUser(User loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
 
     public User getUser() {
         return loggedInUser;

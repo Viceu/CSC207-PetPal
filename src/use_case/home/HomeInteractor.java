@@ -22,8 +22,7 @@ public class HomeInteractor implements HomeInputBoundary{
             }
         }
         else if (nextView.equals("edit")) {
-            User user = homeInputData.getUser();
-            HomeOutputData homeOutputData = new HomeOutputData(nextView, null, user, false);
+            HomeOutputData homeOutputData = new HomeOutputData(nextView, null, homeInputData.getUser(), false);
             homePresenter.prepareSuccessView(homeOutputData);
         }
         else{

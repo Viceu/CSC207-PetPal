@@ -58,7 +58,6 @@ public class HomePresenter implements HomeOutputBoundary{
         }
         else if(nextView.equals("logOut")) {
             LoginState newState = loginViewModel.getState();
-            System.out.println("d");
             this.loginViewModel.setState(newState);
             loginViewModel.firePropertyChanged();
             viewManagerModel.setActiveView(loginViewModel.getViewName());
