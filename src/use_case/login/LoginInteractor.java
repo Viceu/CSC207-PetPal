@@ -1,8 +1,10 @@
 package use_case.login;
 
+import entities.Organizations;
 import entities.Pet;
 import entities.PetFactory;
 import entities.User;
+import use_case.adopt_user_preview.AdoptUserPreviewDataAccessInterface;
 import use_case.search.SearchPetDataAccessInterface;
 
 import java.util.ArrayList;
@@ -17,10 +19,12 @@ public class LoginInteractor implements LoginInputBoundary {
     final LoginOutputBoundary loginPresenter;
     final SearchPetDataAccessInterface petDataAccessObject;
     final PetFactory petFactory;
+    private final AdoptUserPreviewDataAccessInterface orgDAO;
 
-    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
+    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface, AdoptUserPreviewDataAccessInterface orgDAO,
                            LoginOutputBoundary loginOutputBoundary, SearchPetDataAccessInterface petDataAccessObject, PetFactory petFactory) {
         this.userDataAccessObject = userDataAccessInterface;
+        this.orgDAO = orgDAO;
         this.loginPresenter = loginOutputBoundary;
         this.petDataAccessObject = petDataAccessObject;
         this.petFactory = petFactory;
@@ -41,22 +45,27 @@ public class LoginInteractor implements LoginInputBoundary {
 
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();
-        if (!userDataAccessObject.existsByName(username)) {
+        if (!userDataAccessObject.existsByName(username) && !orgDAO.existsByName(username)) {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
         } else { //if the account exists:
-            String pwd = userDataAccessObject.get(username).getPassword();
+            String pwd;
+            if (userDataAccessObject.get(username) != null) {
+                pwd = userDataAccessObject.get(username).getPassword();
+            }
+            else {
+                pwd = "1234";
+            }
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else { // if the account exists and the password is correct:
-
                 User user = userDataAccessObject.get(loginInputData.getUsername());
-
                 // checks if the username is an organizationID
                 String regex = "[A-Z][A-Z][0-9]+";
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(username);
                 if (m.matches()) {
-                    LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "organization", false, null, user);
+                    Organizations org = orgDAO.getUsername(username);
+                    LoginOutputData loginOutputData = new LoginOutputData(org.getName(), "organization", false, null, user);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 } else {

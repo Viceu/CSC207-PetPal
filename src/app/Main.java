@@ -75,7 +75,7 @@ public class Main {
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, orgHomeViewModel,
-                userDataAccessObject, apiPetDataAccessObject);
+                userDataAccessObject, fileOrganizationsDataAccessObject, apiPetDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, displayViewModel,
