@@ -12,7 +12,6 @@ public class Organizations implements User {
     private ArrayList<Requests> deniedRequests = new ArrayList<Requests>();
     private ArrayList<Requests> acceptedRequests = new ArrayList<Requests>();
     private ArrayList<Requests> pendingRequests = new ArrayList<Requests>();
-
     private LocalDateTime date;
 
     public Organizations(String name, String password, String bio, LocalDateTime date) {
