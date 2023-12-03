@@ -27,79 +27,21 @@ public class EditView extends JPanel implements PropertyChangeListener {
 
     private final EditController editController;
 
-    private final JButton add;
-
-    private final JButton exit;
+    private final EditPetDataAccessInterface editPetDataAccessInterface;
 
     public EditView(EditPetDataAccessInterface editPetDataAccessInterface,
                     EditViewModel editviewModel,
                     EditController editController) throws IOException {
         this.editviewModel = editviewModel;
         this.editController = editController;
+        this.editPetDataAccessInterface = editPetDataAccessInterface;
 
         editviewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(EditViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(title);
-
-        JPanel buttons = new JPanel();
-        add = new JButton(EditViewModel.EDIT_BUTTON_LABEL);
-        buttons.add(add);
-        exit = new JButton(EditViewModel.EXIT_BUTTON_LABEL);
-        buttons.add(exit);
-
-        add.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(add)) {
-
-                            User user = editviewModel.getState().getUser();
-                            String petname = JOptionPane.showInputDialog("Pet name:");
-                            String petbio = JOptionPane.showInputDialog("Pet bio:");
-
-                            editController.execute(user, petname, petbio, editviewModel.getState().getUser().getName());
-                        }
-                    }
-                }
-        );
-
-        exit.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(exit)) {
-                            User user = editviewModel.getState().getUser();
-                            editController.execute(user, null, null, null);
-                        }
-                    }
-                }
-        );
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        JLabel username = new JLabel("Username: " + editviewModel.getState().getUser().getName());
-        this.add(username);
-
-        JLabel bio = new JLabel("Bio: " + editviewModel.getState().getUser().getBio());
-        this.add(bio);
-
-        JLabel pets = new JLabel("Pets: ");
-        this.add(pets);
-
-        Map<String, Pet> petsmap = editPetDataAccessInterface.getPetsbyOwner(editviewModel.
-                getState().getUser().getName());
-
-        // for loop tha iterates over ll the pets {
-        for (Pet pet : petsmap.values()) {
-            JLabel petlabel = new JLabel(pet.getName() + ": " + pet.getBio());
-            this.add(petlabel);
-        }
-        // JLabel petlabel = new JLabel("pet.getMa,e()")
-        // this.add(petLabel);
-        // }
-
+        this.add(title);
     }
 
 
@@ -110,6 +52,60 @@ public class EditView extends JPanel implements PropertyChangeListener {
             if (state.getPetnameError() != null) {
                 JOptionPane.showMessageDialog(this, state.getPetnameError());
             }
+
+            JLabel username = new JLabel("Username: " + editviewModel.getState().getUser().getName());
+            this.add(username);
+
+            JLabel bio = new JLabel("Bio: " + editviewModel.getState().getUser().getBio());
+            this.add(bio);
+
+            JButton add = new JButton("add");
+            LabelButtonPanel petsAdd = new LabelButtonPanel(new JLabel("Pets: "), add, null);
+            this.add(petsAdd);
+
+            add.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            User user = editviewModel.getState().getUser();
+
+                            String petname = JOptionPane.showInputDialog("Pet name:");
+                            String petbio = JOptionPane.showInputDialog("Pet bio:");
+
+                            editController.execute(user, petname, petbio, editviewModel.getState().getUser().getName());
+
+                            ((JButton) e.getSource()).removeActionListener(this);
+                        }
+                    }
+            );
+
+            // for loop tha iterates over ll the pets {
+            if (editviewModel.getState().getPets() != null) {
+                for (Pet pet : editviewModel.getState().getPets()) {
+                    JLabel petlabel = new JLabel(pet.getName() + ": " + pet.getBio());
+                    this.add(petlabel);
+                    System.out.println("View adds petlabel");
+                }
+            }
+            // JLabel petlabel = new JLabel("pet.getMa,e()")
+            // this.add(petLabel);
+            // }
+
+            JButton exit = new JButton(EditViewModel.EXIT_BUTTON_LABEL);
+            this.add(exit);
+
+            exit.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            User user = editviewModel.getState().getUser();
+
+                            editController.execute(user, null, null, null);
+
+                            ((JButton) e.getSource()).removeActionListener(this);
+                        }
+                    }
+            );
         }
     }
 }
