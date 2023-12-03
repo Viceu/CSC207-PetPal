@@ -29,8 +29,12 @@ public class HomeInteractor implements HomeInputBoundary{
         }
         else{
             String nextView = homeInputData.getNextView();
-            HomeOutputData homeOutputData = new HomeOutputData(nextView, null, null, false);
-            homePresenter.prepareSuccessView(homeOutputData);
+            if(nextView.equals("search") || nextView.equals("logout")) {
+                HomeOutputData homeOutputData = new HomeOutputData(nextView, null, null, false);
+                homePresenter.prepareSuccessView(homeOutputData);
+            } else{
+                homePresenter.prepareFailView("Invalid next view");
+            }
         }
     }
 }
