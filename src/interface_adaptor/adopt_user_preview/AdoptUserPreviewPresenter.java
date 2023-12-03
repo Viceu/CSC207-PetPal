@@ -24,6 +24,8 @@ public class AdoptUserPreviewPresenter implements AdoptUserPreviewOutputBoundary
         OrgHomeState newState = orgHomeViewModel.getState();
         newState.setOrg(petData.getOrg());
         this.orgHomeViewModel.setState(newState);
+        homeViewModel.firePropertyChanged();
+        orgHomeViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(homeViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

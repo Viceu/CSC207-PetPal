@@ -24,7 +24,7 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
     private final OrgHomeViewModel orgHomeViewModel;
     private final OrgHomeController orgHomeController;
     JLabel username;
-    final JButton logOut;
+    private JButton logOut;
 
 
     public OrgHomeView(OrgHomeController controller, OrgHomeViewModel orgHomeViewModel) {
@@ -40,11 +40,19 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(username);
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        JOptionPane.showConfirmDialog(this, "This is not a feature.");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
         JLabel pendingRequests = new JLabel("See pending requests");
         this.add(pendingRequests);
         ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
-        for (Requests req: this.orgHomeViewModel.getState().getPendingRequests()) {
+        for (Requests req: this.orgHomeViewModel.getState().getOrg().getPendingRequests()) {
 
             JButton seeRequest = new JButton("See request");
             LabelButtonPanel newButton = new LabelButtonPanel(
@@ -88,13 +96,13 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
 
         JLabel acceptedRequests = new JLabel("These are the requests you have accepted!");
         this.add(acceptedRequests);
-        for (Requests req: this.orgHomeViewModel.getState().getAcceptedRequests()) {
+        for (Requests req: this.orgHomeViewModel.getState().getOrg().getAcceptedRequests()) {
             this.add(new JLabel(req.toString()));
         }
 
         JLabel deniedRequests = new JLabel("These are the requests you have denied!");
         this.add(deniedRequests);
-        for (Requests req: this.orgHomeViewModel.getState().getDeniedRequests()) {
+        for (Requests req: this.orgHomeViewModel.getState().getOrg().getDeniedRequests()) {
             this.add(new JLabel(req.toString()));
         }
 
@@ -109,15 +117,7 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                     }
                 }
         );
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "This is not a feature.");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
         OrgHomeState state = (OrgHomeState) evt.getNewValue();
         username.setText(state.getID());
         if (state.getRequestError() != null) {
