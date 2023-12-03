@@ -67,6 +67,7 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                                         orgHomeController.execute("see request", req, optionChosen);
                                     }
                                 }
+                                ((JButton) evt.getSource()).removeMouseListener(this);
                             }
 
                             @Override
@@ -91,34 +92,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
         }
         else {
             JLabel noReqs = new JLabel("There are no pending requests");
-            this.add(noReqs);
-        }
-
-        JLabel acceptedRequests = new JLabel("These are the requests you have accepted!");
-        this.add(acceptedRequests);
-
-        ArrayList<Requests> acceptedReqs = this.orgHomeViewModel.getState().getOrg().getAcceptedRequests();
-        if (!acceptedReqs.isEmpty()) {
-            for (Requests req : this.orgHomeViewModel.getState().getOrg().getAcceptedRequests()) {
-                this.add(new JLabel(req.toString()));
-            }
-        }
-        else {
-            JLabel noReqs = new JLabel("               There are no accepted requests");
-            this.add(noReqs);
-        }
-
-        JLabel deniedRequests = new JLabel("These are the requests you have denied!");
-        this.add(deniedRequests);
-
-        ArrayList<Requests> deniedReqs = this.orgHomeViewModel.getState().getOrg().getDeniedRequests();
-        if (!deniedReqs.isEmpty()) {
-            for (Requests req : deniedReqs) {
-                this.add(new JLabel(req.toString()));
-            }
-        }
-        else {
-            JLabel noReqs = new JLabel("               There are no denied requests");
             this.add(noReqs);
         }
 
