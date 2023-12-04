@@ -50,22 +50,18 @@ public class LoginInteractor implements LoginInputBoundary {
                 pwd = userDataAccessObject.get(username).getPassword();
             }
             else {
-                pwd = "1234";
+                pwd = orgDAO.get(username).getPassword();
             }
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else { // if the account exists and the password is correct:
-                User user = userDataAccessObject.get(loginInputData.getUsername());
-                // checks if the username is an organizationID
-                String regex = "[A-Z][A-Z][0-9]+";
-                Pattern p = Pattern.compile(regex);
-                Matcher m = p.matcher(username);
-                if (m.matches()) {
-                    Organizations org = orgDAO.getUsername(username);
+                if (orgDAO.get(username) != null) {
+                    Organizations org = orgDAO.get(username);
                     LoginOutputData loginOutputData = new LoginOutputData(org.getName(), "organization", false, null, org);
                     loginPresenter.prepareSuccessView(loginOutputData);
 
                 } else {
+                    User user = userDataAccessObject.get(loginInputData.getUsername());
                     LoginOutputData loginOutputData = new LoginOutputData(user.getName(), "user", false, displayPetMap, user);
                     loginPresenter.prepareSuccessView(loginOutputData);
 

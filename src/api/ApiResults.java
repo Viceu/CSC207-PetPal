@@ -80,4 +80,63 @@ public class ApiResults {
             throw new RuntimeException(e);
         }
     }
+
+    public static String getOrg(String orgID) throws JSONException {
+
+
+        // first get live API access token
+        String API_TOKEN;
+        try {
+            API_TOKEN = GetToken.accessToken();
+        } catch (OAuthSystemException | OAuthProblemException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        // build URL that searches for animals with inputted requirements
+        String orgURL = "https://api.petfinder.com/v2/organizations/" + orgID;
+
+
+        // initialize request through okhttp3 and input values of URL and token
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        Request request = new Request.Builder()
+                .url(orgURL)
+                .method("GET", null)
+                .addHeader("Authorization", API_TOKEN)
+                .build();
+
+
+        // try to get response through request call
+        try {
+            Response response = client.newCall(request).execute();
+            // store response body as JSONObject
+            assert response.body() != null;
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+
+            // transform JSONObject result to ArrayList
+            String orgInfo = null;
+            JSONObject orgObject = responseBody.getJSONObject("organization");
+
+
+            // if there are results (there exists animals that match requirements)
+            // keep first 5 results for use (present to user)
+            // or keep all results if total results less than 5
+            if (!orgObject.equals(JSONObject.NULL)) {
+                orgInfo = String.valueOf(orgObject);
+            }
+
+
+            // successful is Response code() is 200
+            if (response.isSuccessful()) {
+                // return results (now in List of Strings)
+                return orgInfo;
+            } else {
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
