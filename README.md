@@ -15,6 +15,8 @@ Overall, our application aims to simplify the pet adoption process by providing 
 
 ### Link to Pet Finder API documentation: https://www.petfinder.com/developers/v2/docs/
 
+### Note to API access: 
+Due to disclosure restriction of our API credentials, which are necessary for accessing the API, our team has kepy a local copy of file "api/Credentials" in our code when running the program. This file contains our API client ID and client secret, and methods to retrieve them when called in "api/GetToken" to generate access token to the API each time we require access. For this reason, our code in this repository is not fully functional without these credentials to the API.
 
 ### API Screenshot (Postman):
 
