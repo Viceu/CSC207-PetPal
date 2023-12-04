@@ -25,8 +25,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
     public final String viewName = "home";
     private final HomeViewModel homeViewModel;
     private final HomeController homeController;
-
-    JLabel bio;
+    JLabel username;
     JButton logOut;
     JButton edit;
     private JButton search;
@@ -37,11 +36,10 @@ public class HomeView extends JPanel implements PropertyChangeListener {
         this.homeViewModel = homeViewModel;
         this.homeViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
+
+        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
+        this.add(title, BorderLayout.CENTER);
     }
 
     @Override
@@ -50,9 +48,11 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
         this.removeAll();
 
-        JLabel usernameInfo = new JLabel("Currently logged in: "+ homeViewModel.getUsername());
-        bio = new JLabel(homeViewModel.getUserBio());
-        bio.setText(state.getBio());
+        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
+        this.add(title, BorderLayout.CENTER);
+
+        username = new JLabel("Currently logged in: "+ homeViewModel.getUsername());
+        username.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         JPanel buttons = new JPanel();
         search = new JButton(HomeViewModel.SEARCH_BUTTON_LABEL);
@@ -84,9 +84,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
-
-        this.add(usernameInfo);
-        this.add(bio);
+        this.add(username);
         this.add(buttons);
 
         if (state.getFetchError() != null) {
@@ -103,6 +101,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                 LabelButtonPanel newButton = new LabelButtonPanel(
                         new JLabel(entry.getValue().getName() + ": " + entry.getValue().getSpecies()),
                         seeMore, entry.getValue());
+
                 petButtons.add(newButton);
 
                 seeMore.addMouseListener(
@@ -142,7 +141,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
             }
 
             for (LabelButtonPanel someButton : petButtons) {
-                this.add(someButton);
+                this.add(someButton, BorderLayout.WEST);
             }
         }
 
