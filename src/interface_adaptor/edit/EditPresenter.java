@@ -28,7 +28,6 @@ public class EditPresenter implements EditOutputBoundary {
             editState.setUser(edited.getUser());
             editState.addPet(edited.getPet());
             this.editViewModel.setState(editState);
-            this.editViewModel.firePropertyChanged();
             System.out.println("Pesenter success view");
         }
 

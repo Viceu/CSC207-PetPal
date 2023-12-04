@@ -55,6 +55,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         HomeState state = (HomeState) evt.getNewValue();
 
+        this.removeAll();
+
         JLabel usernameInfo = new JLabel("Currently logged in: "+ homeViewModel.getUsername());
         bio = new JLabel(homeViewModel.getUserBio());
         bio.setText(state.getBio());
