@@ -30,5 +30,6 @@ public class EditViewModel extends ViewModel {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
+
     }
 }

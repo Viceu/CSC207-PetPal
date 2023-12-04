@@ -20,7 +20,7 @@ public class RequestsTest {
 
     @BeforeEach
     void init() {
-        request = new Requests(pet, user, "I want to adopt a pet", organization);
+        request = new Requests(pet, "I want to adopt a pet", organization);
 
     }
 
