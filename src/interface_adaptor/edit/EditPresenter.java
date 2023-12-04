@@ -12,7 +12,9 @@ public class EditPresenter implements EditOutputBoundary {
     private final HomeViewModel homeViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public EditPresenter(ViewManagerModel viewManagerModel, EditViewModel editViewModel, HomeViewModel homeViewModel) {
+    public EditPresenter(ViewManagerModel viewManagerModel,
+                         EditViewModel editViewModel,
+                         HomeViewModel homeViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.editViewModel = editViewModel;
         this.homeViewModel = homeViewModel;
@@ -21,7 +23,16 @@ public class EditPresenter implements EditOutputBoundary {
     @Override
     public void prepareSuccessView(EditOutputData edited) {
         // on success, switch to the home page
-        HomeState homeState = homeViewModel.getState();
+        if (edited != null) {
+            EditState editState = editViewModel.getState();
+            editState.setUser(edited.getUser());
+            editState.addPet(edited.getPet());
+            this.editViewModel.setState(editState);
+            this.editViewModel.firePropertyChanged();
+            System.out.println("Pesenter success view");
+        }
+
+        HomeState homeState = this.homeViewModel.getState();
         homeState.setUser(edited.getUser());
         this.homeViewModel.setState(homeState);
         this.homeViewModel.firePropertyChanged();
