@@ -24,8 +24,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
     private final OrgHomeViewModel orgHomeViewModel;
     private final OrgHomeController orgHomeController;
     private final JButton logOut = new JButton(OrgHomeViewModel.LOGOUT_BUTTON_LABEL);
-    private final JLabel pendingRequests = new JLabel("See pending requests");
-    private final JButton seeRequest = new JButton();
 
 
     public OrgHomeView(OrgHomeController controller, OrgHomeViewModel orgHomeViewModel) {
@@ -48,12 +46,14 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+        JLabel pendingRequests = new JLabel("See pending requests");
         this.add(pendingRequests);
 
         ArrayList<Requests> pendingReqs = this.orgHomeViewModel.getState().getOrg().getPendingRequests();
         if (!pendingReqs.isEmpty()) {
             for (Requests req : pendingReqs) {
-                seeRequest = new JButton("See request");
+                JButton seeRequest = new JButton("See request");
                 LabelButtonPanel newButton = new LabelButtonPanel(
                         new JLabel(req.getPet().getName()), seeRequest, null);
 
@@ -68,7 +68,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                                         orgHomeController.execute("see request", req, optionChosen);
                                     }
                                 }
-                                ((JButton) evt.getSource()).removeMouseListener(this);
                             }
 
                             @Override
