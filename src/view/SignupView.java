@@ -78,8 +78,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        //cancel.addActionListener(this);
-
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override
