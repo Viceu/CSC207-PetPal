@@ -23,8 +23,6 @@ public class EditOutputData {
         this.editFail = editFail;
         this.pet = pet;
         this.user = user;
-
-        System.out.println("EditOutput runs");
     }
 
     public String getPetname() {

@@ -18,7 +18,6 @@ public class EditInteractor implements EditInputBoundary{
 
     @Override
     public void execute(EditInputData editInputData) {
-        System.out.println("EditInteractor executes");
         if (petDataAccessObject.existsByName(editInputData.getPetname())) {
             petPresenter.prepareFailView("Pet Name already exists.");
         } else {
@@ -34,7 +33,8 @@ public class EditInteractor implements EditInputBoundary{
                 editOutputData = new EditOutputData(user, pet.getName(), pet.getBio(), pet.getOwner(), pet, false);
             }
             else {
-                editOutputData = null;
+                User user = editInputData.getUser();
+                editOutputData = new EditOutputData(user, null, null, null, null, false);
             }
 
             petPresenter.prepareSuccessView(editOutputData);

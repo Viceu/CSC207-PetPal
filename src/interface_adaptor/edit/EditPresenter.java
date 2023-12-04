@@ -23,12 +23,11 @@ public class EditPresenter implements EditOutputBoundary {
     @Override
     public void prepareSuccessView(EditOutputData edited) {
         // on success, switch to the home page
-        if (edited != null) {
+        if (edited.getPetname() != null) {
             EditState editState = editViewModel.getState();
             editState.setUser(edited.getUser());
             editState.addPet(edited.getPet());
             this.editViewModel.setState(editState);
-            this.editViewModel.firePropertyChanged();
             System.out.println("Pesenter success view");
         }
 
