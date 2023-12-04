@@ -1,0 +1,192 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
++class SearchUseCaseFactory {
+    -SearchUseCaseFactory()
+    +SearchView create()
+    -SearchController createSearchUseCase()
+}
+
++interface Pet {
+    {abstract} +Integer getPetID()
+    {abstract} +String getOrganizationID()
+    {abstract} +String getURL()
+    {abstract} +String getName()
+    {abstract} +String getColors()
+    {abstract} +String getBreed()
+    {abstract} +Integer getSpecies()
+    {abstract} +String getCoat()
+    {abstract} +String getAge()
+    {abstract} +String getAttributes()
+    {abstract} +String getEnvironment()
+    {abstract} +boolean getDescription()
+    {abstract} +boolean getAdoptable()
+    {abstract} +boolean getContact()
+    {abstract} +boolean getGender()
+    {abstract} +boolean getSize()
+    {abstract} +String getBio()
+    {abstract} +String getOwner()
+    {abstract} +void setAdoptable(
+    {abstract} +void setAdoptable()
+    {abstract} +void setOwner()
+    {abstract} +void setBio()
+    {abstract} +Map<String, String> getAll()
+}
+
++interface PetFactory {
+    -Pet create()
+}
+
++class ApiDataAccessObject implements SearchPetDataAccessInterface {
+    -Map<Integer, Pet> profiles
+    -PetFactory petFactory
+    +ApiPetDataAccessObject()
+    +Map<String, String> toMapSS()
+    +Map<String, Boolean> toMapSB()
+    +void save()
+    +boolean existsByName()
+    +Pet getPet()
+    +Map<Integer, Pet> accessApi()
+    +void deleteAll()
+    +List<Integer> getIDs()
+    +List<Pet> getPets()
+}
+
++class SearchController {
+    -SearchInputBoundary searchUseCaseInteractor
+    +SearchController()
+    +void execute()
+}
+
++class SearchPresenter implements SearchOutputBoundary{
+    -SearchViewModel searchViewModel
+    -ViewManagerModel viewManagerModel
+    -DisplayViewModel resultViewModel
+    +SearchPresenter()
+    +void prepareSuccessView()
+    +void prepareFailView()
+}
+
++class SearchState {
+    -String failMessage
+    -HashMap<String, String> requirements
+    +Map<String, String> getRequirements()
+    +void addRequirement()
+    +void setSearchFailMessage()
+    +Object getRequirementsError()
+}
+
++class SearchViewModel extends ViewModel{
+    +String TITLE_LABEL
+    +String SPECIES_LABEL
+    ...
+    -SearchState state
+    -PropertyChangeSupport support
+    +SearchViewModel()
+    +SearchState getState()
+    +void addPropertyChangeListener()
+    +void setState()
+    +void firePropertyChanged()
+    +void addPropertyChangeListener()
+}
+
++class ViewManagerModel {
+    -String activeViewName
+    -PropertyChangeSupport support
+    +String getActiveView()
+    +void setActiveView()
+    +void firePropertyChanged()
+    +void addPropertyChangeListener()
+}
+
++abstract class ViewModel {
+    -String viewName
+    +ViewModel()
+    +String getViewName()
+    {abstract} +void firePropertyChanged()
+    {abstract} +void addPropertyChangeListener()
+}
+
++interface SearchInputBoundary {
+    {abstract} +void execute()
+}
+
++class SearchInputData {
+    -Map<String, String> requirements
+    +SearchInputData()
+    +Map<String, String> getRequirements()
+}
+
++class SearchInteractor implements SearchInputBoundary{
+    -SearchPetDataAccessInterface userDataAccessObject
+    -SearchOutputBoundary searchPresenter
+    -PetFactory petFactory
+    +SearchInteractor()
+    +void execute()
+}
+
++interface SearchOutputBoundary {
+    {abstract} +void prepareSuccessView()
+    {abstract} +prepareFailView()
+}
+
++class SearchOutputData {
+    -Map<Integer, Pet> results
+    -boolean searchFail
+    +SearchOutputData()
+    +getResults()
+}
+
++interface SearchPetDataAccessInterface {
+    {abstract} +void save()
+    {abstract} +Pet getPet()
+    {abstract} +boolean existsByName()
+    {abstract} +Map<Integer, Pet> accessApi()
+    {abstract} +void deleteAll()
+    {abstract} +List<Pet> getPets()
+    {abstract} +List<Integer> getIDs()
+}
+
++class ViewManager implements PropertyChangeListener {
+    -CardLayout cardLayout
+    -Jpanel views
+    -ViewManagerModel viewManagerModel
+    +ViewManager()
+    +void propertyChange()
+}
+
++class SearchView extends JPanel implements ActionListener, PropertyChangeSupport {
+    -String viewName
+    -SearchViewModel searchViewModel
+    -JTextField speciesField
+    ...
+    -JComboBox<String> ageField
+    ...
+    -SearchController searchController
+    -JButton search
+    +SearchView()
+    +void actionPerformed()
+    +void propertyChange()
+}
+
+Pet *-- SearchPetDataAccessInterface
+Pet *-- SearchInteractor
+SearchPetDataAccessInterface *-- SearchInteractor
+SearchOutputBoundary *-- SearchInteractor
+SearchOutputData *-- SearchInteractor
+SearchInputData *-- SearchInteractor
+SearchInputData *-- SearchController
+SearchInputBoundary *-- SearchController
+SearchOutputData *-- SearchPresenter
+SearchViewModel *-- SearchPresenter
+SearchViewModel *-- SearchView
+SearchController *-- SearchView
+ViewManagerModel *-- ViewManager
+SearchState *-- SearchViewModel
+ApiDataAccessObject *-- PetFactory
+ViewModel *-- SearchViewModel
+SearchView *--SearchUseCaseFactory
+SearchController *--SearchUseCaseFactory
+
+
+@enduml
