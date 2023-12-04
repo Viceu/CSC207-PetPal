@@ -9,6 +9,7 @@ import entities.Pet;
 import interface_adaptor.display.DisplayController;
 import interface_adaptor.display.DisplayViewModel;
 import interface_adaptor.display.DisplayState;
+import interface_adaptor.org_adopt.OrgHomeViewModel;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -41,11 +42,16 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        this.removeAll();
+
+        JLabel title = new JLabel(OrgHomeViewModel.TITLE_LABEL);
+        this.add(title, BorderLayout.CENTER);
+
         if (this.displayViewModel.getState().getPets() == null) {
             this.add(new JLabel("No results found for this search, please change your search."));
         }
         else {
-
+            System.out.println("printing pets");
             ArrayList<LabelButtonPanel> buttons = new ArrayList<LabelButtonPanel>();
             for (Map.Entry<Integer, Pet> entry : this.displayViewModel.getState().getPets().entrySet()) {
                 JButton seeMore = new JButton("See more");
@@ -92,10 +98,6 @@ public class DisplayView extends JPanel implements PropertyChangeListener {
                             public void mouseExited(MouseEvent e) {
                             }
                         });
-            }
-
-            for (LabelButtonPanel button : buttons) {
-
             }
 
             for (LabelButtonPanel someButton : buttons) {

@@ -14,8 +14,6 @@ public class OrgHomeInputData {
     public Requests getRequest() {
         return request;
     }
-    public String getViewname() {return viewname;}
-
     public Integer getChosenOption() {
         return chosenOption;
     }

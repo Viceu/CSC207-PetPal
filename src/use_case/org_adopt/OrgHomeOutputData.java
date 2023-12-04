@@ -12,10 +12,6 @@ public class OrgHomeOutputData {
         this.searchFail = searchFail;
     }
 
-    public Requests getRequest() {
-        return request;
-    }
-
     public void setViewName(String orgHome) {
         this.viewName = orgHome;
     }

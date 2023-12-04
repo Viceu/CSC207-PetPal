@@ -13,12 +13,6 @@ public class HomeState {
 
     public HomeState() {}
 
-    public String getUsername() {
-        return user.getName();
-    }
-    public String getBio() {
-        return user.getBio();
-    }
     public Map<Integer, Pet> getPets() {
         return pets;
     }

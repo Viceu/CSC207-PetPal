@@ -45,6 +45,8 @@ public class ApiResults {
             }
         }
 
+        System.out.println(paramURL);
+
         // initialize request through okhttp3 and input values of URL and token
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request = new Request.Builder()

@@ -3,8 +3,6 @@ package use_case.edit;
 import entities.Pet;
 import entities.User;
 
-import java.util.Map;
-
 public class EditOutputData {
 
     final private String petname;
@@ -29,14 +27,8 @@ public class EditOutputData {
         return petname;
     }
 
-    public String getPet_bio() {
-        return pet_bio;
-    }
     public Pet getPet() {return pet;}
 
-    public String getOwner() {
-        return owner;
-    }
     public User getUser() {
         return user;
     }

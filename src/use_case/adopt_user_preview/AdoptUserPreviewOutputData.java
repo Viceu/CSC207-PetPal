@@ -13,6 +13,5 @@ public class AdoptUserPreviewOutputData {
         this.org = org;
     }
 
-    public Pet getPet() {return thisPet;}
     public Organizations getOrg() {return this.org;}
 }
