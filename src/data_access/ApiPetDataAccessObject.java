@@ -82,27 +82,6 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     }
 
     /**
-     * Return if a pet with given id is in local profiles
-     * @param id
-     * @return
-     */
-    @Override
-    public boolean existsByName(Integer id) {
-        return profiles.containsKey(id);
-    }
-
-    /**
-     * Return the corresponding pet entity object to the given id
-     * @param id
-     * @return
-     */
-    @Override
-    public Pet getPet(Integer id) {
-        assert existsByName(id);
-        return profiles.get(id);
-    }
-
-    /**
      * Retrieve pet information from the API given the user requirements
      * @param params user requirements
      * @return Map of pet id to created pet entities
@@ -187,24 +166,4 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
         return resultPets;
     }
-
-    @Override
-    public void deleteAll() {
-        profiles.clear();
-    }
-
-    @Override
-    public List<Integer> getIDs() {
-        return new ArrayList<Integer>(profiles.keySet());
-    }
-
-    /**
-     * Returns list of pets exiting in lcoal profiles
-     * @return
-     */
-    @Override
-    public List<Pet> getPets() {
-        return (List<Pet>) profiles.values();
-    }
-
 }
