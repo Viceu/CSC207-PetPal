@@ -64,17 +64,6 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
     }
 
     @Override
-    public boolean existsByName(Integer id) {
-        return profiles.containsKey(id);
-    }
-
-    @Override
-    public Pet getPet(Integer id) {
-        assert existsByName(id);
-        return profiles.get(id);
-    }
-
-    @Override
     public Map<Integer, Pet> accessApi(Map<String, String> params) {
         Map<Integer, Pet> resultPets = new HashMap<>();
 
@@ -153,21 +142,6 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
         }
 
         return resultPets;
-    }
-
-    @Override
-    public void deleteAll() {
-        profiles.clear();
-    }
-
-    @Override
-    public List<Integer> getIDs() {
-        return new ArrayList<Integer>(profiles.keySet());
-    }
-
-    @Override
-    public List<Pet> getPets() {
-        return (List<Pet>) profiles.values();
     }
 
 }
