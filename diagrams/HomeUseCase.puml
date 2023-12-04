@@ -1,0 +1,155 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
++interface Pet {
+    {abstract} +Integer getPetID()
+    {abstract} +String getOrganizationID()
+    {abstract} +String getURL()
+    {abstract} +String getName()
+    {abstract} +String getColors()
+    {abstract} +String getBreed()
+    {abstract} +Integer getSpecies()
+    {abstract} +String getCoat()
+    {abstract} +String getAge()
+    {abstract} +String getAttributes()
+    {abstract} +String getEnvironment()
+    {abstract} +boolean getDescription()
+    {abstract} +boolean getAdoptable()
+    {abstract} +boolean getContact()
+    {abstract} +boolean getGender()
+    {abstract} +boolean getSize()
+    {abstract} +String getBio()
+    {abstract} +String getOwner()
+    {abstract} +void setAdoptable(
+    {abstract} +void setAdoptable()
+    {abstract} +void setOwner()
+    {abstract} +void setBio()
+    {abstract} +Map<String, String> getAll()
+}
+
++class HomeUseCaseFactory {
+    -HomeUseCaseFactory()
+    +HomeView create()
+    -HomeController createHomeUseCase()
+}
+
++class HomeController {
+    -HomeInputBoundary searchUseCaseInteractor
+    +HomeController()
+    +void execute()
+}
+
++class HomePresenter implements HomeOutputBoundary{
+    -HomeViewModel homeViewModel
+    -ViewManagerModel viewManagerModel
+    -AdoptUserPreviewViewModel adoptUserPreviewViewModel
+    -SearchViewModel searchViewModel
+    -EditViewModel editViewModel
+    -LoginViewModel loginViewModel
+    +SearchPresenter()
+    +void prepareSuccessView()
+    +void prepareFailView()
+}
+
++class HomeState {
+    -User user
+    -String failMessage
+    -Map<Integer, Pet> pets
+    +HomeState()
+    +Map<Integer, Pet> getPets()
+    +User getUser()
+    +void setUser()
+    +void setResults()
+    +void setHomeFailMessage()
+    +Object getFetchError()
+}
+
++class HomeViewModel extends ViewModel{
+    +String TITLE_LABEL
+    +String EDIT_BUTTON_LABEL
+    +String SEARCH_BUTTON_LABEL
+    +String LOGOUT_BUTTON_LABEL
+    -User loggedInUser
+    -HomeState state
+    -PropertyChangeSupport support
+    +HomeViewModel()
+    +HomeState getState()
+    +void addPropertyChangeListener()
+    +void setState()
+    +void firePropertyChanged()
+    +User getUser()
+    +String getUsername()
+}
+
++class ViewManagerModel {
+    -String activeViewName
+    -PropertyChangeSupport support
+    +String getActiveView()
+    +void setActiveView()
+    +void firePropertyChanged()
+    +void addPropertyChangeListener()
+}
+
++abstract class ViewModel {
+    -String viewName
+    +ViewModel()
+    +String getViewName()
+    {abstract} +void firePropertyChanged()
+    {abstract} +void addPropertyChangeListener()
+}
+
++interface HomeInputBoundary {
+    {abstract} +void execute()
+}
+
++class HomeInputData {
+    -Pet thisPet
+    -User thisUser
+    -String nextView
+    +HomeInputData()
+    {abstract} +Pet getPet()
+    {abstract} +String getNextView()
+    {abstract} +User getUser()
+}
+
++class HomeInteractor implements HomeInputBoundary{
+    -HomeOutputBoundary homePresenter
+    +HomeInteractor()
+    +void execute()
+}
+
++interface HomeOutputBoundary {
+    {abstract} +void prepareSuccessView()
+    {abstract} +prepareFailView()
+}
+
++class HomeOutputData {
+    -Map<Integer, Pet> results
+    -boolean searchFail
+    +SearchOutputData()
+    +getResults()
+}
+
+
++class ViewManager implements PropertyChangeListener {
+    -CardLayout cardLayout
+    -Jpanel views
+    -ViewManagerModel viewManagerModel
+    +ViewManager()
+    +void propertyChange()
+}
+
++class HomeView extends JPanel implements ActionListener, PropertyChangeSupport {
+    -String viewName
+    -SearchViewModel searchViewModel
+    -HomeViewModel homeViewModel
+    -HomeController homeController
+    +JLabel username
+    +JButton logOut
+    +JButton edit
+    -JButton search
+    +HomeView()
+    +void propertyChange()
+}
+
+@enduml
