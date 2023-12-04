@@ -1,7 +1,6 @@
 package view;
 
 import entities.Pet;
-import entities.User;
 import interface_adaptor.home.HomeController;
 import interface_adaptor.home.HomeState;
 import interface_adaptor.home.HomeViewModel;
@@ -22,12 +21,11 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 
-public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
+public class HomeView extends JPanel implements PropertyChangeListener {
     public final String viewName = "home";
     private final HomeViewModel homeViewModel;
     private final HomeController homeController;
 
-    JLabel username;
     JLabel bio;
     JButton logOut;
     JButton edit;
@@ -44,11 +42,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "This is not implemented yet.");
     }
 
     @Override
@@ -119,11 +112,9 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
                                 String message = "";
 
-                                for (Map.Entry<String, Boolean> attributes : thisPet.getAttributes().entrySet()) {
-                                    if (attributes.getValue()) {
-                                        String key = attributes.getKey();
-                                        message += key + thisPet.getAll().get(key) + "\n";
-                                    }
+                                for (Map.Entry<String, String> attributes : thisPet.getAll().entrySet()) {
+                                    String key = attributes.getKey();
+                                    message += key + " " + thisPet.getAll().get(key) + "\n";
                                 }
 
                                 Object[] options = {"Adopt!",
