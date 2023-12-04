@@ -4,6 +4,7 @@ import entities.Organizations;
 import entities.Requests;
 import org.junit.jupiter.api.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -14,7 +15,7 @@ public class OrganizationsTest {
 
     @BeforeEach
     void init() {
-        organizations = new Organizations("fightingchanceranchandrecuse", "1234", "I love pets");
+        organizations = new Organizations("fightingchanceranchandrecuse", "1234", "I love pets", LocalDateTime.now());
     }
 
     @Test
