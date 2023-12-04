@@ -34,13 +34,10 @@ public class LoginInteractor implements LoginInputBoundary {
     public void execute(LoginInputData loginInputData) {
         Map<Integer, Pet> displayPetMap = new HashMap<>();
         Map<Integer, Pet> resultPetMap = petDataAccessObject.accessApi(new HashMap<>());
-        for (Integer id : resultPetMap.keySet()) {
-            Pet pet = resultPetMap.get(id);
-            if (!pet.getAdoptable()) {
-                continue;
-            }
-            displayPetMap.put(id, pet);
-            petDataAccessObject.save(pet);
+        for (int i = 0; i < 5; i++) {
+            Map.Entry<Integer, Pet> petEntry = (Map.Entry<Integer, Pet>) resultPetMap.entrySet().toArray()[i];
+            displayPetMap.put(petEntry.getKey(), petEntry.getValue());
+            petDataAccessObject.save(petEntry.getValue());
         }
 
         String username = loginInputData.getUsername();
