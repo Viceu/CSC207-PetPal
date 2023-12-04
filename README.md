@@ -18,6 +18,6 @@ Overall, our application aims to simplify the pet adoption process by providing 
 ### Note to API access: 
 Due to disclosure restriction of our API credentials, which are necessary for accessing the API, our team has kepy a local copy of file "api/Credentials" in our code when running the program. This file contains our API client ID and client secret, and methods to retrieve them when called in "api/GetToken" to generate access token to the API each time we require access. For this reason, our code in this repository is not fully functional without these credentials to the API.
 
-### API example run Screenshot (Postman):
+### API example call (Postman):
 
 ![API Screenshot](https://github.com/Viceu/CSC207-PetMatch/assets/144386124/fc899a3f-5f6e-47c6-b49e-4e4b8fe3631e)
