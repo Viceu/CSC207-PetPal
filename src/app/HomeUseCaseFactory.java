@@ -22,6 +22,16 @@ import java.io.IOException;
 public class HomeUseCaseFactory {
     private HomeUseCaseFactory(){}
 
+    /**
+     * To create HomeView
+     * @param viewManagerModel to react with changing views
+     * @param homeViewModel own view model
+     * @param adoptUserPreviewViewModel in case of adopting a pet
+     * @param searchViewModel in case of wanting to search for a pet
+     * @param editViewModel in case of wanting to edit profile
+     * @param loginViewModel in case of loggin out
+     * @return
+     */
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                   AdoptUserPreviewViewModel adoptUserPreviewViewModel,
                                   SearchViewModel searchViewModel, EditViewModel editViewModel,
@@ -31,6 +41,16 @@ public class HomeUseCaseFactory {
         return new HomeView(homeController, homeViewModel);
     }
 
+    /**
+     * To create a controller
+     * @param viewManagerModel
+     * @param homeViewModel
+     * @param adoptUserPreviewViewModel
+     * @param searchViewModel
+     * @param editViewModel
+     * @param loginViewModel
+     * @return
+     */
     private static HomeController createHomeUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                                     AdoptUserPreviewViewModel adoptUserPreviewViewModel,
                                                     SearchViewModel searchViewModel, EditViewModel editViewModel,

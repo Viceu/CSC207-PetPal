@@ -20,6 +20,15 @@ public class HomePresenter implements HomeOutputBoundary{
     private final EditViewModel editViewModel;
     private final LoginViewModel loginViewModel;
 
+    /**
+     * Construct Presetner with necessary view models that the Home use case may redirect user to
+     * @param homeViewModel
+     * @param viewManagerModel
+     * @param adoptUserPreviewViewModel
+     * @param searchViewModel
+     * @param editViewModel
+     * @param loginViewModel
+     */
     public HomePresenter(HomeViewModel homeViewModel, ViewManagerModel viewManagerModel,
                          AdoptUserPreviewViewModel adoptUserPreviewViewModel,
                          SearchViewModel searchViewModel, EditViewModel editViewModel, LoginViewModel loginViewModel) {
@@ -31,6 +40,10 @@ public class HomePresenter implements HomeOutputBoundary{
         this.loginViewModel = loginViewModel;
     }
 
+    /**
+     * In case of success user interactor, go to the next view
+     * @param result
+     */
     @Override
     public void prepareSuccessView(HomeOutputData result) {
         // on success, switch to the respective next view
@@ -65,6 +78,10 @@ public class HomePresenter implements HomeOutputBoundary{
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * In case of failed user interactions, stay in HomeView and display fail msssage
+     * @param failMessage
+     */
     @Override
     public void prepareFailView(String failMessage) {
         HomeState homeState = homeViewModel.getState();
