@@ -83,7 +83,7 @@ public class EditView extends JPanel implements PropertyChangeListener {
         // for loop tha iterates over ll the pets {
         if (editviewModel.getState().getPets() != null) {
             for (Pet pet : editviewModel.getState().getPets()) {
-                JLabel petlabel = new JLabel(pet.getName() + ": " + pet.getBio());
+                JLabel petlabel = new JLabel("Pet: " + pet.getName() + ": " + pet.getBio());
                 this.add(petlabel);
             }
         }

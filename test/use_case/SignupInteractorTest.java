@@ -1,10 +1,11 @@
-package use_case.signup;
+package use_case;
 
 import data_access.InMemoryUserDataAccessObject;
 import entities.PersonalUserFactory;
 import entities.User;
 import entities.UserFactory;
 import org.junit.jupiter.api.Test;
+import use_case.signup.*;
 
 import java.time.LocalDateTime;
 

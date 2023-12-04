@@ -1,6 +1,7 @@
 package view;
 
 import entities.Requests;
+import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.org_adopt.OrgHomeController;
 import interface_adaptor.org_adopt.OrgHomeState;
 import interface_adaptor.org_adopt.OrgHomeViewModel;
@@ -47,10 +48,15 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        JLabel pendingRequests = new JLabel("See pending requests");
+        this.removeAll();
+
+        JLabel title = new JLabel(OrgHomeViewModel.TITLE_LABEL);
+        this.add(title, BorderLayout.CENTER);
+
+        JLabel pendingRequests = new JLabel("See requests");
         this.add(pendingRequests);
 
-        ArrayList<Requests> pendingReqs = this.orgHomeViewModel.getState().getOrg().getPendingRequests();
+        ArrayList<Requests> pendingReqs = this.orgHomeViewModel.getState().getOrg().getRequests();
         if (!pendingReqs.isEmpty()) {
             for (Requests req : pendingReqs) {
                 JButton seeRequest = new JButton("See request");
@@ -60,14 +66,12 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
                 seeRequest.addMouseListener(
                         new MouseListener() {
                             public void mouseClicked(MouseEvent evt) {
-                                if (evt.getSource().equals(seeRequest)) {
-                                    Object[] options = {"Accept request",
-                                            "Deny request", "Return to list of requests"};
+                                Object[] options = {"Accept request",
+                                        "Deny request", "Return to list of requests"};
                                     int optionChosen = JOptionPane.showOptionDialog(null, req.toString(), null, YES_NO_OPTION, PLAIN_MESSAGE, null, options, options[2]);
                                     if (optionChosen != JOptionPane.CANCEL_OPTION) {
                                         orgHomeController.execute("see request", req, optionChosen);
                                     }
-                                }
                             }
 
                             @Override

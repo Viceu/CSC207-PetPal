@@ -32,8 +32,8 @@ public class AdoptUserPreviewPresenter implements AdoptUserPreviewOutputBoundary
     }
 
     public void prepareFailView(String failmessage) {
-        HomeState homeState = homeViewModel.getState();
-        // homeState.setSearchFailMessage(failmessage);
-        homeViewModel.firePropertyChanged();
+        AdoptUserPreviewState state = adoptUserPreviewViewModel.getState();
+        state.setSearchFailMessage(failmessage);
+        adoptUserPreviewViewModel.firePropertyChanged();
     }
 }

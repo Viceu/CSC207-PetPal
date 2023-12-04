@@ -15,15 +15,6 @@ public class EditState {
 
     private String petnameError = null;
 
-    // pass this User to the view model and view model controls view (user's screen)
-
-    public EditState(EditState copy, User user) {
-        this.user = user;
-        petname = copy.petname;
-        pet = copy.pet;
-        petnameError = copy.petnameError;
-    }
-
     public EditState() {
     }
 
@@ -54,7 +45,5 @@ public class EditState {
     public void setPetnameError(String petnameError) {
         this.petnameError = petnameError;
     }
-
-    // get state from view model
 
 }
