@@ -23,6 +23,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
     private final SignupController signupController;
 
     private final JButton signUp;
+    final JButton cancel;
 
     public SignupView(SignupController controller, SignupViewModel signupViewModel) {
 
@@ -59,6 +60,9 @@ public class SignupView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+
+        cancel = new JButton("cancel");
+        buttons.add(cancel);
 
         cancel.addActionListener(
                 new ActionListener() {

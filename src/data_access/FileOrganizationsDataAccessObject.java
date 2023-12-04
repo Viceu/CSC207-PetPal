@@ -1,15 +1,14 @@
 package data_access;
 
+import api.ApiResults;
 import entities.Organizations;
 import entities.OrganizationsFactory;
-import entities.Pet;
 import use_case.adopt_user_preview.AdoptUserPreviewDataAccessInterface;
 
+import org.json.JSONObject;
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 //
 public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAccessInterface {
@@ -69,19 +68,32 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
     }
 
     @Override
-    public Organizations getUsername(String username) {
+    public Organizations get(String username) {
         return orgAccounts.get(username);
     }
 
     @Override
-    public Organizations getPassword(String password) {
-        return orgAccounts.get(password);
+    public Organizations accessApi(String orgID) {
+        String apiResult = ApiResults.getOrg(orgID);
+
+
+        // Construct a JSONObject using above string for easier parsing
+        JSONObject petJson = new JSONObject(apiResult);
+
+
+        // store all needed data points for construction a Pet object
+        String organizationID = String.valueOf(petJson.get("id"));
+        String name = String.valueOf(petJson.get("name"));
+
+
+        String bio = null;
+        String password = organizationID;
+        Organizations org = organizationsFactory.create(name, password, bio, LocalDateTime.now());
+
+
+        return org;
     }
 
-    @Override
-    public Organizations getBio(String bio) {
-        return orgAccounts.get(bio);
-    }
 
     private void save() {
         BufferedWriter writer;
