@@ -212,36 +212,6 @@ public class SearchInteractor implements SearchInputBoundary {
                         break;
                     }
                 }
-
-                if (req.equals("Phone: ")) {
-                    if (pet.getContact().get("phone") == null) {
-                        break;
-                    }
-                    if ((pet.getContact().get("phone")).equals(requirements.get(req))) {
-                        displayPetMap.put(id, pet);
-                        userDataAccessObject.save(pet);
-                    } else {
-                        if (displayPetMap.containsValue(pet)) {
-                            displayPetMap.remove(pet.getPetID());
-                        }
-                        break;
-                    }
-                }
-
-                if (req.equals("Email: ")) {
-                    if (pet.getContact().get("email") == null) {
-                        break;
-                    }
-                    if ((pet.getContact().get("email")).equals(requirements.get(req))) {
-                        displayPetMap.put(id, pet);
-                        userDataAccessObject.save(pet);
-                    } else {
-                        if (displayPetMap.containsValue(pet)) {
-                            displayPetMap.remove(pet.getPetID());
-                        }
-                        break;
-                    }
-                }
             }
         }
 
