@@ -17,11 +17,20 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
 
     private PetFactory petFactory;
 
+    /**
+     * To declare factory for creating pet
+     * @param petFactory
+     */
     public ApiPetDataAccessObject(PetFactory petFactory){
         this.petFactory = petFactory;
     }
 
-    // helper function to transform certain pet data points to Map<String, String>
+    /**
+     * helper function to transform certain pet data points to Map<String, String>
+     * @param petJson given JSON info
+     * @param param given information needed to extract
+     * @return return info in Map
+     */
     public Map<String, String> toMapSS(JSONObject petJson, String param){
         JSONObject row = (JSONObject) petJson.get(param);
         JSONArray keys = row.names();
@@ -39,7 +48,12 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
         }
         return mapped;
     }
-    // transform pet data to Map(String, Boolean)
+    /**
+     * helper function to transform certain pet data points to Map<String, Boolean>
+     * @param petJson given JSON info
+     * @param param given information needed to extract
+     * @return return info in Map
+     */
     public Map<String, Boolean> toMapSB(JSONObject petJson, String param){
         JSONObject row = (JSONObject) petJson.get(param);
         JSONArray keys = row.names();
@@ -58,11 +72,41 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
         return mapped;
     }
 
+    /**
+     * To save local temporary copy of retrieved pet
+     * @param pet
+     */
     @Override
     public void save(Pet pet) {
         profiles.put(pet.getPetID(), pet);
     }
 
+    /**
+     * Return if a pet with given id is in local profiles
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean existsByName(Integer id) {
+        return profiles.containsKey(id);
+    }
+
+    /**
+     * Return the corresponding pet entity object to the given id
+     * @param id
+     * @return
+     */
+    @Override
+    public Pet getPet(Integer id) {
+        assert existsByName(id);
+        return profiles.get(id);
+    }
+
+    /**
+     * Retrieve pet information from the API given the user requirements
+     * @param params user requirements
+     * @return Map of pet id to created pet entities
+     */
     @Override
     public Map<Integer, Pet> accessApi(Map<String, String> params) {
         Map<Integer, Pet> resultPets = new HashMap<>();
@@ -142,6 +186,25 @@ public class ApiPetDataAccessObject implements SearchPetDataAccessInterface {
         }
 
         return resultPets;
+    }
+
+    @Override
+    public void deleteAll() {
+        profiles.clear();
+    }
+
+    @Override
+    public List<Integer> getIDs() {
+        return new ArrayList<Integer>(profiles.keySet());
+    }
+
+    /**
+     * Returns list of pets exiting in lcoal profiles
+     * @return
+     */
+    @Override
+    public List<Pet> getPets() {
+        return (List<Pet>) profiles.values();
     }
 
 }

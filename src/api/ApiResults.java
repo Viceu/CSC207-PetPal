@@ -13,6 +13,12 @@ import static java.lang.Math.min;
 
 public class ApiResults {
 
+    /**
+     *
+     * @param params requirements
+     * @return List<String> Pet details
+     * @throws JSONException when retrieval fails
+     */
     public static List<String> getAnimals(Map<String, String> params) throws JSONException {
 
         // first get live API access token
@@ -81,6 +87,12 @@ public class ApiResults {
         }
     }
 
+    /**
+     *
+     * @param orgID
+     * @return String orgnization information
+     * @throws JSONException when retrieval fails
+     */
     public static String getOrg(String orgID) throws JSONException {
 
 

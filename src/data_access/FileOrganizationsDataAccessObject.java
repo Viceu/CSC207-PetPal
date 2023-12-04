@@ -21,6 +21,12 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
 
     private OrganizationsFactory organizationsFactory;
 
+    /**
+     * Create a DAO by saving the appropriate entity factory and creating a local file to keep track of entities
+     * @param csvPath
+     * @param organizationsFactory
+     * @throws IOException
+     */
     public FileOrganizationsDataAccessObject(String csvPath, OrganizationsFactory organizationsFactory) throws IOException {
         this.organizationsFactory = organizationsFactory;
 
@@ -57,21 +63,38 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
 
 
     @Override
+    /**
+     * Return if an organization of given id is in the system
+     */
     public boolean existsByName(String identifier) {
         return orgAccounts.containsKey(identifier);
     }
 
+    /**
+     * Save an organization entity into system
+     * @param organizations
+     */
     @Override
     public void save(Organizations organizations) {
         orgAccounts.put(organizations.getName(), organizations);
         this.save();
     }
 
+    /**
+     * Return the organziation entity given its username
+     * @param username
+     * @return
+     */
     @Override
     public Organizations get(String username) {
         return orgAccounts.get(username);
     }
 
+    /**
+     * Retrieve organization information from the API given the organization id, retrieved from its pet
+     * @param orgID
+     * @return
+     */
     @Override
     public Organizations accessApi(String orgID) {
         String apiResult = ApiResults.getOrg(orgID);
@@ -95,6 +118,9 @@ public class FileOrganizationsDataAccessObject implements AdoptUserPreviewDataAc
     }
 
 
+    /**
+     * Save an organization to system file database
+     */
     private void save() {
         BufferedWriter writer;
         try {

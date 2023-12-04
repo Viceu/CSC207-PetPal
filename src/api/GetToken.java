@@ -17,6 +17,12 @@ import java.util.Base64;
 public class GetToken {
 
     // method to get API access token
+
+    /**
+     * @return String access token given our credentials
+     * @throws OAuthSystemException if OAuth fails
+     * @throws OAuthProblemException
+     */
     public static String accessToken() throws OAuthSystemException, OAuthProblemException {
 
         String clientID = Credentials.getClientID();

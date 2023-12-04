@@ -5,10 +5,18 @@ import entities.User;
 public class HomeInteractor implements HomeInputBoundary{
     final HomeOutputBoundary homePresenter;
 
+    /**
+     * Construct interactor using given presenter
+     * @param homeOutputBoundary
+     */
     public HomeInteractor(HomeOutputBoundary homeOutputBoundary) {
         this.homePresenter = homeOutputBoundary;
     }
 
+    /**
+     * Process input data, generate output data based on indicated next view, then prepare view in presenter
+     * @param homeInputData
+     */
     @Override
     public void execute(HomeInputData homeInputData) {
         String nextView = homeInputData.getNextView();
