@@ -17,8 +17,6 @@ public class EditController {
         EditInputData editInputData = new EditInputData(user,
                 petname, pet_bio, owner);
 
-        System.out.println("Edit controller executes");
-
         userEditCaseInteractor.execute(editInputData);
     }
 }

@@ -19,8 +19,6 @@ public class EditInputData {
         this.petname = petname;
         this.pet_bio = pet_bio;
         this.owner = owner;
-
-        System.out.println("EditInputData is called");
     }
 
     public String getPetname() {
