@@ -17,9 +17,6 @@ public class AdoptUserPreviewState {
     public void setSearchFailMessage(String errorMessage) {
         failMessage = errorMessage;
     }
-    public Object getPetError() {
-        return failMessage;
-    }
 
     public void addUserMessage(String text) {
         userMessage = text;

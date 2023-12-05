@@ -4,7 +4,6 @@ public class LoginState {
     private String username = "";
     private String usernameError = null;
     private String password = "";
-    private String passwordError = null;
 
     public LoginState() {}
 
@@ -12,16 +11,8 @@ public class LoginState {
         return username;
     }
 
-    public String getUsernameError() {
-        return usernameError;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public String getPasswordError() {
-        return passwordError;
     }
 
     public void setUsername(String username) {
@@ -36,7 +27,4 @@ public class LoginState {
         this.password = password;
     }
 
-    public void setPasswordError(String passwordError) {
-        this.passwordError = passwordError;
-    }
 }

@@ -1,22 +1,20 @@
 package use_case;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.FileUserDataAccessObject;
 import entities.PersonalUserFactory;
-import entities.User;
-import entities.UserFactory;
 import org.junit.jupiter.api.Test;
 import use_case.signup.*;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SignupInteractorTest {
 
     @Test
-    void successTest() {
+    void successTest() throws IOException {
         SignupInputData inputData = new SignupInputData("test", "password", "password");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface userRepository = new FileUserDataAccessObject("/users.csv", new PersonalUserFactory());
 
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
             @Override
@@ -37,9 +35,9 @@ class SignupInteractorTest {
     }
 
     @Test
-    void failurePasswordMismatchTest() {
+    void failurePasswordMismatchTest() throws IOException {
         SignupInputData inputData = new SignupInputData("test", "password", "hehe");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface userRepository = new FileUserDataAccessObject("/users.csv", new PersonalUserFactory());
 
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override

@@ -1,11 +1,6 @@
 package view;
 
-import entities.Pet;
 import interface_adaptor.adopt_user_preview.*;
-import interface_adaptor.display.*;
-import interface_adaptor.search.SearchState;
-import interface_adaptor.search.SearchViewModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +15,6 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
     private final AdoptUserPreviewViewModel adoptUserPreviewViewModel;
     private final AdoptUserPreviewController adoptUserPreviewController;
     private final JTextField userMessage = new JTextField(15);
-    private final JTextField username = new JTextField(15);
     private final JButton next;
 
 
@@ -54,29 +48,6 @@ public class AdoptUserPreviewView extends JPanel implements PropertyChangeListen
                     public void keyReleased(KeyEvent e) {
                     }
                 });
-
-        LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(AdoptUserPreviewViewModel.USERNAME_LABEL), username);
-
-        username.addKeyListener(
-                new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        AdoptUserPreviewState currentState = adoptUserPreviewViewModel.getState();
-                        String text = username.getText() + e.getKeyChar();
-                        currentState.addUsername(text);
-                        adoptUserPreviewViewModel.setState(currentState);
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                    }
-                });
-
 
         next = new JButton(AdoptUserPreviewViewModel.SUBMIT_BUTTON_LABEL);
 

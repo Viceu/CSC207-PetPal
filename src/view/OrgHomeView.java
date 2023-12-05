@@ -1,7 +1,6 @@
 package view;
 
 import entities.Requests;
-import interface_adaptor.home.HomeViewModel;
 import interface_adaptor.org_adopt.OrgHomeController;
 import interface_adaptor.org_adopt.OrgHomeState;
 import interface_adaptor.org_adopt.OrgHomeViewModel;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
-public class OrgHomeView extends JPanel implements ActionListener, PropertyChangeListener {
+public class OrgHomeView extends JPanel implements PropertyChangeListener {
 
     public final String viewName = "org home";
     private final OrgHomeViewModel orgHomeViewModel;
@@ -38,11 +37,6 @@ public class OrgHomeView extends JPanel implements ActionListener, PropertyChang
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "This is not a feature.");
     }
 
     @Override

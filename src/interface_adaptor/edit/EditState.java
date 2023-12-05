@@ -24,13 +24,6 @@ public class EditState {
     public void setUser(User user) {
         this.user = user;
     }
-    public String getPetname() {
-        return petname;
-    }
-
-    public void setPetname(String petname) {
-        this.petname = petname;
-    }
     public void addPet(Pet thisPet) {
         this.pet.add(thisPet);
     }

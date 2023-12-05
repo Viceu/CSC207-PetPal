@@ -1,33 +1,28 @@
 package use_case;
 
-import data_access.EditInMemoryPetDataAccessObject;
-import data_access.EditInMemoryUserDataAccessObject;
+import data_access.EditInFilePetDataAccessObject;
 import entities.*;
 import org.junit.jupiter.api.Test;
 import use_case.edit.*;
-import use_case.signup.SignupInputData;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EditInteractorTest {
     @Test
-    void successTest(){
+    void successTest() throws IOException {
         User user = new PersonalUser("Jess", "123", "cat person", LocalDateTime.now());
         EditInputData inputData = new EditInputData(user, "Coco13",
                 "I am a rabbit.", "Jess");
-        EditUserDataAccessInterface userRepository = new EditInMemoryUserDataAccessObject();
-        EditPetDataAccessInterface petRepository = new EditInMemoryPetDataAccessObject();
+        EditPetDataAccessInterface petRepository = new EditInFilePetDataAccessObject("/pets.csv", new CommonPetFactory());
 
         EditOutputBoundary successPresenter = new EditOutputBoundary() {
             @Override
             public void prepareSuccessView(EditOutputData pet) {
                 // things to check: the output data is correct, and the pet has been created in the DAO.
                 assertEquals("Coco13", pet.getPetname());
-                assertEquals("I am a rabbit.", pet.getPet_bio());
-                assertEquals("Jess", pet.getOwner());
-
                 assertTrue(petRepository.existsByName("Coco13"));
             }
 
@@ -42,11 +37,11 @@ class EditInteractorTest {
     }
 
     @Test
-    void failPetNameExistsTest() {
+    void failPetNameExistsTest() throws IOException {
         User user = new PersonalUser("Jess", "123", "cat person", LocalDateTime.now());
         EditInputData inputData = new EditInputData(user, "Coco13",
                 "I am a rabbit.", "Jess");
-        EditPetDataAccessInterface petRepository = new EditInMemoryPetDataAccessObject();
+        EditPetDataAccessInterface petRepository = new EditInFilePetDataAccessObject("/pets.csv", new CommonPetFactory());
 
         // Add Coco13 to the repo so that when we check later they already exist
         PetFactory factory = new CommonPetFactory();

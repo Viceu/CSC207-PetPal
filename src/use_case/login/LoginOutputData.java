@@ -20,10 +20,6 @@ public class LoginOutputData {
         this.user = user;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public String getType() {
         return type;
     }

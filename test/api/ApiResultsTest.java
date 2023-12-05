@@ -17,22 +17,22 @@ class ApiResultTest {
         @Test
         void successFilterTest() {
                 HashMap<String, String> exParam = new HashMap<>();
-                exParam.put("age", "young");
-                exParam.put("name", "Serenity");
+                exParam.put("type", "dog");
+                // exParam.put("name", "Serenity");
                 List<String> exResults = getAnimals(exParam);
 
                 assertFalse(exResults.isEmpty());
 
                 List<String> ages = new ArrayList<>();
-                for (int i = 0; i < exResults.size(); i++) {
-                        JSONObject petJson = new JSONObject(exResults.get(i));
-                        String type = (String) petJson.get("age");
+                for (String exResult : exResults) {
+                        JSONObject petJson = new JSONObject(exResult);
+                        String type = (String) petJson.get("type");
                         ages.add(type);
                 }
 
                 List<String> expectedList = new ArrayList<>();
                 for (int i = 0; i < ages.size(); i++) {
-                        expectedList.add("Young");
+                        expectedList.add("Dog");
                 }
 
                 assertFalse(ages.isEmpty());
